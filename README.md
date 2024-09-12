@@ -48,9 +48,9 @@ Sistemai naudotojai bus trijų rolių: svečias, registruotas naudotojas ir admi
 
 ### Sistemos sudedamosios dalys:
 
-- Kliento pusė (angl. Front-end) – bus realizuojama naudojant SvelteKit karkasą. SvelteKit - tai Svelte paremtas karkasas, kuris remiasi Svelte pagrindais ir suteikia galingų funkcijų, tokių kaip SSR, kodo skaidymas, failų maršrutizavimas, kurios palengvina sudėtingų programų kūrimą.
-- Serverio pusė (angl. Back-end) – bus realizuojama naudojant Ktor karkasą. Ktor yra asinchroninis karkasas, skirtas mikroservisams, žiniatinklio programoms ir kt. kurti, naudojant Kotlin programavimo kalbą.
-- Duomenys bus saugomi PostgreSQL duomenų bazėje, kuri bus pasiekiama per Exposed ORM. Duomenų bazė yra reliacinė, kuri leidžia saugoti duomenis lentelėse bei sudaryti ryšius tarp jų.
+- Kliento pusė (angl. Front-end) – bus realizuojama naudojant `SvelteKit` karkasą. SvelteKit - tai Svelte paremtas karkasas, kuris remiasi Svelte pagrindais ir suteikia galingų funkcijų, tokių kaip SSR, kodo skaidymas, failų maršrutizavimas, kurios palengvina sudėtingų programų kūrimą.
+- Serverio pusė (angl. Back-end) – bus realizuojama naudojant `Ktor` karkasą. Ktor yra asinchroninis karkasas, skirtas mikroservisams, žiniatinklio programoms ir kt. kurti, naudojant Kotlin programavimo kalbą.
+- Duomenys bus saugomi `PostgreSQL` duomenų bazėje, kuri bus pasiekiama per `Exposed ORM`. Duomenų bazė yra reliacinė, kuri leidžia saugoti duomenis lentelėse bei sudaryti ryšius tarp jų.
 
 ## API metodai (Endpoints)
 
