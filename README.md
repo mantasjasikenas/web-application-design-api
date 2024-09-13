@@ -39,6 +39,8 @@ Sistemai naudotojai bus trijų rolių: svečias, registruotas naudotojas ir admi
 
 ## Taikomosios srities objektai
 
+Projektas ⇒ Sekcija ⇒ Užduotis
+
 - Projektas (project)
 - Sekcija (section)
 - Užduotis (task)
