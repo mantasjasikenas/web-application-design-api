@@ -1,0 +1,340 @@
+---
+openapi: "3.1.0"
+info:
+  title: "Tornado RESTful API"
+  description: ""
+  version: "1.0"
+paths:
+  /:
+    get: {}
+  /{id}:
+    get:
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+  /projects/{id}:
+    put:
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/com.github.mantasjasikenas.model.UpdateProjectDto"
+    delete:
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+  /sections/{sectionId}/tasks/:
+    post:
+      parameters:
+      - name: "sectionId"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/com.github.mantasjasikenas.model.PostTaskDto"
+  /tasks/{id}:
+    put:
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/com.github.mantasjasikenas.model.UpdateTaskDto"
+    delete:
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+  /projects/{projectId}/sections/:
+    post:
+      parameters:
+      - name: "projectId"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/com.github.mantasjasikenas.model.PostSectionDto"
+  /sections/{sectionId}:
+    put:
+      parameters:
+      - name: "sectionId"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/com.github.mantasjasikenas.model.UpdateSectionDto"
+  /sections/{id}:
+    delete:
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+  /sections/{sectionId}/tasks:
+    post:
+      parameters:
+      - name: "sectionId"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/com.github.mantasjasikenas.model.PostTaskDto"
+  /projects/{projectId}/sections:
+    post:
+      parameters:
+      - name: "projectId"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/com.github.mantasjasikenas.model.PostSectionDto"
+components:
+  schemas:
+    com.github.mantasjasikenas.model.PostProjectDto:
+      type: "object"
+      properties:
+        createdBy:
+          type: "string"
+        description:
+          type: "string"
+        name:
+          type: "string"
+      required:
+      - "name"
+      - "description"
+      - "createdBy"
+    com.github.mantasjasikenas.model.PostSectionDto:
+      type: "object"
+      properties:
+        createdBy:
+          type: "string"
+        name:
+          type: "string"
+      required:
+      - "name"
+      - "createdBy"
+    com.github.mantasjasikenas.model.PostTaskDto:
+      type: "object"
+      properties:
+        createdBy:
+          type: "string"
+        description:
+          type: "string"
+        dueDate:
+          $ref: "#/components/schemas/kotlinx.datetime.LocalDateTime"
+        isCompleted:
+          type: "boolean"
+        name:
+          type: "string"
+        priority:
+          type: "string"
+          enum:
+          - "Low"
+          - "Medium"
+          - "High"
+          - "Vital"
+      required:
+      - "name"
+      - "description"
+      - "priority"
+      - "isCompleted"
+      - "createdBy"
+    com.github.mantasjasikenas.model.UpdateProjectDto:
+      type: "object"
+      properties:
+        description:
+          type: "string"
+        name:
+          type: "string"
+    com.github.mantasjasikenas.model.UpdateSectionDto:
+      type: "object"
+      properties:
+        name:
+          type: "string"
+    com.github.mantasjasikenas.model.UpdateTaskDto:
+      type: "object"
+      properties:
+        description:
+          type: "string"
+        dueDate:
+          $ref: "#/components/schemas/kotlinx.datetime.LocalDateTime"
+        isCompleted:
+          type: "boolean"
+        name:
+          type: "string"
+        priority:
+          type: "string"
+          enum:
+          - "Low"
+          - "Medium"
+          - "High"
+          - "Vital"
+        sectionId:
+          type: "integer"
+    kotlinx.datetime.LocalDate:
+      type: "object"
+      properties:
+        dayOfMonth:
+          type: "integer"
+        dayOfWeek:
+          type: "string"
+          enum:
+          - "MONDAY"
+          - "TUESDAY"
+          - "WEDNESDAY"
+          - "THURSDAY"
+          - "FRIDAY"
+          - "SATURDAY"
+          - "SUNDAY"
+        dayOfYear:
+          type: "integer"
+        month:
+          type: "string"
+          enum:
+          - "JANUARY"
+          - "FEBRUARY"
+          - "MARCH"
+          - "APRIL"
+          - "MAY"
+          - "JUNE"
+          - "JULY"
+          - "AUGUST"
+          - "SEPTEMBER"
+          - "OCTOBER"
+          - "NOVEMBER"
+          - "DECEMBER"
+        monthNumber:
+          type: "integer"
+        year:
+          type: "integer"
+      required:
+      - "dayOfMonth"
+      - "dayOfWeek"
+      - "dayOfYear"
+      - "month"
+      - "monthNumber"
+      - "year"
+    kotlinx.datetime.LocalDateTime:
+      type: "object"
+      properties:
+        date:
+          $ref: "#/components/schemas/kotlinx.datetime.LocalDate"
+        dayOfMonth:
+          type: "integer"
+        dayOfWeek:
+          type: "string"
+          enum:
+          - "MONDAY"
+          - "TUESDAY"
+          - "WEDNESDAY"
+          - "THURSDAY"
+          - "FRIDAY"
+          - "SATURDAY"
+          - "SUNDAY"
+        dayOfYear:
+          type: "integer"
+        hour:
+          type: "integer"
+        minute:
+          type: "integer"
+        month:
+          type: "string"
+          enum:
+          - "JANUARY"
+          - "FEBRUARY"
+          - "MARCH"
+          - "APRIL"
+          - "MAY"
+          - "JUNE"
+          - "JULY"
+          - "AUGUST"
+          - "SEPTEMBER"
+          - "OCTOBER"
+          - "NOVEMBER"
+          - "DECEMBER"
+        monthNumber:
+          type: "integer"
+        nanosecond:
+          type: "integer"
+        second:
+          type: "integer"
+        time:
+          $ref: "#/components/schemas/kotlinx.datetime.LocalTime"
+        year:
+          type: "integer"
+      required:
+      - "date"
+      - "dayOfMonth"
+      - "dayOfWeek"
+      - "dayOfYear"
+      - "hour"
+      - "minute"
+      - "month"
+      - "monthNumber"
+      - "nanosecond"
+      - "second"
+      - "time"
+      - "year"
+    kotlinx.datetime.LocalTime:
+      type: "object"
+      properties:
+        hour:
+          type: "integer"
+        minute:
+          type: "integer"
+        nanosecond:
+          type: "integer"
+        second:
+          type: "integer"
+      required:
+      - "hour"
+      - "minute"
+      - "nanosecond"
+      - "second"

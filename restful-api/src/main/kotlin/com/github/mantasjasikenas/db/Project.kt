@@ -1,0 +1,41 @@
+﻿package com.github.mantasjasikenas.db
+
+import com.github.mantasjasikenas.model.ProjectDto
+import kotlinx.datetime.Clock
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
+import org.jetbrains.exposed.dao.IntEntity
+import org.jetbrains.exposed.dao.IntEntityClass
+import org.jetbrains.exposed.dao.id.EntityID
+import org.jetbrains.exposed.dao.id.IntIdTable
+import org.jetbrains.exposed.sql.kotlin.datetime.datetime
+
+object ProjectsTable : IntIdTable() {
+    val name = varchar("name", 255)
+    val description = text("description")
+    val createdAt =
+        datetime("created_at").default(
+            Clock.System.now()
+                .toLocalDateTime(TimeZone.Companion.currentSystemDefault())
+        )
+    val createdBy = varchar("created_by", 255)
+}
+
+
+class ProjectDAO(id: EntityID<Int>) : IntEntity(id) {
+    companion object : IntEntityClass<ProjectDAO>(ProjectsTable)
+
+    var name by ProjectsTable.name
+    var description by ProjectsTable.description
+    var createdAt by ProjectsTable.createdAt
+    var createdBy by ProjectsTable.createdBy
+}
+
+
+fun daoToModel(dao: ProjectDAO) = ProjectDto(
+    id = dao.id.value,
+    name = dao.name,
+    description = dao.description,
+    createdAt = dao.createdAt,
+    createdBy = dao.createdBy
+)
