@@ -51,7 +51,7 @@ fun daoToModel(dao: TaskDAO) = TaskDto(
     description = dao.description,
     priority = dao.priority,
     isCompleted = dao.isCompleted,
-    dueDate = dao.dueDateTime,
+    dueDate = dao.dueDateTime.toString(),
     createdBy = dao.createdBy,
-    createdAt = dao.createdAt,
+    createdAt = dao.createdAt.toString(),
 )

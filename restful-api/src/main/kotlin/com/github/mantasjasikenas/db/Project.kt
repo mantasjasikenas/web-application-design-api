@@ -36,6 +36,6 @@ fun daoToModel(dao: ProjectDAO) = ProjectDto(
     id = dao.id.value,
     name = dao.name,
     description = dao.description,
-    createdAt = dao.createdAt,
+    createdAt = dao.createdAt.toString(),
     createdBy = dao.createdBy
 )

@@ -4,6 +4,7 @@ import com.github.mantasjasikenas.db.*
 import com.github.mantasjasikenas.model.PostTaskDto
 import com.github.mantasjasikenas.model.TaskDto
 import com.github.mantasjasikenas.model.UpdateTaskDto
+import kotlinx.datetime.LocalDateTime
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.deleteWhere
@@ -29,7 +30,7 @@ class TaskRepositoryImpl : TaskRepository {
             priority = taskDto.priority
             this.sectionId = EntityID(sectionId, TasksTable)
             isCompleted = taskDto.isCompleted
-            dueDateTime = taskDto.dueDate
+            dueDateTime =taskDto.dueDate?.let { LocalDateTime.parse(it) }
         }.let(::daoToModel)
     }
 
@@ -47,7 +48,7 @@ class TaskRepositoryImpl : TaskRepository {
             it.priority = taskDto.priority ?: it.priority
             it.sectionId = if (taskDto.sectionId != null) EntityID(taskDto.sectionId, ProjectsTable) else it.sectionId
             it.isCompleted = taskDto.isCompleted ?: it.isCompleted
-            it.dueDateTime = taskDto.dueDate ?: it.dueDateTime
+            it.dueDateTime = taskDto.dueDate?.let { LocalDateTime.parse(it) } ?: it.dueDateTime
         }?.let(::daoToModel)
     }
 }

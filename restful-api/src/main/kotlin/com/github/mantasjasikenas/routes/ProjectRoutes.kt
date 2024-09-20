@@ -3,29 +3,52 @@
 import com.github.mantasjasikenas.data.ProjectRepository
 import com.github.mantasjasikenas.data.ProjectRepositoryImpl
 import com.github.mantasjasikenas.model.PostProjectDto
+import com.github.mantasjasikenas.model.ProjectDto
 import com.github.mantasjasikenas.model.UpdateProjectDto
+import io.github.tabilzad.ktor.annotations.KtorResponds
+import io.github.tabilzad.ktor.annotations.ResponseEntry
+import io.github.tabilzad.ktor.annotations.Tag
 import io.ktor.http.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
-fun Routing.projectRoutes() {
+@Tag(["Projects"])
+fun Route.projectRoutes() {
     val projectRepository: ProjectRepository = ProjectRepositoryImpl()
 
     route("/projects") {
+        @KtorResponds(
+            [
+                ResponseEntry("200", PostProjectDto::class, true, description = "All projects")
+            ]
+        )
         get {
             val projects = projectRepository.allProjects()
 
             call.respond(projects)
         }
 
+        @KtorResponds(
+            [
+                ResponseEntry("201", ProjectDto::class, description = "Project created"),
+                ResponseEntry("400", String::class, description = "Bad request")
+            ]
+        )
         post {
             val projectDto = call.receive<PostProjectDto>()
-            val id = projectRepository.addProject(projectDto)
+            val project = projectRepository.addProject(projectDto)
 
-            call.respond(HttpStatusCode.Created, id)
+            call.respond(HttpStatusCode.Created, project)
         }
 
+        @KtorResponds(
+            [
+                ResponseEntry("200", ProjectDto::class, description = "Project by id"),
+                ResponseEntry("400", String::class, description = "Bad request"),
+                ResponseEntry("404", String::class, description = "Not found")
+            ]
+        )
         get("/{id}") {
             val id = call.parameters["id"]?.toInt()
 
@@ -43,6 +66,13 @@ fun Routing.projectRoutes() {
             }
         }
 
+        @KtorResponds(
+            [
+                ResponseEntry("200", ProjectDto::class, description = "Project updated"),
+                ResponseEntry("400", String::class, description = "Bad request"),
+                ResponseEntry("404", String::class, description = "Not found")
+            ]
+        )
         put("/projects/{id}") {
             val id = call.parameters["id"]?.toInt()
             val projectDto = call.receive<UpdateProjectDto>()
@@ -52,11 +82,22 @@ fun Routing.projectRoutes() {
                 return@put
             }
 
-            projectRepository.updateProject(id, projectDto)
+            val updatedProject = projectRepository.updateProject(id, projectDto)
 
-            call.respond(HttpStatusCode.OK)
+            if (updatedProject != null) {
+                call.respond(HttpStatusCode.OK, updatedProject)
+            } else {
+                call.respond(HttpStatusCode.NotFound)
+            }
         }
 
+        @KtorResponds(
+            [
+                ResponseEntry("204", String::class, description = "Project deleted"),
+                ResponseEntry("400", String::class, description = "Bad request"),
+                ResponseEntry("404", String::class, description = "Not found")
+            ]
+        )
         delete("/projects/{id}") {
             val id = call.parameters["id"]?.toInt()
 

@@ -37,7 +37,7 @@ class SectionDAO(id: EntityID<Int>) : IntEntity(id) {
 fun daoToModel(dao: SectionDAO) = SectionDto(
     id = dao.id.value,
     name = dao.name,
-    createdAt = dao.createdAt,
+    createdAt = dao.createdAt.toString(),
     createdBy = dao.createdBy,
     projectId = dao.project.id.value,
 )

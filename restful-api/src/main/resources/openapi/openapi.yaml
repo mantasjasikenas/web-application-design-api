@@ -5,18 +5,93 @@ info:
   description: ""
   version: "1.0"
 paths:
-  /:
-    get: {}
-  /{id}:
+  /api/v1/projects:
     get:
+      tags:
+      - "Projects"
+      responses:
+        "200":
+          description: "All projects"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/com.github.mantasjasikenas.model.PostProjectDto"
+    post:
+      tags:
+      - "Projects"
+      responses:
+        "201":
+          description: "Project created"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/com.github.mantasjasikenas.model.ProjectDto"
+        "400":
+          description: "Bad request"
+          content:
+            application/json:
+              schema:
+                type: "string"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/com.github.mantasjasikenas.model.PostProjectDto"
+  /api/v1/projects/{id}:
+    get:
+      tags:
+      - "Projects"
+      responses:
+        "200":
+          description: "Project by id"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/com.github.mantasjasikenas.model.ProjectDto"
+        "400":
+          description: "Bad request"
+          content:
+            application/json:
+              schema:
+                type: "string"
+        "404":
+          description: "Not found"
+          content:
+            application/json:
+              schema:
+                type: "string"
       parameters:
       - name: "id"
         in: "path"
         required: true
         schema:
           type: "string"
-  /projects/{id}:
+  /api/v1/projects/projects/{id}:
     put:
+      tags:
+      - "Projects"
+      responses:
+        "200":
+          description: "Project updated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/com.github.mantasjasikenas.model.ProjectDto"
+        "400":
+          description: "Bad request"
+          content:
+            application/json:
+              schema:
+                type: "string"
+        "404":
+          description: "Not found"
+          content:
+            application/json:
+              schema:
+                type: "string"
       parameters:
       - name: "id"
         in: "path"
@@ -30,14 +105,50 @@ paths:
             schema:
               $ref: "#/components/schemas/com.github.mantasjasikenas.model.UpdateProjectDto"
     delete:
+      tags:
+      - "Projects"
+      responses:
+        "204":
+          description: "Project deleted"
+          content:
+            application/json:
+              schema:
+                type: "string"
+        "400":
+          description: "Bad request"
+          content:
+            application/json:
+              schema:
+                type: "string"
+        "404":
+          description: "Not found"
+          content:
+            application/json:
+              schema:
+                type: "string"
       parameters:
       - name: "id"
         in: "path"
         required: true
         schema:
           type: "string"
-  /sections/{sectionId}/tasks/:
+  /api/v1/sections/{sectionId}/tasks:
     post:
+      tags:
+      - "Tasks"
+      responses:
+        "201":
+          description: "Task created"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/com.github.mantasjasikenas.model.TaskDto"
+        "400":
+          description: "Bad request"
+          content:
+            application/json:
+              schema:
+                type: "string"
       parameters:
       - name: "sectionId"
         in: "path"
@@ -50,8 +161,73 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/com.github.mantasjasikenas.model.PostTaskDto"
-  /tasks/{id}:
+  /api/v1/tasks:
+    get:
+      tags:
+      - "Tasks"
+      responses:
+        "200":
+          description: "All tasks"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/com.github.mantasjasikenas.model.TaskDto"
+  /api/v1/tasks/{id}:
+    get:
+      tags:
+      - "Tasks"
+      responses:
+        "200":
+          description: "Task by id"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/com.github.mantasjasikenas.model.TaskDto"
+        "400":
+          description: "Bad request"
+          content:
+            application/json:
+              schema:
+                type: "string"
+        "404":
+          description: "Not found"
+          content:
+            application/json:
+              schema:
+                type: "string"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+  /api/v1/tasks/tasks/{id}:
     put:
+      tags:
+      - "Tasks"
+      responses:
+        "200":
+          description: "Task updated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/com.github.mantasjasikenas.model.TaskDto"
+        "400":
+          description: "Bad request"
+          content:
+            application/json:
+              schema:
+                type: "string"
+        "404":
+          description: "Not found"
+          content:
+            application/json:
+              schema:
+                type: "string"
       parameters:
       - name: "id"
         in: "path"
@@ -65,14 +241,50 @@ paths:
             schema:
               $ref: "#/components/schemas/com.github.mantasjasikenas.model.UpdateTaskDto"
     delete:
+      tags:
+      - "Tasks"
+      responses:
+        "200":
+          description: "Task removed"
+          content:
+            application/json:
+              schema:
+                type: "string"
+        "404":
+          description: "Not found"
+          content:
+            application/json:
+              schema:
+                type: "string"
+        "400":
+          description: "Bad request"
+          content:
+            application/json:
+              schema:
+                type: "string"
       parameters:
       - name: "id"
         in: "path"
         required: true
         schema:
           type: "string"
-  /projects/{projectId}/sections/:
+  /api/v1/projects/{projectId}/sections:
     post:
+      tags:
+      - "Sections"
+      responses:
+        "201":
+          description: "Section created"
+          content:
+            application/json:
+              schema:
+                type: "integer"
+        "400":
+          description: "Bad request"
+          content:
+            application/json:
+              schema:
+                type: "string"
       parameters:
       - name: "projectId"
         in: "path"
@@ -85,8 +297,71 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/com.github.mantasjasikenas.model.PostSectionDto"
-  /sections/{sectionId}:
+  /api/v1/sections:
+    get:
+      tags:
+      - "Sections"
+      responses:
+        "200":
+          description: "All sections"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/com.github.mantasjasikenas.model.PostSectionDto"
+  /api/v1/sections/{id}:
+    get:
+      tags:
+      - "Sections"
+      responses:
+        "200":
+          description: "Section by id"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/com.github.mantasjasikenas.model.PostSectionDto"
+        "400":
+          description: "Bad request"
+          content:
+            application/json:
+              schema:
+                type: "string"
+        "404":
+          description: "Not found"
+          content:
+            application/json:
+              schema:
+                type: "string"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+  /api/v1/sections/sections/{sectionId}:
     put:
+      tags:
+      - "Sections"
+      responses:
+        "200":
+          description: "Section updated"
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/com.github.mantasjasikenas.model.SectionDto"
+        "400":
+          description: "Bad request"
+          content:
+            application/json:
+              schema:
+                type: "string"
+        "404":
+          description: "Not found"
+          content:
+            application/json:
+              schema:
+                type: "string"
       parameters:
       - name: "sectionId"
         in: "path"
@@ -99,42 +374,35 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/com.github.mantasjasikenas.model.UpdateSectionDto"
-  /sections/{id}:
+  /api/v1/sections/sections/{id}:
     delete:
+      tags:
+      - "Sections"
+      responses:
+        "204":
+          description: "Section deleted"
+          content:
+            application/json:
+              schema:
+                type: "string"
+        "400":
+          description: "Bad request"
+          content:
+            application/json:
+              schema:
+                type: "string"
+        "404":
+          description: "Not found"
+          content:
+            application/json:
+              schema:
+                type: "string"
       parameters:
       - name: "id"
         in: "path"
         required: true
         schema:
           type: "string"
-  /sections/{sectionId}/tasks:
-    post:
-      parameters:
-      - name: "sectionId"
-        in: "path"
-        required: true
-        schema:
-          type: "string"
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/com.github.mantasjasikenas.model.PostTaskDto"
-  /projects/{projectId}/sections:
-    post:
-      parameters:
-      - name: "projectId"
-        in: "path"
-        required: true
-        schema:
-          type: "string"
-      requestBody:
-        required: true
-        content:
-          application/json:
-            schema:
-              $ref: "#/components/schemas/com.github.mantasjasikenas.model.PostSectionDto"
 components:
   schemas:
     com.github.mantasjasikenas.model.PostProjectDto:
@@ -142,10 +410,13 @@ components:
       properties:
         createdBy:
           type: "string"
+          description: "Project creator"
         description:
           type: "string"
+          description: "Project description"
         name:
           type: "string"
+          description: "Project name"
       required:
       - "name"
       - "description"
@@ -155,8 +426,10 @@ components:
       properties:
         createdBy:
           type: "string"
+          description: "Section creator"
         name:
           type: "string"
+          description: "Section name"
       required:
       - "name"
       - "createdBy"
@@ -165,14 +438,19 @@ components:
       properties:
         createdBy:
           type: "string"
+          description: "Task creator"
         description:
           type: "string"
+          description: "Task description"
         dueDate:
-          $ref: "#/components/schemas/kotlinx.datetime.LocalDateTime"
+          type: "string"
+          description: "Task due date"
         isCompleted:
           type: "boolean"
+          description: "Task completion status"
         name:
           type: "string"
+          description: "Task name"
         priority:
           type: "string"
           enum:
@@ -180,35 +458,85 @@ components:
           - "Medium"
           - "High"
           - "Vital"
+          description: "Task priority"
       required:
       - "name"
       - "description"
       - "priority"
       - "isCompleted"
       - "createdBy"
-    com.github.mantasjasikenas.model.UpdateProjectDto:
+    com.github.mantasjasikenas.model.ProjectDto:
       type: "object"
       properties:
+        createdAt:
+          type: "string"
+          description: "Project creation date"
+        createdBy:
+          type: "string"
+          description: "Project creator"
         description:
           type: "string"
+          description: "Project description"
+        id:
+          type: "integer"
+          description: "Project id"
         name:
           type: "string"
-    com.github.mantasjasikenas.model.UpdateSectionDto:
+          description: "Project name"
+      required:
+      - "id"
+      - "name"
+      - "description"
+      - "createdAt"
+      - "createdBy"
+    com.github.mantasjasikenas.model.SectionDto:
       type: "object"
       properties:
+        createdAt:
+          type: "string"
+          description: "Section creation date"
+        createdBy:
+          type: "string"
+          description: "Section creator"
+        id:
+          type: "integer"
+          description: "Section id"
         name:
           type: "string"
-    com.github.mantasjasikenas.model.UpdateTaskDto:
+          description: "Section name"
+        projectId:
+          type: "integer"
+          description: "Project id"
+      required:
+      - "id"
+      - "projectId"
+      - "name"
+      - "createdBy"
+      - "createdAt"
+    com.github.mantasjasikenas.model.TaskDto:
       type: "object"
       properties:
+        createdAt:
+          type: "string"
+          description: "Task creation date"
+        createdBy:
+          type: "string"
+          description: "Task creator"
         description:
           type: "string"
+          description: "Task description"
         dueDate:
-          $ref: "#/components/schemas/kotlinx.datetime.LocalDateTime"
+          type: "string"
+          description: "Task due date"
+        id:
+          type: "integer"
+          description: "Task id"
         isCompleted:
           type: "boolean"
+          description: "Task completion status"
         name:
           type: "string"
+          description: "Task name"
         priority:
           type: "string"
           enum:
@@ -216,125 +544,57 @@ components:
           - "Medium"
           - "High"
           - "Vital"
+          description: "Task priority"
         sectionId:
           type: "integer"
-    kotlinx.datetime.LocalDate:
+          description: "Section id"
+      required:
+      - "id"
+      - "sectionId"
+      - "name"
+      - "description"
+      - "priority"
+      - "isCompleted"
+      - "createdBy"
+      - "createdAt"
+    com.github.mantasjasikenas.model.UpdateProjectDto:
       type: "object"
       properties:
-        dayOfMonth:
-          type: "integer"
-        dayOfWeek:
+        description:
           type: "string"
-          enum:
-          - "MONDAY"
-          - "TUESDAY"
-          - "WEDNESDAY"
-          - "THURSDAY"
-          - "FRIDAY"
-          - "SATURDAY"
-          - "SUNDAY"
-        dayOfYear:
-          type: "integer"
-        month:
+          description: "Project description"
+        name:
           type: "string"
-          enum:
-          - "JANUARY"
-          - "FEBRUARY"
-          - "MARCH"
-          - "APRIL"
-          - "MAY"
-          - "JUNE"
-          - "JULY"
-          - "AUGUST"
-          - "SEPTEMBER"
-          - "OCTOBER"
-          - "NOVEMBER"
-          - "DECEMBER"
-        monthNumber:
-          type: "integer"
-        year:
-          type: "integer"
-      required:
-      - "dayOfMonth"
-      - "dayOfWeek"
-      - "dayOfYear"
-      - "month"
-      - "monthNumber"
-      - "year"
-    kotlinx.datetime.LocalDateTime:
+          description: "Project name"
+    com.github.mantasjasikenas.model.UpdateSectionDto:
       type: "object"
       properties:
-        date:
-          $ref: "#/components/schemas/kotlinx.datetime.LocalDate"
-        dayOfMonth:
-          type: "integer"
-        dayOfWeek:
+        name:
           type: "string"
-          enum:
-          - "MONDAY"
-          - "TUESDAY"
-          - "WEDNESDAY"
-          - "THURSDAY"
-          - "FRIDAY"
-          - "SATURDAY"
-          - "SUNDAY"
-        dayOfYear:
-          type: "integer"
-        hour:
-          type: "integer"
-        minute:
-          type: "integer"
-        month:
-          type: "string"
-          enum:
-          - "JANUARY"
-          - "FEBRUARY"
-          - "MARCH"
-          - "APRIL"
-          - "MAY"
-          - "JUNE"
-          - "JULY"
-          - "AUGUST"
-          - "SEPTEMBER"
-          - "OCTOBER"
-          - "NOVEMBER"
-          - "DECEMBER"
-        monthNumber:
-          type: "integer"
-        nanosecond:
-          type: "integer"
-        second:
-          type: "integer"
-        time:
-          $ref: "#/components/schemas/kotlinx.datetime.LocalTime"
-        year:
-          type: "integer"
-      required:
-      - "date"
-      - "dayOfMonth"
-      - "dayOfWeek"
-      - "dayOfYear"
-      - "hour"
-      - "minute"
-      - "month"
-      - "monthNumber"
-      - "nanosecond"
-      - "second"
-      - "time"
-      - "year"
-    kotlinx.datetime.LocalTime:
+          description: "Section name"
+    com.github.mantasjasikenas.model.UpdateTaskDto:
       type: "object"
       properties:
-        hour:
+        description:
+          type: "string"
+          description: "Task description"
+        dueDate:
+          type: "string"
+          description: "Task due date"
+        isCompleted:
+          type: "boolean"
+          description: "Task completion status"
+        name:
+          type: "string"
+          description: "Task name"
+        priority:
+          type: "string"
+          enum:
+          - "Low"
+          - "Medium"
+          - "High"
+          - "Vital"
+          description: "Task priority"
+        sectionId:
           type: "integer"
-        minute:
-          type: "integer"
-        nanosecond:
-          type: "integer"
-        second:
-          type: "integer"
-      required:
-      - "hour"
-      - "minute"
-      - "nanosecond"
-      - "second"
+          description: "Task creator"
