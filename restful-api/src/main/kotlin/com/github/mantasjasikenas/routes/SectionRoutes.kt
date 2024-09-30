@@ -1,7 +1,6 @@
 ﻿package com.github.mantasjasikenas.routes
 
 import com.github.mantasjasikenas.data.SectionRepository
-import com.github.mantasjasikenas.data.SectionRepositoryImpl
 import com.github.mantasjasikenas.model.PostSectionDto
 import com.github.mantasjasikenas.model.SectionDto
 import com.github.mantasjasikenas.model.UpdateSectionDto
@@ -14,10 +13,7 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
 @Tag(["Sections"])
-fun Route.sectionRoutes() {
-    val sectionRepository: SectionRepository = SectionRepositoryImpl()
-
-    // TODO: move elsewhere
+fun Route.sectionRoutes(sectionRepository: SectionRepository) {
     @KtorResponds(
         [
             ResponseEntry("201", Int::class, description = "Section created"),
@@ -82,7 +78,7 @@ fun Route.sectionRoutes() {
                 ResponseEntry("404", String::class, description = "Not found")
             ]
         )
-        put("/sections/{sectionId}") {
+        put("/{sectionId}") {
             val sectionId = call.parameters["sectionId"]?.toInt()
             val sectionDto = call.receive<UpdateSectionDto>()
 
@@ -107,7 +103,7 @@ fun Route.sectionRoutes() {
                 ResponseEntry("404", String::class, description = "Not found")
             ]
         )
-        delete("/sections/{id}") {
+        delete("/{id}") {
             val id = call.parameters["id"]?.toInt()
 
             if (id == null) {

@@ -1,7 +1,6 @@
 ﻿package com.github.mantasjasikenas.routes
 
 import com.github.mantasjasikenas.data.TaskRepository
-import com.github.mantasjasikenas.data.TaskRepositoryImpl
 import com.github.mantasjasikenas.model.PostTaskDto
 import com.github.mantasjasikenas.model.TaskDto
 import com.github.mantasjasikenas.model.UpdateTaskDto
@@ -14,10 +13,7 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
 @Tag(["Tasks"])
-fun Route.taskRoutes() {
-    val taskRepository: TaskRepository = TaskRepositoryImpl()
-
-    // TODO: move elsewhere
+fun Route.taskRoutes(taskRepository: TaskRepository) {
     @KtorResponds(
         [
             ResponseEntry("201", TaskDto::class, description = "Task created"),
@@ -37,6 +33,27 @@ fun Route.taskRoutes() {
 
         call.respond(HttpStatusCode.Created, task)
     }
+
+//    GET /projects/{projectId}/sections/{sectionId}/tasks
+    @KtorResponds(
+        [
+            ResponseEntry("200", TaskDto::class, true, description = "All tasks")
+        ]
+    )
+    get("/projects/{projectId}/sections/{sectionId}/tasks") {
+        val projectId = call.parameters["projectId"]?.toInt()
+        val sectionId = call.parameters["sectionId"]?.toInt()
+
+        if (projectId == null || sectionId == null) {
+            call.respond(HttpStatusCode.BadRequest)
+            return@get
+        }
+
+        val tasks = taskRepository.allTasks(projectId, sectionId)
+
+        call.respond(tasks)
+    }
+
 
     route("/tasks") {
         @KtorResponds(
@@ -81,7 +98,7 @@ fun Route.taskRoutes() {
                 ResponseEntry("404", String::class, description = "Not found")
             ]
         )
-        put("/tasks/{id}") {
+        put("/{id}") {
             val id = call.parameters["id"]?.toInt()
             val taskDto = call.receive<UpdateTaskDto>()
 
@@ -106,7 +123,7 @@ fun Route.taskRoutes() {
                 ResponseEntry("400", String::class, description = "Bad request")
             ]
         )
-        delete("/tasks/{id}") {
+        delete("/{id}") {
             val id = call.parameters["id"]?.toInt()
 
             if (id == null) {

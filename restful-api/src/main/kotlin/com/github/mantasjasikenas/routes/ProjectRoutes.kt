@@ -1,7 +1,6 @@
 ﻿package com.github.mantasjasikenas.routes
 
 import com.github.mantasjasikenas.data.ProjectRepository
-import com.github.mantasjasikenas.data.ProjectRepositoryImpl
 import com.github.mantasjasikenas.model.PostProjectDto
 import com.github.mantasjasikenas.model.ProjectDto
 import com.github.mantasjasikenas.model.UpdateProjectDto
@@ -14,9 +13,7 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
 @Tag(["Projects"])
-fun Route.projectRoutes() {
-    val projectRepository: ProjectRepository = ProjectRepositoryImpl()
-
+fun Route.projectRoutes(projectRepository: ProjectRepository) {
     route("/projects") {
         @KtorResponds(
             [
@@ -73,7 +70,7 @@ fun Route.projectRoutes() {
                 ResponseEntry("404", String::class, description = "Not found")
             ]
         )
-        put("/projects/{id}") {
+        put("/{id}") {
             val id = call.parameters["id"]?.toInt()
             val projectDto = call.receive<UpdateProjectDto>()
 
@@ -98,7 +95,7 @@ fun Route.projectRoutes() {
                 ResponseEntry("404", String::class, description = "Not found")
             ]
         )
-        delete("/projects/{id}") {
+        delete("/{id}") {
             val id = call.parameters["id"]?.toInt()
 
             if (id == null) {

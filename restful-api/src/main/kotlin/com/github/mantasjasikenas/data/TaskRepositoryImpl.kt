@@ -7,19 +7,24 @@ import com.github.mantasjasikenas.model.UpdateTaskDto
 import kotlinx.datetime.LocalDateTime
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
+import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.deleteWhere
+import org.jetbrains.exposed.sql.selectAll
 
 class TaskRepositoryImpl : TaskRepository {
     override suspend fun allTasks(): List<TaskDto> = suspendTransaction {
-        TaskDAO
-            .all()
+        TaskDAO.all().map(::daoToModel)
+    }
+
+    override suspend fun allTasks(projectId: Int, sectionId: Int): List<TaskDto> = suspendTransaction {
+        (TasksTable innerJoin SectionsTable)
+            .selectAll().where { (TasksTable.sectionId eq sectionId) and (SectionsTable.projectId eq projectId) }
+            .map { TaskDAO.wrapRow(it) }
             .map(::daoToModel)
     }
 
     override suspend fun taskById(id: Int): TaskDto? = suspendTransaction {
-        TaskDAO
-            .findById(id)
-            ?.let(::daoToModel)
+        TaskDAO.findById(id)?.let(::daoToModel)
     }
 
 
@@ -30,7 +35,7 @@ class TaskRepositoryImpl : TaskRepository {
             priority = taskDto.priority
             this.sectionId = EntityID(sectionId, TasksTable)
             isCompleted = taskDto.isCompleted
-            dueDateTime =taskDto.dueDate?.let { LocalDateTime.parse(it) }
+            dueDateTime = taskDto.dueDate?.let { LocalDateTime.parse(it) }
         }.let(::daoToModel)
     }
 
@@ -48,7 +53,7 @@ class TaskRepositoryImpl : TaskRepository {
             it.priority = taskDto.priority ?: it.priority
             it.sectionId = if (taskDto.sectionId != null) EntityID(taskDto.sectionId, ProjectsTable) else it.sectionId
             it.isCompleted = taskDto.isCompleted ?: it.isCompleted
-            it.dueDateTime = taskDto.dueDate?.let { LocalDateTime.parse(it) } ?: it.dueDateTime
+            it.dueDateTime = taskDto.dueDate?.let { due -> LocalDateTime.parse(due) } ?: it.dueDateTime
         }?.let(::daoToModel)
     }
 }

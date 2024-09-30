@@ -6,6 +6,7 @@ import com.github.mantasjasikenas.model.UpdateTaskDto
 
 interface TaskRepository {
     suspend fun allTasks(): List<TaskDto>
+    suspend fun allTasks(projectId: Int, sectionId: Int): List<TaskDto>
     suspend fun taskById(id: Int): TaskDto?
     suspend fun addTask(sectionId: Int, taskDto: PostTaskDto): TaskDto
     suspend fun removeTask(id: Int): Boolean

@@ -4,6 +4,9 @@ info:
   title: "Tornado RESTful API"
   description: ""
   version: "1.0"
+servers:
+  - url: http://localhost:8080
+    description: "Local server"
 paths:
   /api/v1/projects:
     get:
@@ -69,7 +72,6 @@ paths:
         required: true
         schema:
           type: "string"
-  /api/v1/projects/projects/{id}:
     put:
       tags:
       - "Projects"
@@ -161,6 +163,30 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/com.github.mantasjasikenas.model.PostTaskDto"
+  /api/v1/projects/{projectId}/sections/{sectionId}/tasks:
+    get:
+      tags:
+      - "Tasks"
+      responses:
+        "200":
+          description: "All tasks"
+          content:
+            application/json:
+              schema:
+                type: "array"
+                items:
+                  $ref: "#/components/schemas/com.github.mantasjasikenas.model.TaskDto"
+      parameters:
+      - name: "projectId"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+      - name: "sectionId"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
   /api/v1/tasks:
     get:
       tags:
@@ -205,7 +231,6 @@ paths:
         required: true
         schema:
           type: "string"
-  /api/v1/tasks/tasks/{id}:
     put:
       tags:
       - "Tasks"
@@ -339,7 +364,35 @@ paths:
         required: true
         schema:
           type: "string"
-  /api/v1/sections/sections/{sectionId}:
+    delete:
+      tags:
+      - "Sections"
+      responses:
+        "204":
+          description: "Section deleted"
+          content:
+            application/json:
+              schema:
+                type: "string"
+        "400":
+          description: "Bad request"
+          content:
+            application/json:
+              schema:
+                type: "string"
+        "404":
+          description: "Not found"
+          content:
+            application/json:
+              schema:
+                type: "string"
+      parameters:
+      - name: "id"
+        in: "path"
+        required: true
+        schema:
+          type: "string"
+  /api/v1/sections/{sectionId}:
     put:
       tags:
       - "Sections"
@@ -374,35 +427,6 @@ paths:
           application/json:
             schema:
               $ref: "#/components/schemas/com.github.mantasjasikenas.model.UpdateSectionDto"
-  /api/v1/sections/sections/{id}:
-    delete:
-      tags:
-      - "Sections"
-      responses:
-        "204":
-          description: "Section deleted"
-          content:
-            application/json:
-              schema:
-                type: "string"
-        "400":
-          description: "Bad request"
-          content:
-            application/json:
-              schema:
-                type: "string"
-        "404":
-          description: "Not found"
-          content:
-            application/json:
-              schema:
-                type: "string"
-      parameters:
-      - name: "id"
-        in: "path"
-        required: true
-        schema:
-          type: "string"
 components:
   schemas:
     com.github.mantasjasikenas.model.PostProjectDto:
