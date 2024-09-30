@@ -36,6 +36,7 @@ class TaskRepositoryImpl : TaskRepository {
             this.sectionId = EntityID(sectionId, TasksTable)
             isCompleted = taskDto.isCompleted
             dueDateTime = taskDto.dueDate?.let { LocalDateTime.parse(it) }
+            createdBy = taskDto.createdBy
         }.let(::daoToModel)
     }
 

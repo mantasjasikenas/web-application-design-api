@@ -1,15 +1,12 @@
 ﻿package com.github.mantasjasikenas.routes
 
 import com.github.mantasjasikenas.data.ProjectRepository
-import com.github.mantasjasikenas.model.PostProjectDto
-import com.github.mantasjasikenas.model.ProjectDto
-import com.github.mantasjasikenas.model.UpdateProjectDto
+import com.github.mantasjasikenas.model.*
 import io.github.tabilzad.ktor.annotations.KtorResponds
 import io.github.tabilzad.ktor.annotations.ResponseEntry
 import io.github.tabilzad.ktor.annotations.Tag
 import io.ktor.http.*
 import io.ktor.server.request.*
-import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
 @Tag(["Projects"])
@@ -23,7 +20,7 @@ fun Route.projectRoutes(projectRepository: ProjectRepository) {
         get {
             val projects = projectRepository.allProjects()
 
-            call.respond(projects)
+            call.respondSuccess("All projects", projects)
         }
 
         @KtorResponds(
@@ -36,7 +33,7 @@ fun Route.projectRoutes(projectRepository: ProjectRepository) {
             val projectDto = call.receive<PostProjectDto>()
             val project = projectRepository.addProject(projectDto)
 
-            call.respond(HttpStatusCode.Created, project)
+            call.respondCreated("Project created", project)
         }
 
         @KtorResponds(
@@ -50,16 +47,16 @@ fun Route.projectRoutes(projectRepository: ProjectRepository) {
             val id = call.parameters["id"]?.toInt()
 
             if (id == null) {
-                call.respond(HttpStatusCode.BadRequest)
+                call.respondBadRequest("Project id is required")
                 return@get
             }
 
             val project = projectRepository.projectById(id)
 
             if (project != null) {
-                call.respond(HttpStatusCode.OK, project)
+                call.respondSuccess("Project by id", project)
             } else {
-                call.respond(HttpStatusCode.NotFound)
+                call.respondNotFound("Project not found")
             }
         }
 
@@ -75,16 +72,16 @@ fun Route.projectRoutes(projectRepository: ProjectRepository) {
             val projectDto = call.receive<UpdateProjectDto>()
 
             if (id == null) {
-                call.respond(HttpStatusCode.BadRequest)
+                call.respondBadRequest("Project id is required")
                 return@put
             }
 
             val updatedProject = projectRepository.updateProject(id, projectDto)
 
             if (updatedProject != null) {
-                call.respond(HttpStatusCode.OK, updatedProject)
+                call.respondSuccess("Project updated", updatedProject)
             } else {
-                call.respond(HttpStatusCode.NotFound)
+                call.respondNotFound("Project not found")
             }
         }
 
@@ -99,16 +96,16 @@ fun Route.projectRoutes(projectRepository: ProjectRepository) {
             val id = call.parameters["id"]?.toInt()
 
             if (id == null) {
-                call.respond(HttpStatusCode.BadRequest)
+                call.respondBadRequest("Project id is required")
                 return@delete
             }
 
             val removed = projectRepository.removeProject(id)
 
             if (removed) {
-                call.respond(HttpStatusCode.NoContent)
+                call.respondCustom(HttpStatusCode.NoContent, "Project deleted")
             } else {
-                call.respond(HttpStatusCode.NotFound)
+                call.respondNotFound("Project not found")
             }
         }
     }

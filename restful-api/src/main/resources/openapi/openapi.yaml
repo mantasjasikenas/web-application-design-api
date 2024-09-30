@@ -4,9 +4,6 @@ info:
   title: "Tornado RESTful API"
   description: ""
   version: "1.0"
-servers:
-  - url: http://localhost:8080
-    description: "Local server"
 paths:
   /api/v1/projects:
     get:
@@ -20,7 +17,7 @@ paths:
               schema:
                 type: "array"
                 items:
-                  $ref: "#/components/schemas/com.github.mantasjasikenas.model.PostProjectDto"
+                  $ref: "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse"
     post:
       tags:
       - "Projects"
@@ -429,6 +426,27 @@ paths:
               $ref: "#/components/schemas/com.github.mantasjasikenas.model.UpdateSectionDto"
 components:
   schemas:
+    UNKNOWN:
+      type: "object"
+    com.github.mantasjasikenas.model.ApiResponse:
+      type: "object"
+      properties:
+        data:
+          $ref: "#/components/schemas/null"
+        errors:
+          type: "array"
+          items:
+            type: "string"
+        message:
+          type: "string"
+        status:
+          type: "string"
+        success:
+          type: "boolean"
+      required:
+      - "success"
+      - "status"
+      - "message"
     com.github.mantasjasikenas.model.PostProjectDto:
       type: "object"
       properties:

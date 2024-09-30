@@ -48,6 +48,8 @@ dependencies {
     implementation(libs.exposed.kotlin.datetime)
     implementation(libs.postgresql)
     implementation(libs.ktor.server.openapi)
+    implementation(libs.ktor.server.request.validation)
+    implementation(libs.ktor.server.status.pages)
     implementation(libs.ktor.server.swagger)
     implementation(libs.ktor.server.default.headers)
     implementation(libs.ktor.server.netty)

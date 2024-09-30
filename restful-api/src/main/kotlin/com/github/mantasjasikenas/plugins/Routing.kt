@@ -6,6 +6,7 @@ import com.github.mantasjasikenas.routes.sectionRoutes
 import com.github.mantasjasikenas.routes.taskRoutes
 import io.github.tabilzad.ktor.annotations.GenerateOpenApi
 import io.ktor.server.application.*
+import io.ktor.server.plugins.openapi.*
 import io.ktor.server.routing.*
 
 @GenerateOpenApi
@@ -16,6 +17,8 @@ fun Application.configureRouting() {
 
     routing {
         route("/api/v1") {
+            openAPI(path = "openapi", swaggerFile = "openapi/openapi.yaml")
+
             projectRoutes(projectRepository)
             taskRoutes(taskRepository)
             sectionRoutes(sectionRepository)

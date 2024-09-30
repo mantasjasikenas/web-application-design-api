@@ -17,4 +17,5 @@ fun Application.module() {
     configureDatabases()
     configureHTTP()
     configureRouting()
+    configureValidation()
 }

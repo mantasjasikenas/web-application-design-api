@@ -1,15 +1,12 @@
 ﻿package com.github.mantasjasikenas.routes
 
 import com.github.mantasjasikenas.data.SectionRepository
-import com.github.mantasjasikenas.model.PostSectionDto
-import com.github.mantasjasikenas.model.SectionDto
-import com.github.mantasjasikenas.model.UpdateSectionDto
+import com.github.mantasjasikenas.model.*
 import io.github.tabilzad.ktor.annotations.KtorResponds
 import io.github.tabilzad.ktor.annotations.ResponseEntry
 import io.github.tabilzad.ktor.annotations.Tag
 import io.ktor.http.*
 import io.ktor.server.request.*
-import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
 @Tag(["Sections"])
@@ -24,14 +21,14 @@ fun Route.sectionRoutes(sectionRepository: SectionRepository) {
         val projectId = call.parameters["id"]?.toInt()
 
         if (projectId == null) {
-            call.respond(HttpStatusCode.BadRequest)
+            call.respondBadRequest("Project id is required")
             return@post
         }
 
-        val sectionDto = call.receive<PostSectionDto>()
-        val id = sectionRepository.addSection(projectId, sectionDto)
+        val postSectionDto = call.receive<PostSectionDto>()
+        val sectionDto = sectionRepository.addSection(projectId, postSectionDto)
 
-        call.respond(HttpStatusCode.Created, id)
+        call.respondCreated("Section created", sectionDto)
     }
 
 
@@ -44,7 +41,7 @@ fun Route.sectionRoutes(sectionRepository: SectionRepository) {
         get {
             val sections = sectionRepository.allSections()
 
-            call.respond(sections)
+            call.respondSuccess("All sections", sections)
         }
 
         @KtorResponds(
@@ -58,16 +55,16 @@ fun Route.sectionRoutes(sectionRepository: SectionRepository) {
             val id = call.parameters["id"]?.toInt()
 
             if (id == null) {
-                call.respond(HttpStatusCode.BadRequest)
+                call.respondBadRequest("Section id is required")
                 return@get
             }
 
             val section = sectionRepository.sectionById(id)
 
             if (section != null) {
-                call.respond(HttpStatusCode.OK, section)
+                call.respondSuccess("Section by id", section)
             } else {
-                call.respond(HttpStatusCode.NotFound)
+                call.respondNotFound("Section not found")
             }
         }
 
@@ -83,16 +80,16 @@ fun Route.sectionRoutes(sectionRepository: SectionRepository) {
             val sectionDto = call.receive<UpdateSectionDto>()
 
             if (sectionId == null) {
-                call.respond(HttpStatusCode.BadRequest)
+                call.respondBadRequest("Section id is required")
                 return@put
             }
 
             val updatedSection = sectionRepository.updateSection(sectionId, sectionDto)
 
             if (updatedSection != null) {
-                call.respond(HttpStatusCode.OK, updatedSection)
+                call.respondSuccess("Section updated", updatedSection)
             } else {
-                call.respond(HttpStatusCode.NotFound)
+                call.respondNotFound("Section not found")
             }
         }
 
@@ -107,16 +104,16 @@ fun Route.sectionRoutes(sectionRepository: SectionRepository) {
             val id = call.parameters["id"]?.toInt()
 
             if (id == null) {
-                call.respond(HttpStatusCode.BadRequest)
+                call.respondBadRequest("Section id is required")
                 return@delete
             }
 
             val removed = sectionRepository.removeSection(id)
 
             if (removed) {
-                call.respond(HttpStatusCode.NoContent)
+                call.respondCustom(HttpStatusCode.NoContent, "Section deleted")
             } else {
-                call.respond(HttpStatusCode.NotFound)
+                call.respondNotFound("Section not found")
             }
         }
     }

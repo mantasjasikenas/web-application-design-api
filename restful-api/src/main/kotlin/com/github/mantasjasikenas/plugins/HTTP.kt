@@ -4,9 +4,6 @@ import io.ktor.server.application.*
 import io.ktor.server.plugins.defaultheaders.*
 
 fun Application.configureHTTP() {
-//    routing {
-//        openAPI(path = "openapi")
-//    }
     install(DefaultHeaders) {
         header("X-Engine", "Ktor")
     }

@@ -1,9 +1,7 @@
 ﻿package com.github.mantasjasikenas.routes
 
 import com.github.mantasjasikenas.data.TaskRepository
-import com.github.mantasjasikenas.model.PostTaskDto
-import com.github.mantasjasikenas.model.TaskDto
-import com.github.mantasjasikenas.model.UpdateTaskDto
+import com.github.mantasjasikenas.model.*
 import io.github.tabilzad.ktor.annotations.KtorResponds
 import io.github.tabilzad.ktor.annotations.ResponseEntry
 import io.github.tabilzad.ktor.annotations.Tag
@@ -24,17 +22,16 @@ fun Route.taskRoutes(taskRepository: TaskRepository) {
         val sectionId = call.parameters["sectionId"]?.toInt()
 
         if (sectionId == null) {
-            call.respond(HttpStatusCode.BadRequest)
+            call.respondBadRequest("Section id is required")
             return@post
         }
 
         val taskDto = call.receive<PostTaskDto>()
         val task = taskRepository.addTask(sectionId, taskDto)
 
-        call.respond(HttpStatusCode.Created, task)
+        call.respondCreated("Task created", task)
     }
 
-//    GET /projects/{projectId}/sections/{sectionId}/tasks
     @KtorResponds(
         [
             ResponseEntry("200", TaskDto::class, true, description = "All tasks")
@@ -45,13 +42,13 @@ fun Route.taskRoutes(taskRepository: TaskRepository) {
         val sectionId = call.parameters["sectionId"]?.toInt()
 
         if (projectId == null || sectionId == null) {
-            call.respond(HttpStatusCode.BadRequest)
+            call.respondBadRequest("Project id and section id are required")
             return@get
         }
 
         val tasks = taskRepository.allTasks(projectId, sectionId)
 
-        call.respond(tasks)
+        call.respondSuccess("Project section tasks", tasks)
     }
 
 
@@ -64,7 +61,7 @@ fun Route.taskRoutes(taskRepository: TaskRepository) {
         get {
             val tasks = taskRepository.allTasks()
 
-            call.respond(tasks)
+            call.respondSuccess("All tasks", tasks)
         }
 
         @KtorResponds(
@@ -78,16 +75,16 @@ fun Route.taskRoutes(taskRepository: TaskRepository) {
             val id = call.parameters["id"]?.toInt()
 
             if (id == null) {
-                call.respond(HttpStatusCode.BadRequest)
+                call.respondBadRequest("Task id is required")
                 return@get
             }
 
             val task = taskRepository.taskById(id)
 
             if (task != null) {
-                call.respond(HttpStatusCode.OK, task)
+                call.respondSuccess("Task by id", task)
             } else {
-                call.respond(HttpStatusCode.NotFound)
+                call.respondNotFound("Task not found")
             }
         }
 
@@ -103,16 +100,16 @@ fun Route.taskRoutes(taskRepository: TaskRepository) {
             val taskDto = call.receive<UpdateTaskDto>()
 
             if (id == null) {
-                call.respond(HttpStatusCode.BadRequest)
+                call.respondBadRequest("Task id is required")
                 return@put
             }
 
             val updatedTask = taskRepository.updateTask(id, taskDto)
 
             if (updatedTask != null) {
-                call.respond(HttpStatusCode.OK, updatedTask)
+                call.respondSuccess("Task updated", updatedTask)
             } else {
-                call.respond(HttpStatusCode.NotFound)
+                call.respondNotFound("Task not found")
             }
         }
 
@@ -127,16 +124,16 @@ fun Route.taskRoutes(taskRepository: TaskRepository) {
             val id = call.parameters["id"]?.toInt()
 
             if (id == null) {
-                call.respond(HttpStatusCode.BadRequest)
+                call.respondBadRequest("Task id is required")
                 return@delete
             }
 
             val removed = taskRepository.removeTask(id)
 
             if (removed) {
-                call.respond(HttpStatusCode.OK)
+                call.respondCustom(HttpStatusCode.NoContent, "Task removed")
             } else {
-                call.respond(HttpStatusCode.NotFound)
+                call.respondNotFound("Task not found")
             }
         }
     }
