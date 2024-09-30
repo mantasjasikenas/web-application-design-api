@@ -1,4 +1,4 @@
-﻿package com.github.mantasjasikenas.model
+﻿package com.github.mantasjasikenas.model.project
 
 import io.github.tabilzad.ktor.annotations.KtorFieldDescription
 import kotlinx.serialization.Serializable
@@ -18,20 +18,3 @@ data class ProjectDto(
     val createdBy: String,
 )
 
-@Serializable
-data class PostProjectDto(
-    @KtorFieldDescription("Project name")
-    val name: String,
-    @KtorFieldDescription("Project description")
-    val description: String,
-    @KtorFieldDescription("Project creator")
-    val createdBy: String,
-)
-
-@Serializable
-data class UpdateProjectDto(
-    @KtorFieldDescription("Project name")
-    val name: String?,
-    @KtorFieldDescription("Project description")
-    val description: String?,
-)

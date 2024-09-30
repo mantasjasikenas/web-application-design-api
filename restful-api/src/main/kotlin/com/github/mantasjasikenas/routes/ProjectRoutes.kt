@@ -2,6 +2,9 @@
 
 import com.github.mantasjasikenas.data.ProjectRepository
 import com.github.mantasjasikenas.model.*
+import com.github.mantasjasikenas.model.project.PostProjectDto
+import com.github.mantasjasikenas.model.project.ProjectDto
+import com.github.mantasjasikenas.model.project.UpdateProjectDto
 import io.github.tabilzad.ktor.annotations.KtorResponds
 import io.github.tabilzad.ktor.annotations.ResponseEntry
 import io.github.tabilzad.ktor.annotations.Tag

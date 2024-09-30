@@ -1,10 +1,18 @@
 ﻿package com.github.mantasjasikenas.plugins
 
-import com.github.mantasjasikenas.model.PostTaskDto
+import com.github.mantasjasikenas.model.project.PostProjectDto
+import com.github.mantasjasikenas.model.project.UpdateProjectDto
+import com.github.mantasjasikenas.model.project.validate
 import com.github.mantasjasikenas.model.respondCustom
-import com.github.mantasjasikenas.model.validate
+import com.github.mantasjasikenas.model.section.PostSectionDto
+import com.github.mantasjasikenas.model.section.UpdateSectionDto
+import com.github.mantasjasikenas.model.section.validate
+import com.github.mantasjasikenas.model.task.PostTaskDto
+import com.github.mantasjasikenas.model.task.UpdateTaskDto
+import com.github.mantasjasikenas.model.task.validate
 import io.ktor.http.*
 import io.ktor.server.application.*
+import io.ktor.server.plugins.*
 import io.ktor.server.plugins.requestvalidation.*
 import io.ktor.server.plugins.statuspages.*
 import io.ktor.server.response.*
@@ -28,12 +36,33 @@ fun Application.configureValidation() {
         }
 
         exception<Throwable> { call, cause ->
-            call.respondCustom(HttpStatusCode.InternalServerError, cause.message ?: "Internal server error")
-        }
+            if (cause is IllegalArgumentException) {
+                call.respondCustom(HttpStatusCode.BadRequest, cause.message ?: "Bad request")
 
+                return@exception
+            }
+
+            if (cause is IllegalStateException) {
+                call.respondCustom(HttpStatusCode.BadRequest, cause.message ?: "Bad request")
+
+                return@exception
+            }
+
+            if (cause is BadRequestException) {
+                call.respondCustom(HttpStatusCode.BadRequest, cause.message ?: "Bad request")
+
+                return@exception
+            }
+        }
     }
 
     install(RequestValidation) {
         validate<PostTaskDto>(PostTaskDto::validate)
+        validate<PostProjectDto>(PostProjectDto::validate)
+        validate<PostSectionDto>(PostSectionDto::validate)
+
+        validate<UpdateTaskDto>(UpdateTaskDto::validate)
+        validate<UpdateProjectDto>(UpdateProjectDto::validate)
+        validate<UpdateSectionDto>(UpdateSectionDto::validate)
     }
 }

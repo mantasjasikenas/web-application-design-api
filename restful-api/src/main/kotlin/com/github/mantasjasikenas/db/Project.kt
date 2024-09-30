@@ -1,6 +1,6 @@
 ﻿package com.github.mantasjasikenas.db
 
-import com.github.mantasjasikenas.model.ProjectDto
+import com.github.mantasjasikenas.model.project.ProjectDto
 import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
 import org.jetbrains.exposed.dao.id.EntityID

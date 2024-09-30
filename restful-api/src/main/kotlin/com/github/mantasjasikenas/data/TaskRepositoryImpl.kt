@@ -1,9 +1,9 @@
 ﻿package com.github.mantasjasikenas.data
 
 import com.github.mantasjasikenas.db.*
-import com.github.mantasjasikenas.model.PostTaskDto
-import com.github.mantasjasikenas.model.TaskDto
-import com.github.mantasjasikenas.model.UpdateTaskDto
+import com.github.mantasjasikenas.model.task.PostTaskDto
+import com.github.mantasjasikenas.model.task.TaskDto
+import com.github.mantasjasikenas.model.task.UpdateTaskDto
 import kotlinx.datetime.LocalDateTime
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq

@@ -1,4 +1,4 @@
-﻿package com.github.mantasjasikenas.model
+﻿package com.github.mantasjasikenas.model.section
 
 import io.github.tabilzad.ktor.annotations.KtorFieldDescription
 import kotlinx.serialization.Serializable
@@ -16,18 +16,4 @@ data class SectionDto(
     val createdBy: String,
     @KtorFieldDescription("Section creation date")
     val createdAt: String,
-)
-
-@Serializable
-data class PostSectionDto(
-    @KtorFieldDescription("Section name")
-    val name: String,
-    @KtorFieldDescription("Section creator")
-    val createdBy: String,
-)
-
-@Serializable
-data class UpdateSectionDto(
-    @KtorFieldDescription("Section name")
-    val name: String?,
 )

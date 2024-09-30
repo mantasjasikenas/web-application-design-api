@@ -1,8 +1,8 @@
 ﻿package com.github.mantasjasikenas.data
 
-import com.github.mantasjasikenas.model.PostSectionDto
-import com.github.mantasjasikenas.model.SectionDto
-import com.github.mantasjasikenas.model.UpdateSectionDto
+import com.github.mantasjasikenas.model.section.PostSectionDto
+import com.github.mantasjasikenas.model.section.SectionDto
+import com.github.mantasjasikenas.model.section.UpdateSectionDto
 
 interface SectionRepository {
     suspend fun allSections(): List<SectionDto>

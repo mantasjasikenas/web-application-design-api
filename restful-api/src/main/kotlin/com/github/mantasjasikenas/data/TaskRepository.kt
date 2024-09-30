@@ -1,8 +1,8 @@
 package com.github.mantasjasikenas.data
 
-import com.github.mantasjasikenas.model.PostTaskDto
-import com.github.mantasjasikenas.model.TaskDto
-import com.github.mantasjasikenas.model.UpdateTaskDto
+import com.github.mantasjasikenas.model.task.PostTaskDto
+import com.github.mantasjasikenas.model.task.TaskDto
+import com.github.mantasjasikenas.model.task.UpdateTaskDto
 
 interface TaskRepository {
     suspend fun allTasks(): List<TaskDto>

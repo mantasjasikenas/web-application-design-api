@@ -1,9 +1,9 @@
 ﻿package com.github.mantasjasikenas.data
 
 import com.github.mantasjasikenas.db.*
-import com.github.mantasjasikenas.model.PostSectionDto
-import com.github.mantasjasikenas.model.SectionDto
-import com.github.mantasjasikenas.model.UpdateSectionDto
+import com.github.mantasjasikenas.model.section.PostSectionDto
+import com.github.mantasjasikenas.model.section.SectionDto
+import com.github.mantasjasikenas.model.section.UpdateSectionDto
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.deleteWhere

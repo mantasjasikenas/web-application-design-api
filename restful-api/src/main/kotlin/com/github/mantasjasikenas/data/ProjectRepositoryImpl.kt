@@ -4,9 +4,9 @@ import com.github.mantasjasikenas.db.ProjectDAO
 import com.github.mantasjasikenas.db.ProjectsTable
 import com.github.mantasjasikenas.db.daoToModel
 import com.github.mantasjasikenas.db.suspendTransaction
-import com.github.mantasjasikenas.model.PostProjectDto
-import com.github.mantasjasikenas.model.ProjectDto
-import com.github.mantasjasikenas.model.UpdateProjectDto
+import com.github.mantasjasikenas.model.project.PostProjectDto
+import com.github.mantasjasikenas.model.project.ProjectDto
+import com.github.mantasjasikenas.model.project.UpdateProjectDto
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.deleteWhere
 

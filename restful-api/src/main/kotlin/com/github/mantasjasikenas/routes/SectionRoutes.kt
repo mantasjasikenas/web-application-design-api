@@ -2,6 +2,9 @@
 
 import com.github.mantasjasikenas.data.SectionRepository
 import com.github.mantasjasikenas.model.*
+import com.github.mantasjasikenas.model.section.PostSectionDto
+import com.github.mantasjasikenas.model.section.SectionDto
+import com.github.mantasjasikenas.model.section.UpdateSectionDto
 import io.github.tabilzad.ktor.annotations.KtorResponds
 import io.github.tabilzad.ktor.annotations.ResponseEntry
 import io.github.tabilzad.ktor.annotations.Tag

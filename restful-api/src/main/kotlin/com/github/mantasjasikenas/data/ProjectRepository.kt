@@ -1,8 +1,8 @@
 ﻿package com.github.mantasjasikenas.data
 
-import com.github.mantasjasikenas.model.PostProjectDto
-import com.github.mantasjasikenas.model.ProjectDto
-import com.github.mantasjasikenas.model.UpdateProjectDto
+import com.github.mantasjasikenas.model.project.PostProjectDto
+import com.github.mantasjasikenas.model.project.ProjectDto
+import com.github.mantasjasikenas.model.project.UpdateProjectDto
 
 interface ProjectRepository {
     suspend fun allProjects(): List<ProjectDto>
