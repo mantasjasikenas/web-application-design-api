@@ -2,29 +2,10 @@ plugins {
     alias(libs.plugins.kotlin.jvm)
     alias(libs.plugins.ktor)
     alias(libs.plugins.kotlin.serialization)
-    alias(libs.plugins.tabilzad.ktor.docs)
 }
 
 group = "com.github.mantasjasikenas"
 version = "0.0.1"
-
-swagger {
-    documentation {
-        docsTitle = "Tornado RESTful API"
-        docsDescription = ""
-        docsVersion = "1.0"
-        generateRequestSchemas = true
-        hideTransientFields = true
-        hidePrivateAndInternalFields = true
-        deriveFieldRequirementFromTypeNullability = true
-    }
-
-    pluginOptions {
-        format = "yaml"
-        saveInBuild = false
-    }
-}
-
 
 application {
     mainClass.set("com.github.mantasjasikenas.ApplicationKt")
@@ -57,4 +38,5 @@ dependencies {
     testImplementation(libs.ktor.server.test.host)
     testImplementation(libs.kotlin.test.junit)
     implementation(libs.swagger.codegen.generators)
+    implementation(libs.smiley4.ktor.swagger.ui)
 }

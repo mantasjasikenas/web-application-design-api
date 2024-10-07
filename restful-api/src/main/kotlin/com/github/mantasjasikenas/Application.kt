@@ -16,6 +16,7 @@ fun Application.module() {
     configureSerialization()
     configureDatabases()
     configureHTTP()
+    configureSwaggerUI()
     configureRouting()
     configureValidation()
 }

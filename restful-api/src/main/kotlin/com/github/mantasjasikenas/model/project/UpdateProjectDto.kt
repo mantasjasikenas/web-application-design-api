@@ -1,14 +1,11 @@
 ﻿package com.github.mantasjasikenas.model.project
 
-import io.github.tabilzad.ktor.annotations.KtorFieldDescription
 import io.ktor.server.plugins.requestvalidation.*
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class UpdateProjectDto(
-    @KtorFieldDescription("Project name")
     val name: String?,
-    @KtorFieldDescription("Project description")
     val description: String?,
 )
 

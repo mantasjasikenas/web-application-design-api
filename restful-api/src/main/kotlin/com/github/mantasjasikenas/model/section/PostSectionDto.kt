@@ -1,14 +1,11 @@
 ﻿package com.github.mantasjasikenas.model.section
 
-import io.github.tabilzad.ktor.annotations.KtorFieldDescription
 import io.ktor.server.plugins.requestvalidation.*
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class PostSectionDto(
-    @KtorFieldDescription("Section name")
     val name: String,
-    @KtorFieldDescription("Section creator")
     val createdBy: String,
 )
 

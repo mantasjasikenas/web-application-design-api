@@ -1,11 +1,11 @@
 [versions]
-ktor-version = "3.0.0-rc-1"
+ktor-version = "2.3.12"
 kotlin-version = "2.0.0"
 logback-version = "1.4.14"
 exposed-version = "0.53.0"
 postgresql-version = "42.7.2"
 swagger-version = "1.0.51"
-tabilzad-ktor-docs-version = "0.6.2-alpha"
+smiley4-ktor-swagger-ui = "3.5.0"
 
 [libraries]
 ktor-server-call-logging = { module = "io.ktor:ktor-server-call-logging-jvm", version.ref = "ktor-version" }
@@ -27,10 +27,10 @@ logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "lo
 ktor-server-test-host = { module = "io.ktor:ktor-server-test-host-jvm", version.ref = "ktor-version" }
 kotlin-test-junit = { module = "org.jetbrains.kotlin:kotlin-test-junit", version.ref = "kotlin-version" }
 swagger-codegen-generators = { module = "io.swagger.codegen.v3:swagger-codegen-generators", version.ref = "swagger-version" }
+smiley4-ktor-swagger-ui = { module = "io.github.smiley4:ktor-swagger-ui", version.ref = "smiley4-ktor-swagger-ui" }
 
 
 [plugins]
 kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin-version" }
 kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin-version" }
 ktor = { id = "io.ktor.plugin", version.ref = "ktor-version" }
-tabilzad-ktor-docs = { id = "io.github.tabilzad.ktor-docs-plugin-gradle", version.ref = "tabilzad-ktor-docs-version" }

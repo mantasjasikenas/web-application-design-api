@@ -1,12 +1,10 @@
 ﻿package com.github.mantasjasikenas.model.section
 
-import io.github.tabilzad.ktor.annotations.KtorFieldDescription
 import io.ktor.server.plugins.requestvalidation.*
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class UpdateSectionDto(
-    @KtorFieldDescription("Section name")
     val name: String?,
 )
 

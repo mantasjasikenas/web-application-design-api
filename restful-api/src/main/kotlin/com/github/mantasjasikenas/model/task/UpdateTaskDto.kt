@@ -1,23 +1,16 @@
 ﻿package com.github.mantasjasikenas.model.task
 
-import io.github.tabilzad.ktor.annotations.KtorFieldDescription
 import io.ktor.server.plugins.requestvalidation.*
 import kotlinx.datetime.LocalDateTime
 import kotlinx.serialization.Serializable
 
 @Serializable
 data class UpdateTaskDto(
-    @KtorFieldDescription("Task name")
     val name: String?,
-    @KtorFieldDescription("Task description")
     val description: String?,
-    @KtorFieldDescription("Task priority")
     val priority: Priority?,
-    @KtorFieldDescription("Task completion status")
     val isCompleted: Boolean?,
-    @KtorFieldDescription("Task due date")
     val dueDate: String?,
-    @KtorFieldDescription("Task creator")
     val sectionId: Int?,
 )
 
