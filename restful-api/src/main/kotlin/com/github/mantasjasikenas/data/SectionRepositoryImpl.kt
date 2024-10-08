@@ -39,6 +39,7 @@ class SectionRepositoryImpl : SectionRepository {
     override suspend fun updateSection(id: Int, sectionDto: UpdateSectionDto): SectionDto? = suspendTransaction {
         SectionDAO.findByIdAndUpdate(id) {
             it.name = sectionDto.name ?: it.name
+            it.projectId = if (sectionDto.projectId != null) EntityID(sectionDto.projectId, ProjectsTable) else it.projectId
         }?.let(::daoToModel)
     }
 }

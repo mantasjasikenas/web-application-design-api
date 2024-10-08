@@ -17,7 +17,7 @@ fun postTaskDocs(): OpenApiRoute.() -> Unit = {
     description = "Create a new task"
 
     request {
-        queryParameter<Int>("sectionId") {
+        pathParameter<Int>("id") {
             description = "Section id"
             required = true
             example("default") {
@@ -32,8 +32,8 @@ fun postTaskDocs(): OpenApiRoute.() -> Unit = {
                     name = "New Task",
                     description = "New task description",
                     priority = Priority.Vital,
-                    isCompleted = true,
-                    dueDate = "2023-10-01T12:00:00Z",
+                    completed = true,
+                    dueDate = "2023-10-01T12:00:00",
                     createdBy = "user1",
                 )
             }
@@ -49,11 +49,11 @@ fun postTaskDocs(): OpenApiRoute.() -> Unit = {
                             id = 1,
                             name = "New Task",
                             description = "New task description",
-                            createdAt = "2023-10-01T12:00:00Z",
+                            createdAt = "2023-10-01T12:00:00",
                             sectionId = 1,
                             priority = Priority.Low,
-                            isCompleted = false,
-                            dueDate = "2023-10-01T12:00:00Z",
+                            completed = false,
+                            dueDate = "2023-10-01T12:00:00",
                             createdBy = "user1",
                         ),
                         success = true,
@@ -83,14 +83,14 @@ fun getTasksByProjectAndSectionId(): OpenApiRoute.() -> Unit = {
     description = "Get tasks by project and section id"
 
     request {
-        queryParameter<Int>("projectId") {
+        pathParameter<Int>("projectId") {
             description = "Project id"
             required = true
             example("default") {
                 value = 1
             }
         }
-        queryParameter<Int>("sectionId") {
+        pathParameter<Int>("sectionId") {
             description = "Section id"
             required = true
             example("default") {
@@ -112,22 +112,22 @@ fun getTasksByProjectAndSectionId(): OpenApiRoute.() -> Unit = {
                                 id = 1,
                                 name = "Task 1",
                                 description = "Description 1",
-                                createdAt = "2021-09-01T12:00:00Z",
+                                createdAt = "2021-09-01T12:00:00",
                                 sectionId = 4,
                                 priority = Priority.Vital,
-                                isCompleted = false,
-                                dueDate = "2023-10-01T12:00:00Z",
+                                completed = false,
+                                dueDate = "2023-10-01T12:00:00",
                                 createdBy = "user1",
                             ),
                             TaskDto(
                                 id = 2,
                                 name = "Task 2",
                                 description = "Description 2",
-                                createdAt = "2022-09-01T12:00:00Z",
+                                createdAt = "2022-09-01T12:00:00",
                                 sectionId = 4,
                                 priority = Priority.Vital,
-                                isCompleted = false,
-                                dueDate = "2023-10-01T12:00:00Z",
+                                completed = false,
+                                dueDate = "2023-10-01T12:00:00",
                                 createdBy = "user1",
                             )
                         ),
@@ -147,7 +147,7 @@ fun getTasksByProjectAndSectionId(): OpenApiRoute.() -> Unit = {
                         data = null,
                         success = false,
                         status = HttpStatusCode.BadRequest.value.toString(),
-                        message = "Task id is required"
+                        message = "Both project id and section id are required"
                     )
                 }
             }
@@ -169,22 +169,22 @@ fun getAllTasksDocs(): OpenApiRoute.() -> Unit = {
                                 id = 1,
                                 name = "Task 1",
                                 description = "Description 1",
-                                createdAt = "2021-09-01T12:00:00Z",
+                                createdAt = "2021-09-01T12:00:00",
                                 sectionId = 4,
                                 priority = Priority.Vital,
-                                isCompleted = false,
-                                dueDate = "2023-10-01T12:00:00Z",
+                                completed = false,
+                                dueDate = "2023-10-01T12:00:00",
                                 createdBy = "user1",
                             ),
                             TaskDto(
                                 id = 2,
                                 name = "Task 2",
                                 description = "Description 2",
-                                createdAt = "2022-09-01T12:00:00Z",
+                                createdAt = "2022-09-01T12:00:00",
                                 sectionId = 4,
                                 priority = Priority.Vital,
-                                isCompleted = false,
-                                dueDate = "2023-10-01T12:00:00Z",
+                                completed = false,
+                                dueDate = "2023-10-01T12:00:00",
                                 createdBy = "user1",
                             )
                         ),
@@ -202,7 +202,7 @@ fun getTaskByIdDocs(): OpenApiRoute.() -> Unit = {
     description = "Get task by id"
 
     request {
-        queryParameter<Int>("id") {
+        pathParameter<Int>("id") {
             description = "Task id"
             required = true
             example("default") {
@@ -221,11 +221,11 @@ fun getTaskByIdDocs(): OpenApiRoute.() -> Unit = {
                             id = 1,
                             name = "Task 1",
                             description = "Description 1",
-                            createdAt = "2021-09-01T12:00:00Z",
+                            createdAt = "2021-09-01T12:00:00",
                             sectionId = 4,
                             priority = Priority.Vital,
-                            isCompleted = false,
-                            dueDate = "2023-10-01T12:00:00Z",
+                            completed = false,
+                            dueDate = "2023-10-01T12:00:00",
                             createdBy = "user1",
                         ),
                         success = true,
@@ -268,7 +268,7 @@ fun updateTaskByIdDocs(): OpenApiRoute.() -> Unit = {
     description = "Update task by id"
 
     request {
-        queryParameter<Int>("id") {
+        pathParameter<Int>("id") {
             description = "Task id"
             required = true
             example("default") {
@@ -285,8 +285,8 @@ fun updateTaskByIdDocs(): OpenApiRoute.() -> Unit = {
                     name = "Updated Task",
                     description = "Updated task description",
                     priority = Priority.Vital,
-                    isCompleted = false,
-                    dueDate = "2023-10-01T12:00:00Z",
+                    completed = false,
+                    dueDate = "2023-10-01T12:00:00",
                     sectionId = 1,
                 )
             }
@@ -302,11 +302,11 @@ fun updateTaskByIdDocs(): OpenApiRoute.() -> Unit = {
                             id = 1,
                             name = "Updated Task",
                             description = "Updated task description",
-                            createdAt = "2021-09-01T12:00:00Z",
+                            createdAt = "2021-09-01T12:00:00",
                             sectionId = 4,
                             priority = Priority.Vital,
-                            isCompleted = false,
-                            dueDate = "2023-10-01T12:00:00Z",
+                            completed = false,
+                            dueDate = "2023-10-01T12:00:00",
                             createdBy = "user1",
                         ),
                         success = true,
@@ -349,11 +349,11 @@ fun deleteTaskByIdDocs(): OpenApiRoute.() -> Unit = {
     description = "Delete task by id"
 
     request {
-        queryParameter<Int>("id") {
+        pathParameter<Int>("id") {
             description = "Task id"
             required = true
             example("default") {
-                value = 1
+                value = 2
             }
         }
     }

@@ -6,18 +6,18 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class UpdateTaskDto(
-    val name: String?,
-    val description: String?,
-    val priority: Priority?,
-    val isCompleted: Boolean?,
-    val dueDate: String?,
-    val sectionId: Int?,
+    val name: String? = null,
+    val description: String? = null,
+    val priority: Priority? = null,
+    val completed: Boolean? = null,
+    val dueDate: String? = null,
+    val sectionId: Int? = null
 )
 
 fun UpdateTaskDto.validate(): ValidationResult {
     val reasons = mutableListOf<String>()
 
-    if (this.name == null && this.description == null && this.priority == null && this.isCompleted == null && this.dueDate == null && this.sectionId == null) {
+    if (this.name == null && this.description == null && this.priority == null && this.completed == null && this.dueDate == null && this.sectionId == null) {
         reasons.add("At least one field must be provided")
     }
 

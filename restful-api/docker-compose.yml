@@ -3,7 +3,9 @@ services:
     image: postgres
     restart: always
     volumes:
-      - pgdata:/var/lib/postgresql/data
+      - ./src/main/kotlin/com/github/mantasjasikenas/db/dumps/init.sql:/docker-entrypoint-initdb.d/docker_postgres_init.sql
+    #    volumes:
+    #      - pgdata:/var/lib/postgresql/data
     environment:
       POSTGRES_DB: todo_db
       POSTGRES_HOST_AUTH_METHOD: trust
@@ -12,5 +14,5 @@ services:
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U postgres" ]
       interval: 1s
-volumes:
-  pgdata:
+#volumes:
+#  pgdata:

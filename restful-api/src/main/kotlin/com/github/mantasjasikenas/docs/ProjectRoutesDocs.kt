@@ -26,14 +26,14 @@ fun getAllProjectsDocs(): OpenApiRoute.() -> Unit = {
                                 id = 1,
                                 name = "Project 1",
                                 description = "Description 1",
-                                createdAt = "2021-09-01T12:00:00Z",
+                                createdAt = "2021-09-01T12:00:00",
                                 createdBy = "user1"
                             ),
                             ProjectDto(
                                 id = 2,
                                 name = "Project 2",
                                 description = "Description 2",
-                                createdAt = "2022-09-01T12:00:00Z",
+                                createdAt = "2022-09-01T12:00:00",
                                 createdBy = "user2"
                             )
                         ),
@@ -71,7 +71,7 @@ fun postProjectDocs(): OpenApiRoute.() -> Unit = {
                             id = 1,
                             name = "New Project",
                             description = "New project description",
-                            createdAt = "2023-10-01T12:00:00Z",
+                            createdAt = "2023-10-01T12:00:00",
                             createdBy = "user1"
                         ),
                         success = true,
@@ -101,7 +101,7 @@ fun getProjectByIdDocs(): OpenApiRoute.() -> Unit = {
     description = "Get project by id"
 
     request {
-        queryParameter<Int>("id") {
+        pathParameter<Int>("id") {
             description = "Project id"
             required = true
             example("default") {
@@ -120,7 +120,7 @@ fun getProjectByIdDocs(): OpenApiRoute.() -> Unit = {
                             id = 1,
                             name = "Project 1",
                             description = "Description 1",
-                            createdAt = "2021-09-01T12:00:00Z",
+                            createdAt = "2021-09-01T12:00:00",
                             createdBy = "user1"
                         ),
                         success = true,
@@ -163,7 +163,7 @@ fun updateProjectByIdDocs(): OpenApiRoute.() -> Unit = {
     description = "Update project by id"
 
     request {
-        queryParameter<Int>("id") {
+        pathParameter<Int>("id") {
             description = "Project id"
             required = true
             example("default") {
@@ -193,7 +193,7 @@ fun updateProjectByIdDocs(): OpenApiRoute.() -> Unit = {
                             id = 1,
                             name = "Updated Project",
                             description = "Updated project description",
-                            createdAt = "2021-09-01T12:00:00Z",
+                            createdAt = "2021-09-01T12:00:00",
                             createdBy = "user1"
                         ),
                         success = true,
@@ -236,11 +236,11 @@ fun deleteProjectByIdDocs(): OpenApiRoute.() -> Unit = {
     description = "Delete project by id"
 
     request {
-        queryParameter<Int>("id") {
+        pathParameter<Int>("id") {
             description = "Project id"
             required = true
             example("default") {
-                value = 1
+                value = 2
             }
         }
     }

@@ -1,5 +1,6 @@
 ﻿package com.github.mantasjasikenas.routes
 
+import com.github.mantasjasikenas.data.ProjectRepository
 import com.github.mantasjasikenas.data.SectionRepository
 import com.github.mantasjasikenas.docs.*
 import com.github.mantasjasikenas.model.*
@@ -7,8 +8,8 @@ import com.github.mantasjasikenas.model.section.PostSectionDto
 import com.github.mantasjasikenas.model.section.UpdateSectionDto
 import io.github.smiley4.ktorswaggerui.dsl.routing.delete
 import io.github.smiley4.ktorswaggerui.dsl.routing.get
+import io.github.smiley4.ktorswaggerui.dsl.routing.patch
 import io.github.smiley4.ktorswaggerui.dsl.routing.post
-import io.github.smiley4.ktorswaggerui.dsl.routing.put
 import io.github.smiley4.ktorswaggerui.dsl.routing.route
 import io.ktor.http.*
 import io.ktor.server.application.*
@@ -16,13 +17,21 @@ import io.ktor.server.request.*
 import io.ktor.server.routing.*
 
 
-fun Route.sectionRoutes(sectionRepository: SectionRepository) {
+fun Route.sectionRoutes(
+    sectionRepository: SectionRepository,
+    projectRepository: ProjectRepository,
+) {
     route(sectionRoutesDocs()) {
-        post("/projects/{projectId}/sections", createSectionDocs()) {
+        post("/projects/{id}/sections", createSectionDocs()) {
             val projectId = call.parameters["id"]?.toInt()
 
             if (projectId == null) {
                 call.respondBadRequest("Project id is required")
+                return@post
+            }
+
+            projectRepository.projectById(projectId) ?: run {
+                call.respondNotFound("Project not found. Please provide a valid project id")
                 return@post
             }
 
@@ -56,13 +65,18 @@ fun Route.sectionRoutes(sectionRepository: SectionRepository) {
                 }
             }
 
-            put("/{sectionId}", updateSectionByIdDocs()) {
-                val sectionId = call.parameters["sectionId"]?.toInt()
+            patch("/{id}", updateSectionByIdDocs()) {
+                val sectionId = call.parameters["id"]?.toInt()
                 val sectionDto = call.receive<UpdateSectionDto>()
 
                 if (sectionId == null) {
                     call.respondBadRequest("Section id is required")
-                    return@put
+                    return@patch
+                }
+
+                sectionDto.projectId?.let { projectRepository.projectById(it) } ?: run {
+                    call.respondNotFound("Project not found. Please provide a valid project id")
+                    return@patch
                 }
 
                 val updatedSection = sectionRepository.updateSection(sectionId, sectionDto)

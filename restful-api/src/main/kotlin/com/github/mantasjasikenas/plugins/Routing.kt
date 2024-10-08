@@ -26,8 +26,8 @@ fun Application.configureRouting() {
             }
 
             projectRoutes(projectRepository)
-            taskRoutes(taskRepository)
-            sectionRoutes(sectionRepository)
+            taskRoutes(taskRepository, sectionRepository)
+            sectionRoutes(sectionRepository, projectRepository)
         }
     }
 }

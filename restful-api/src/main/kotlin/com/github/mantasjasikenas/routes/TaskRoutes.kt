@@ -1,5 +1,6 @@
 ﻿package com.github.mantasjasikenas.routes
 
+import com.github.mantasjasikenas.data.SectionRepository
 import com.github.mantasjasikenas.data.TaskRepository
 import com.github.mantasjasikenas.docs.*
 import com.github.mantasjasikenas.model.*
@@ -11,13 +12,21 @@ import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.routing.*
 
-fun Route.taskRoutes(taskRepository: TaskRepository) {
+fun Route.taskRoutes(
+    taskRepository: TaskRepository,
+    sectionRepository: SectionRepository,
+) {
     route(taskRoutesDocs()) {
-        post("/sections/{sectionId}/tasks", postTaskDocs()) {
-            val sectionId = call.parameters["sectionId"]?.toInt()
+        post("/sections/{id}/tasks", postTaskDocs()) {
+            val sectionId = call.parameters["id"]?.toInt()
 
             if (sectionId == null) {
                 call.respondBadRequest("Section id is required")
+                return@post
+            }
+
+            sectionRepository.sectionById(sectionId) ?: run {
+                call.respondNotFound("Section not found. Please provide a valid section id")
                 return@post
             }
 
@@ -65,13 +74,18 @@ fun Route.taskRoutes(taskRepository: TaskRepository) {
                 }
             }
 
-            put("/{id}", updateTaskByIdDocs()) {
+            patch("/{id}", updateTaskByIdDocs()) {
                 val id = call.parameters["id"]?.toInt()
                 val taskDto = call.receive<UpdateTaskDto>()
 
                 if (id == null) {
                     call.respondBadRequest("Task id is required")
-                    return@put
+                    return@patch
+                }
+
+                taskDto.sectionId?.let { sectionRepository.sectionById(it) } ?: run {
+                    call.respondNotFound("Section not found. Please provide a valid section id")
+                    return@patch
                 }
 
                 val updatedTask = taskRepository.updateTask(id, taskDto)

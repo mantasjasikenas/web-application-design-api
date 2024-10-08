@@ -9,7 +9,7 @@ data class PostTaskDto(
     val name: String,
     val description: String,
     val priority: Priority,
-    val isCompleted: Boolean,
+    val completed: Boolean,
     val dueDate: String?,
     val createdBy: String,
 )

@@ -1,0 +1,1809 @@
+{
+  "openapi" : "3.1.0",
+  "info" : {
+    "title" : "Tasks RESTful API",
+    "description" : "API used for tasks management",
+    "version" : "1.0"
+  },
+  "externalDocs" : {
+    "url" : "https://github.com/mantasjasikenas/web-application-design"
+  },
+  "servers" : [ {
+    "url" : "http://localhost:8080",
+    "description" : "Local Server"
+  } ],
+  "tags" : [ ],
+  "paths" : {
+    "/api/v1/projects" : {
+      "get" : {
+        "tags" : [ "Projects" ],
+        "description" : "Get all projects",
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "All projects",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.collections.List_com.github.mantasjasikenas.model.project.ProjectDto"
+                },
+                "examples" : {
+                  "All projects" : {
+                    "value" : {
+                      "success" : true,
+                      "status" : "200",
+                      "message" : "All projects",
+                      "data" : [ {
+                        "id" : 1,
+                        "name" : "Project 1",
+                        "description" : "Description 1",
+                        "createdAt" : "2021-09-01T12:00:00",
+                        "createdBy" : "user1"
+                      }, {
+                        "id" : 2,
+                        "name" : "Project 2",
+                        "description" : "Description 2",
+                        "createdAt" : "2022-09-01T12:00:00",
+                        "createdBy" : "user2"
+                      } ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated" : false
+      },
+      "post" : {
+        "tags" : [ "Projects" ],
+        "description" : "Create a new project",
+        "parameters" : [ ],
+        "requestBody" : {
+          "description" : "Project to create",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.project.PostProjectDto"
+              },
+              "examples" : {
+                "New project" : {
+                  "value" : {
+                    "name" : "New Project",
+                    "description" : "New project description",
+                    "createdBy" : "user1"
+                  }
+                }
+              }
+            }
+          },
+          "required" : false
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Project created",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_com.github.mantasjasikenas.model.project.ProjectDto"
+                },
+                "examples" : {
+                  "Project created" : {
+                    "value" : {
+                      "success" : true,
+                      "status" : "201",
+                      "message" : "Project created",
+                      "data" : {
+                        "id" : 1,
+                        "name" : "New Project",
+                        "description" : "New project description",
+                        "createdAt" : "2023-10-01T12:00:00",
+                        "createdBy" : "user1"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "Bad request" : {
+                    "value" : {
+                      "success" : false,
+                      "status" : "400",
+                      "message" : "Invalid project data"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated" : false
+      }
+    },
+    "/api/v1/projects/{id}" : {
+      "get" : {
+        "tags" : [ "Projects" ],
+        "description" : "Get project by id",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Project id",
+          "required" : true,
+          "deprecated" : false,
+          "explode" : false,
+          "schema" : {
+            "title" : "Int",
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "example" : 1
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Project by id",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_com.github.mantasjasikenas.model.project.ProjectDto"
+                },
+                "examples" : {
+                  "Project by id" : {
+                    "value" : {
+                      "success" : true,
+                      "status" : "200",
+                      "message" : "Project by id",
+                      "data" : {
+                        "id" : 1,
+                        "name" : "Project 1",
+                        "description" : "Description 1",
+                        "createdAt" : "2021-09-01T12:00:00",
+                        "createdBy" : "user1"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "Bad request" : {
+                    "value" : {
+                      "success" : false,
+                      "status" : "400",
+                      "message" : "Project id is required"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Project not found",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "Project not found" : {
+                    "value" : {
+                      "success" : false,
+                      "status" : "404",
+                      "message" : "Project not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated" : false
+      },
+      "delete" : {
+        "tags" : [ "Projects" ],
+        "description" : "Delete project by id",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Project id",
+          "required" : true,
+          "deprecated" : false,
+          "explode" : false,
+          "schema" : {
+            "title" : "Int",
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "example" : 2
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "Project deleted",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "Project deleted" : {
+                    "value" : {
+                      "success" : true,
+                      "status" : "204",
+                      "message" : "Project deleted"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "Bad request" : {
+                    "value" : {
+                      "success" : false,
+                      "status" : "400",
+                      "message" : "Project id is required"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Project not found",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "Project not found" : {
+                    "value" : {
+                      "success" : false,
+                      "status" : "404",
+                      "message" : "Project not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated" : false
+      },
+      "patch" : {
+        "tags" : [ "Projects" ],
+        "description" : "Update project by id",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Project id",
+          "required" : true,
+          "deprecated" : false,
+          "explode" : false,
+          "schema" : {
+            "title" : "Int",
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "example" : 1
+        } ],
+        "requestBody" : {
+          "description" : "Project data to update",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.project.UpdateProjectDto"
+              },
+              "examples" : {
+                "Update project" : {
+                  "value" : {
+                    "name" : "Updated Project",
+                    "description" : "Updated project description"
+                  }
+                }
+              }
+            }
+          },
+          "required" : false
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Project updated",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_com.github.mantasjasikenas.model.project.ProjectDto"
+                },
+                "examples" : {
+                  "Project updated" : {
+                    "value" : {
+                      "success" : true,
+                      "status" : "200",
+                      "message" : "Project updated",
+                      "data" : {
+                        "id" : 1,
+                        "name" : "Updated Project",
+                        "description" : "Updated project description",
+                        "createdAt" : "2021-09-01T12:00:00",
+                        "createdBy" : "user1"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "Bad request" : {
+                    "value" : {
+                      "success" : false,
+                      "status" : "400",
+                      "message" : "Invalid project data"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Project not found",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "Project not found" : {
+                    "value" : {
+                      "success" : false,
+                      "status" : "404",
+                      "message" : "Project not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated" : false
+      }
+    },
+    "/api/v1/sections/{id}/tasks" : {
+      "post" : {
+        "tags" : [ "Tasks" ],
+        "description" : "Create a new task",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Section id",
+          "required" : true,
+          "deprecated" : false,
+          "explode" : false,
+          "schema" : {
+            "title" : "Int",
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "example" : 1
+        } ],
+        "requestBody" : {
+          "description" : "Task to create",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.task.PostTaskDto"
+              },
+              "examples" : {
+                "New task" : {
+                  "value" : {
+                    "name" : "New Task",
+                    "description" : "New task description",
+                    "priority" : "Vital",
+                    "completed" : true,
+                    "dueDate" : "2023-10-01T12:00:00",
+                    "createdBy" : "user1"
+                  }
+                }
+              }
+            }
+          },
+          "required" : false
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Task created",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_com.github.mantasjasikenas.model.task.TaskDto"
+                },
+                "examples" : {
+                  "Task created" : {
+                    "value" : {
+                      "success" : true,
+                      "status" : "201",
+                      "message" : "Task created",
+                      "data" : {
+                        "id" : 1,
+                        "sectionId" : 1,
+                        "name" : "New Task",
+                        "description" : "New task description",
+                        "priority" : "Low",
+                        "completed" : false,
+                        "dueDate" : "2023-10-01T12:00:00",
+                        "createdBy" : "user1",
+                        "createdAt" : "2023-10-01T12:00:00"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "Bad request" : {
+                    "value" : {
+                      "success" : false,
+                      "status" : "400",
+                      "message" : "Invalid task data"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated" : false
+      }
+    },
+    "/api/v1/projects/{projectId}/sections/{sectionId}/tasks" : {
+      "get" : {
+        "tags" : [ "Tasks" ],
+        "description" : "Get tasks by project and section id",
+        "parameters" : [ {
+          "name" : "projectId",
+          "in" : "path",
+          "description" : "Project id",
+          "required" : true,
+          "deprecated" : false,
+          "explode" : false,
+          "schema" : {
+            "title" : "Int",
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "example" : 1
+        }, {
+          "name" : "sectionId",
+          "in" : "path",
+          "description" : "Section id",
+          "required" : true,
+          "deprecated" : false,
+          "explode" : false,
+          "schema" : {
+            "title" : "Int",
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "example" : 1
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "All tasks",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.collections.List_com.github.mantasjasikenas.model.task.TaskDto"
+                },
+                "examples" : {
+                  "All tasks" : {
+                    "value" : {
+                      "success" : true,
+                      "status" : "200",
+                      "message" : "All tasks",
+                      "data" : [ {
+                        "id" : 1,
+                        "sectionId" : 4,
+                        "name" : "Task 1",
+                        "description" : "Description 1",
+                        "priority" : "Vital",
+                        "completed" : false,
+                        "dueDate" : "2023-10-01T12:00:00",
+                        "createdBy" : "user1",
+                        "createdAt" : "2021-09-01T12:00:00"
+                      }, {
+                        "id" : 2,
+                        "sectionId" : 4,
+                        "name" : "Task 2",
+                        "description" : "Description 2",
+                        "priority" : "Vital",
+                        "completed" : false,
+                        "dueDate" : "2023-10-01T12:00:00",
+                        "createdBy" : "user1",
+                        "createdAt" : "2022-09-01T12:00:00"
+                      } ]
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "Bad request" : {
+                    "value" : {
+                      "success" : false,
+                      "status" : "400",
+                      "message" : "Both project id and section id are required"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated" : false
+      }
+    },
+    "/api/v1/tasks" : {
+      "get" : {
+        "tags" : [ "Tasks" ],
+        "description" : "Get all tasks",
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "All tasks",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.collections.List_com.github.mantasjasikenas.model.task.TaskDto"
+                },
+                "examples" : {
+                  "All tasks" : {
+                    "value" : {
+                      "success" : true,
+                      "status" : "200",
+                      "message" : "All tasks",
+                      "data" : [ {
+                        "id" : 1,
+                        "sectionId" : 4,
+                        "name" : "Task 1",
+                        "description" : "Description 1",
+                        "priority" : "Vital",
+                        "completed" : false,
+                        "dueDate" : "2023-10-01T12:00:00",
+                        "createdBy" : "user1",
+                        "createdAt" : "2021-09-01T12:00:00"
+                      }, {
+                        "id" : 2,
+                        "sectionId" : 4,
+                        "name" : "Task 2",
+                        "description" : "Description 2",
+                        "priority" : "Vital",
+                        "completed" : false,
+                        "dueDate" : "2023-10-01T12:00:00",
+                        "createdBy" : "user1",
+                        "createdAt" : "2022-09-01T12:00:00"
+                      } ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated" : false
+      }
+    },
+    "/api/v1/tasks/{id}" : {
+      "get" : {
+        "tags" : [ "Tasks" ],
+        "description" : "Get task by id",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Task id",
+          "required" : true,
+          "deprecated" : false,
+          "explode" : false,
+          "schema" : {
+            "title" : "Int",
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "example" : 1
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Task by id",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_com.github.mantasjasikenas.model.task.TaskDto"
+                },
+                "examples" : {
+                  "Task by id" : {
+                    "value" : {
+                      "success" : true,
+                      "status" : "200",
+                      "message" : "Task by id",
+                      "data" : {
+                        "id" : 1,
+                        "sectionId" : 4,
+                        "name" : "Task 1",
+                        "description" : "Description 1",
+                        "priority" : "Vital",
+                        "completed" : false,
+                        "dueDate" : "2023-10-01T12:00:00",
+                        "createdBy" : "user1",
+                        "createdAt" : "2021-09-01T12:00:00"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "Bad request" : {
+                    "value" : {
+                      "success" : false,
+                      "status" : "400",
+                      "message" : "Task id is required"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Task not found",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "Task not found" : {
+                    "value" : {
+                      "success" : false,
+                      "status" : "404",
+                      "message" : "Task not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated" : false
+      },
+      "delete" : {
+        "tags" : [ "Tasks" ],
+        "description" : "Delete task by id",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Task id",
+          "required" : true,
+          "deprecated" : false,
+          "explode" : false,
+          "schema" : {
+            "title" : "Int",
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "example" : 2
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "Task deleted",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "Task deleted" : {
+                    "value" : {
+                      "success" : true,
+                      "status" : "204",
+                      "message" : "Task deleted"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "Bad request" : {
+                    "value" : {
+                      "success" : false,
+                      "status" : "400",
+                      "message" : "Task id is required"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Task not found",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "Task not found" : {
+                    "value" : {
+                      "success" : false,
+                      "status" : "404",
+                      "message" : "Task not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated" : false
+      },
+      "patch" : {
+        "tags" : [ "Tasks" ],
+        "description" : "Update task by id",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Task id",
+          "required" : true,
+          "deprecated" : false,
+          "explode" : false,
+          "schema" : {
+            "title" : "Int",
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "example" : 1
+        } ],
+        "requestBody" : {
+          "description" : "Task data to update",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.task.UpdateTaskDto"
+              },
+              "examples" : {
+                "Update task" : {
+                  "value" : {
+                    "name" : "Updated Task",
+                    "description" : "Updated task description",
+                    "priority" : "Vital",
+                    "completed" : false,
+                    "dueDate" : "2023-10-01T12:00:00",
+                    "sectionId" : 1
+                  }
+                }
+              }
+            }
+          },
+          "required" : false
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Task updated",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_com.github.mantasjasikenas.model.task.TaskDto"
+                },
+                "examples" : {
+                  "Task updated" : {
+                    "value" : {
+                      "success" : true,
+                      "status" : "200",
+                      "message" : "Task updated",
+                      "data" : {
+                        "id" : 1,
+                        "sectionId" : 4,
+                        "name" : "Updated Task",
+                        "description" : "Updated task description",
+                        "priority" : "Vital",
+                        "completed" : false,
+                        "dueDate" : "2023-10-01T12:00:00",
+                        "createdBy" : "user1",
+                        "createdAt" : "2021-09-01T12:00:00"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "Bad request" : {
+                    "value" : {
+                      "success" : false,
+                      "status" : "400",
+                      "message" : "Invalid task data"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Task not found",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "Task not found" : {
+                    "value" : {
+                      "success" : false,
+                      "status" : "404",
+                      "message" : "Task not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated" : false
+      }
+    },
+    "/api/v1/projects/{id}/sections" : {
+      "post" : {
+        "tags" : [ "Sections" ],
+        "description" : "Create a new section",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Project id",
+          "required" : true,
+          "deprecated" : false,
+          "explode" : false,
+          "schema" : {
+            "title" : "Int",
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "example" : 1
+        } ],
+        "requestBody" : {
+          "description" : "Section to create",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.section.PostSectionDto"
+              },
+              "examples" : {
+                "New section" : {
+                  "value" : {
+                    "name" : "New Section",
+                    "createdBy" : "user1"
+                  }
+                }
+              }
+            }
+          },
+          "required" : false
+        },
+        "responses" : {
+          "201" : {
+            "description" : "Section created",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_com.github.mantasjasikenas.model.section.SectionDto"
+                },
+                "examples" : {
+                  "Section created" : {
+                    "value" : {
+                      "success" : true,
+                      "status" : "201",
+                      "message" : "Section created",
+                      "data" : {
+                        "id" : 1,
+                        "projectId" : 1,
+                        "name" : "New Section",
+                        "createdBy" : "user1",
+                        "createdAt" : "2021-09-01T12:00:00"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "Bad request" : {
+                    "value" : {
+                      "success" : false,
+                      "status" : "400",
+                      "message" : "Invalid section data"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated" : false
+      }
+    },
+    "/api/v1/sections" : {
+      "get" : {
+        "tags" : [ "Sections" ],
+        "description" : "Get all sections",
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "All sections",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.collections.List_com.github.mantasjasikenas.model.section.SectionDto"
+                },
+                "examples" : {
+                  "All sections" : {
+                    "value" : {
+                      "success" : true,
+                      "status" : "200",
+                      "message" : "All sections",
+                      "data" : [ {
+                        "id" : 1,
+                        "projectId" : 1,
+                        "name" : "Section 1",
+                        "createdBy" : "user1",
+                        "createdAt" : "2021-09-01T12:00:00"
+                      }, {
+                        "id" : 2,
+                        "projectId" : 1,
+                        "name" : "Section 2",
+                        "createdBy" : "user1",
+                        "createdAt" : "2021-09-01T12:00:00"
+                      } ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated" : false
+      }
+    },
+    "/api/v1/sections/{id}" : {
+      "get" : {
+        "tags" : [ "Sections" ],
+        "description" : "Get section by id",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Section id",
+          "required" : true,
+          "deprecated" : false,
+          "explode" : false,
+          "schema" : {
+            "title" : "Int",
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "example" : 1
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Section by id",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_com.github.mantasjasikenas.model.section.SectionDto"
+                },
+                "examples" : {
+                  "Section by id" : {
+                    "value" : {
+                      "success" : true,
+                      "status" : "200",
+                      "message" : "Section by id",
+                      "data" : {
+                        "id" : 1,
+                        "projectId" : 1,
+                        "name" : "Section 1",
+                        "createdBy" : "user1",
+                        "createdAt" : "2021-09-01T12:00:00"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "Bad request" : {
+                    "value" : {
+                      "success" : false,
+                      "status" : "400",
+                      "message" : "Section id is required"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Section not found",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "Section not found" : {
+                    "value" : {
+                      "success" : false,
+                      "status" : "404",
+                      "message" : "Section not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated" : false
+      },
+      "delete" : {
+        "tags" : [ "Sections" ],
+        "description" : "Delete section by id",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Section id",
+          "required" : true,
+          "deprecated" : false,
+          "explode" : false,
+          "schema" : {
+            "title" : "Int",
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "example" : 2
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "Section deleted",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "Section deleted" : {
+                    "value" : {
+                      "success" : true,
+                      "status" : "204",
+                      "message" : "Section deleted"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "Bad request" : {
+                    "value" : {
+                      "success" : false,
+                      "status" : "400",
+                      "message" : "Section id is required"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Section not found",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "Section not found" : {
+                    "value" : {
+                      "success" : false,
+                      "status" : "404",
+                      "message" : "Section not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated" : false
+      },
+      "patch" : {
+        "tags" : [ "Sections" ],
+        "description" : "Update section by id",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "Section id",
+          "required" : true,
+          "deprecated" : false,
+          "explode" : false,
+          "schema" : {
+            "title" : "Int",
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "example" : 1
+        } ],
+        "requestBody" : {
+          "description" : "Section data to update",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.section.UpdateSectionDto"
+              },
+              "examples" : {
+                "Update section" : {
+                  "value" : {
+                    "name" : "Updated Section",
+                    "projectId" : 1
+                  }
+                }
+              }
+            }
+          },
+          "required" : false
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Section updated",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_com.github.mantasjasikenas.model.section.SectionDto"
+                },
+                "examples" : {
+                  "Section updated" : {
+                    "value" : {
+                      "success" : true,
+                      "status" : "200",
+                      "message" : "Section updated",
+                      "data" : {
+                        "id" : 1,
+                        "projectId" : 1,
+                        "name" : "Updated Section",
+                        "createdBy" : "user1",
+                        "createdAt" : "2021-09-01T12:00:00"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400" : {
+            "description" : "Bad request",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "Bad request" : {
+                    "value" : {
+                      "success" : false,
+                      "status" : "400",
+                      "message" : "Invalid section data"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "404" : {
+            "description" : "Section not found",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "Section not found" : {
+                    "value" : {
+                      "success" : false,
+                      "status" : "404",
+                      "message" : "Section not found"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated" : false
+      }
+    }
+  },
+  "components" : {
+    "schemas" : {
+      "com.github.mantasjasikenas.model.project.ProjectDto" : {
+        "title" : "ProjectDto",
+        "required" : [ "createdAt", "createdBy", "description", "id", "name" ],
+        "type" : "object",
+        "properties" : {
+          "createdAt" : {
+            "title" : "String",
+            "type" : "string"
+          },
+          "createdBy" : {
+            "title" : "String",
+            "type" : "string"
+          },
+          "description" : {
+            "title" : "String",
+            "type" : "string"
+          },
+          "id" : {
+            "title" : "Int",
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "name" : {
+            "title" : "String",
+            "type" : "string"
+          }
+        }
+      },
+      "com.github.mantasjasikenas.model.ApiResponse_kotlin.collections.List_com.github.mantasjasikenas.model.project.ProjectDto" : {
+        "title" : "ApiResponse<List<ProjectDto>>",
+        "required" : [ "message", "status", "success" ],
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "title" : "List<ProjectDto>",
+            "items" : {
+              "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.project.ProjectDto"
+            }
+          },
+          "errors" : {
+            "title" : "List<String>",
+            "items" : {
+              "title" : "String",
+              "type" : "string"
+            }
+          },
+          "message" : {
+            "title" : "String",
+            "type" : "string"
+          },
+          "status" : {
+            "title" : "String",
+            "type" : "string"
+          },
+          "success" : {
+            "title" : "Boolean",
+            "type" : "boolean"
+          }
+        }
+      },
+      "com.github.mantasjasikenas.model.project.PostProjectDto" : {
+        "title" : "PostProjectDto",
+        "required" : [ "createdBy", "description", "name" ],
+        "type" : "object",
+        "properties" : {
+          "createdBy" : {
+            "title" : "String",
+            "type" : "string"
+          },
+          "description" : {
+            "title" : "String",
+            "type" : "string"
+          },
+          "name" : {
+            "title" : "String",
+            "type" : "string"
+          }
+        }
+      },
+      "com.github.mantasjasikenas.model.ApiResponse_com.github.mantasjasikenas.model.project.ProjectDto" : {
+        "title" : "ApiResponse<ProjectDto>",
+        "required" : [ "message", "status", "success" ],
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "oneOf" : [ {
+              "type" : "null"
+            }, {
+              "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.project.ProjectDto"
+            } ]
+          },
+          "errors" : {
+            "title" : "List<String>",
+            "items" : {
+              "title" : "String",
+              "type" : "string"
+            }
+          },
+          "message" : {
+            "title" : "String",
+            "type" : "string"
+          },
+          "status" : {
+            "title" : "String",
+            "type" : "string"
+          },
+          "success" : {
+            "title" : "Boolean",
+            "type" : "boolean"
+          }
+        }
+      },
+      "com.github.mantasjasikenas.model.ApiResponse_kotlin.String" : {
+        "title" : "ApiResponse<String>",
+        "required" : [ "message", "status", "success" ],
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "title" : "String"
+          },
+          "errors" : {
+            "title" : "List<String>",
+            "items" : {
+              "title" : "String",
+              "type" : "string"
+            }
+          },
+          "message" : {
+            "title" : "String",
+            "type" : "string"
+          },
+          "status" : {
+            "title" : "String",
+            "type" : "string"
+          },
+          "success" : {
+            "title" : "Boolean",
+            "type" : "boolean"
+          }
+        }
+      },
+      "com.github.mantasjasikenas.model.project.UpdateProjectDto" : {
+        "title" : "UpdateProjectDto",
+        "type" : "object",
+        "properties" : {
+          "description" : {
+            "title" : "String"
+          },
+          "name" : {
+            "title" : "String"
+          }
+        }
+      },
+      "com.github.mantasjasikenas.model.task.Priority" : {
+        "title" : "Priority",
+        "enum" : [ "Low", "Medium", "High", "Vital" ]
+      },
+      "com.github.mantasjasikenas.model.task.PostTaskDto" : {
+        "title" : "PostTaskDto",
+        "required" : [ "completed", "createdBy", "description", "name", "priority" ],
+        "type" : "object",
+        "properties" : {
+          "completed" : {
+            "title" : "Boolean",
+            "type" : "boolean"
+          },
+          "createdBy" : {
+            "title" : "String",
+            "type" : "string"
+          },
+          "description" : {
+            "title" : "String",
+            "type" : "string"
+          },
+          "dueDate" : {
+            "title" : "String"
+          },
+          "name" : {
+            "title" : "String",
+            "type" : "string"
+          },
+          "priority" : {
+            "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.task.Priority"
+          }
+        }
+      },
+      "com.github.mantasjasikenas.model.task.TaskDto" : {
+        "title" : "TaskDto",
+        "required" : [ "completed", "createdAt", "createdBy", "description", "id", "name", "priority", "sectionId" ],
+        "type" : "object",
+        "properties" : {
+          "completed" : {
+            "title" : "Boolean",
+            "type" : "boolean"
+          },
+          "createdAt" : {
+            "title" : "String",
+            "type" : "string"
+          },
+          "createdBy" : {
+            "title" : "String",
+            "type" : "string"
+          },
+          "description" : {
+            "title" : "String",
+            "type" : "string"
+          },
+          "dueDate" : {
+            "title" : "String"
+          },
+          "id" : {
+            "title" : "Int",
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "name" : {
+            "title" : "String",
+            "type" : "string"
+          },
+          "priority" : {
+            "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.task.Priority"
+          },
+          "sectionId" : {
+            "title" : "Int",
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }
+      },
+      "com.github.mantasjasikenas.model.ApiResponse_com.github.mantasjasikenas.model.task.TaskDto" : {
+        "title" : "ApiResponse<TaskDto>",
+        "required" : [ "message", "status", "success" ],
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "oneOf" : [ {
+              "type" : "null"
+            }, {
+              "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.task.TaskDto"
+            } ]
+          },
+          "errors" : {
+            "title" : "List<String>",
+            "items" : {
+              "title" : "String",
+              "type" : "string"
+            }
+          },
+          "message" : {
+            "title" : "String",
+            "type" : "string"
+          },
+          "status" : {
+            "title" : "String",
+            "type" : "string"
+          },
+          "success" : {
+            "title" : "Boolean",
+            "type" : "boolean"
+          }
+        }
+      },
+      "com.github.mantasjasikenas.model.ApiResponse_kotlin.collections.List_com.github.mantasjasikenas.model.task.TaskDto" : {
+        "title" : "ApiResponse<List<TaskDto>>",
+        "required" : [ "message", "status", "success" ],
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "title" : "List<TaskDto>",
+            "items" : {
+              "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.task.TaskDto"
+            }
+          },
+          "errors" : {
+            "title" : "List<String>",
+            "items" : {
+              "title" : "String",
+              "type" : "string"
+            }
+          },
+          "message" : {
+            "title" : "String",
+            "type" : "string"
+          },
+          "status" : {
+            "title" : "String",
+            "type" : "string"
+          },
+          "success" : {
+            "title" : "Boolean",
+            "type" : "boolean"
+          }
+        }
+      },
+      "com.github.mantasjasikenas.model.task.UpdateTaskDto" : {
+        "title" : "UpdateTaskDto",
+        "type" : "object",
+        "properties" : {
+          "completed" : {
+            "title" : "Boolean"
+          },
+          "description" : {
+            "title" : "String"
+          },
+          "dueDate" : {
+            "title" : "String"
+          },
+          "name" : {
+            "title" : "String"
+          },
+          "priority" : {
+            "oneOf" : [ {
+              "type" : "null"
+            }, {
+              "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.task.Priority"
+            } ]
+          },
+          "sectionId" : {
+            "title" : "Int",
+            "format" : "int32"
+          }
+        }
+      },
+      "com.github.mantasjasikenas.model.section.PostSectionDto" : {
+        "title" : "PostSectionDto",
+        "required" : [ "createdBy", "name" ],
+        "type" : "object",
+        "properties" : {
+          "createdBy" : {
+            "title" : "String",
+            "type" : "string"
+          },
+          "name" : {
+            "title" : "String",
+            "type" : "string"
+          }
+        }
+      },
+      "com.github.mantasjasikenas.model.section.SectionDto" : {
+        "title" : "SectionDto",
+        "required" : [ "createdAt", "createdBy", "id", "name", "projectId" ],
+        "type" : "object",
+        "properties" : {
+          "createdAt" : {
+            "title" : "String",
+            "type" : "string"
+          },
+          "createdBy" : {
+            "title" : "String",
+            "type" : "string"
+          },
+          "id" : {
+            "title" : "Int",
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "name" : {
+            "title" : "String",
+            "type" : "string"
+          },
+          "projectId" : {
+            "title" : "Int",
+            "type" : "integer",
+            "format" : "int32"
+          }
+        }
+      },
+      "com.github.mantasjasikenas.model.ApiResponse_com.github.mantasjasikenas.model.section.SectionDto" : {
+        "title" : "ApiResponse<SectionDto>",
+        "required" : [ "message", "status", "success" ],
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "oneOf" : [ {
+              "type" : "null"
+            }, {
+              "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.section.SectionDto"
+            } ]
+          },
+          "errors" : {
+            "title" : "List<String>",
+            "items" : {
+              "title" : "String",
+              "type" : "string"
+            }
+          },
+          "message" : {
+            "title" : "String",
+            "type" : "string"
+          },
+          "status" : {
+            "title" : "String",
+            "type" : "string"
+          },
+          "success" : {
+            "title" : "Boolean",
+            "type" : "boolean"
+          }
+        }
+      },
+      "com.github.mantasjasikenas.model.ApiResponse_kotlin.collections.List_com.github.mantasjasikenas.model.section.SectionDto" : {
+        "title" : "ApiResponse<List<SectionDto>>",
+        "required" : [ "message", "status", "success" ],
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "title" : "List<SectionDto>",
+            "items" : {
+              "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.section.SectionDto"
+            }
+          },
+          "errors" : {
+            "title" : "List<String>",
+            "items" : {
+              "title" : "String",
+              "type" : "string"
+            }
+          },
+          "message" : {
+            "title" : "String",
+            "type" : "string"
+          },
+          "status" : {
+            "title" : "String",
+            "type" : "string"
+          },
+          "success" : {
+            "title" : "Boolean",
+            "type" : "boolean"
+          }
+        }
+      },
+      "com.github.mantasjasikenas.model.section.UpdateSectionDto" : {
+        "title" : "UpdateSectionDto",
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "title" : "String"
+          },
+          "projectId" : {
+            "title" : "Int",
+            "format" : "int32"
+          }
+        }
+      }
+    },
+    "examples" : { }
+  }
+}

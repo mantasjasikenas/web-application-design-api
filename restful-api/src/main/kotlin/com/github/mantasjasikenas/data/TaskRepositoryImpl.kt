@@ -34,7 +34,7 @@ class TaskRepositoryImpl : TaskRepository {
             description = taskDto.description
             priority = taskDto.priority
             this.sectionId = EntityID(sectionId, TasksTable)
-            isCompleted = taskDto.isCompleted
+            isCompleted = taskDto.completed
             dueDateTime = taskDto.dueDate?.let { LocalDateTime.parse(it) }
             createdBy = taskDto.createdBy
         }.let(::daoToModel)
@@ -53,7 +53,7 @@ class TaskRepositoryImpl : TaskRepository {
             it.description = taskDto.description ?: it.description
             it.priority = taskDto.priority ?: it.priority
             it.sectionId = if (taskDto.sectionId != null) EntityID(taskDto.sectionId, ProjectsTable) else it.sectionId
-            it.isCompleted = taskDto.isCompleted ?: it.isCompleted
+            it.isCompleted = taskDto.completed ?: it.isCompleted
             it.dueDateTime = taskDto.dueDate?.let { due -> LocalDateTime.parse(due) } ?: it.dueDateTime
         }?.let(::daoToModel)
     }

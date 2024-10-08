@@ -15,7 +15,7 @@ fun sectionRoutesDocs(): OpenApiRoute.() -> Unit = {
 fun createSectionDocs(): OpenApiRoute.() -> Unit = {
     description = "Create a new section"
     request {
-        queryParameter<Int>("projectId") {
+        pathParameter<Int>("id") {
             description = "Project id"
             required = true
             example("default") {
@@ -43,7 +43,7 @@ fun createSectionDocs(): OpenApiRoute.() -> Unit = {
                             name = "New Section",
                             projectId = 1,
                             createdBy = "user1",
-                            createdAt = "2021-09-01T12:00:00Z"
+                            createdAt = "2021-09-01T12:00:00"
                         ),
                         success = true,
                         status = HttpStatusCode.Created.value.toString(),
@@ -83,14 +83,14 @@ fun getAllSectionsDocs(): OpenApiRoute.() -> Unit = {
                                 name = "Section 1",
                                 projectId = 1,
                                 createdBy = "user1",
-                                createdAt = "2021-09-01T12:00:00Z"
+                                createdAt = "2021-09-01T12:00:00"
                             ),
                             SectionDto(
                                 id = 2,
                                 name = "Section 2",
                                 projectId = 1,
                                 createdBy = "user1",
-                                createdAt = "2021-09-01T12:00:00Z"
+                                createdAt = "2021-09-01T12:00:00"
                             )
                         ),
                         success = true,
@@ -106,7 +106,7 @@ fun getAllSectionsDocs(): OpenApiRoute.() -> Unit = {
 fun getSectionByIdDocs(): OpenApiRoute.() -> Unit = {
     description = "Get section by id"
     request {
-        queryParameter<Int>("id") {
+        pathParameter<Int>("id") {
             description = "Section id"
             required = true
             example("default") {
@@ -125,7 +125,7 @@ fun getSectionByIdDocs(): OpenApiRoute.() -> Unit = {
                             name = "Section 1",
                             projectId = 1,
                             createdBy = "user1",
-                            createdAt = "2021-09-01T12:00:00Z"
+                            createdAt = "2021-09-01T12:00:00"
                         ),
                         success = true,
                         status = HttpStatusCode.OK.value.toString(),
@@ -166,7 +166,7 @@ fun getSectionByIdDocs(): OpenApiRoute.() -> Unit = {
 fun updateSectionByIdDocs(): OpenApiRoute.() -> Unit = {
     description = "Update section by id"
     request {
-        queryParameter<Int>("sectionId") {
+        pathParameter<Int>("id") {
             description = "Section id"
             required = true
             example("default") {
@@ -177,7 +177,8 @@ fun updateSectionByIdDocs(): OpenApiRoute.() -> Unit = {
             description = "Section data to update"
             example("Update section") {
                 value = UpdateSectionDto(
-                    name = "Updated Section"
+                    name = "Updated Section",
+                    projectId = 1
                 )
             }
         }
@@ -193,7 +194,7 @@ fun updateSectionByIdDocs(): OpenApiRoute.() -> Unit = {
                             name = "Updated Section",
                             projectId = 1,
                             createdBy = "user1",
-                            createdAt = "2021-09-01T12:00:00Z"
+                            createdAt = "2021-09-01T12:00:00"
                         ),
                         success = true,
                         status = HttpStatusCode.OK.value.toString(),
@@ -234,11 +235,11 @@ fun updateSectionByIdDocs(): OpenApiRoute.() -> Unit = {
 fun deleteSectionByIdDocs(): OpenApiRoute.() -> Unit = {
     description = "Delete section by id"
     request {
-        queryParameter<Int>("id") {
+        pathParameter<Int>("id") {
             description = "Section id"
             required = true
             example("default") {
-                value = 1
+                value = 2
             }
         }
     }

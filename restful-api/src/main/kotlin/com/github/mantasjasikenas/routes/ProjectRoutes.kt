@@ -44,13 +44,13 @@ fun Route.projectRoutes(projectRepository: ProjectRepository) {
             }
         }
 
-        put("/{id}", updateProjectByIdDocs()) {
+        patch("/{id}", updateProjectByIdDocs()) {
             val id = call.parameters["id"]?.toInt()
             val projectDto = call.receive<UpdateProjectDto>()
 
             if (id == null) {
                 call.respondBadRequest("Project id is required")
-                return@put
+                return@patch
             }
 
             val updatedProject = projectRepository.updateProject(id, projectDto)

@@ -15,12 +15,11 @@ import io.ktor.server.application.*
 import io.ktor.server.plugins.*
 import io.ktor.server.plugins.requestvalidation.*
 import io.ktor.server.plugins.statuspages.*
-import io.ktor.server.response.*
 
 fun Application.configureValidation() {
     install(StatusPages) {
         exception<RequestValidationException> { call, cause ->
-            call.respond(HttpStatusCode.BadRequest, cause.reasons.joinToString())
+            call.respondCustom(HttpStatusCode.BadRequest, cause.reasons.joinToString())
         }
 
         status(HttpStatusCode.NotFound) { call, _ ->
@@ -37,19 +36,19 @@ fun Application.configureValidation() {
 
         exception<Throwable> { call, cause ->
             if (cause is IllegalArgumentException) {
-                call.respondCustom(HttpStatusCode.BadRequest, cause.message ?: "Bad request")
+                call.respondCustom(HttpStatusCode.BadRequest, "Bad request (illegal argument)")
 
                 return@exception
             }
 
             if (cause is IllegalStateException) {
-                call.respondCustom(HttpStatusCode.BadRequest, cause.message ?: "Bad request")
+                call.respondCustom(HttpStatusCode.BadRequest, "Bad request (illegal state)")
 
                 return@exception
             }
 
             if (cause is BadRequestException) {
-                call.respondCustom(HttpStatusCode.BadRequest, cause.message ?: "Bad request")
+                call.respondCustom(HttpStatusCode.BadRequest, "Bad request")
 
                 return@exception
             }
