@@ -22,7 +22,7 @@ fun Route.sectionRoutes(
     projectRepository: ProjectRepository,
 ) {
     route(sectionRoutesDocs()) {
-        post("/projects/{id}/sections", createSectionDocs()) {
+        post("/projects/{id}/sections", postSectionDocs()) {
             val projectId = call.parameters["id"]?.toInt()
 
             if (projectId == null) {

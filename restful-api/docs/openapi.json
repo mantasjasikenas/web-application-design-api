@@ -127,6 +127,26 @@
                 }
               }
             }
+          },
+          "422" : {
+            "description" : "Unprocessable entity",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "Unprocessable entity" : {
+                    "value" : {
+                      "success" : false,
+                      "status" : "422",
+                      "message" : "Validation failed"
+                    }
+                  }
+                }
+              }
+            }
           }
         },
         "deprecated" : false
@@ -366,6 +386,26 @@
               }
             }
           },
+          "422" : {
+            "description" : "Unprocessable entity",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "Unprocessable entity" : {
+                    "value" : {
+                      "success" : false,
+                      "status" : "422",
+                      "message" : "Validation failed"
+                    }
+                  }
+                }
+              }
+            }
+          },
           "400" : {
             "description" : "Bad request",
             "headers" : { },
@@ -497,6 +537,26 @@
                       "success" : false,
                       "status" : "400",
                       "message" : "Invalid task data"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422" : {
+            "description" : "Unprocessable entity",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "Unprocessable entity" : {
+                    "value" : {
+                      "success" : false,
+                      "status" : "422",
+                      "message" : "Validation failed"
                     }
                   }
                 }
@@ -921,6 +981,26 @@
               }
             }
           },
+          "422" : {
+            "description" : "Unprocessable entity",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "Unprocessable entity" : {
+                    "value" : {
+                      "success" : false,
+                      "status" : "422",
+                      "message" : "Validation failed"
+                    }
+                  }
+                }
+              }
+            }
+          },
           "404" : {
             "description" : "Task not found",
             "headers" : { },
@@ -1024,6 +1104,26 @@
                       "success" : false,
                       "status" : "400",
                       "message" : "Invalid section data"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422" : {
+            "description" : "Unprocessable entity",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "Unprocessable entity" : {
+                    "value" : {
+                      "success" : false,
+                      "status" : "422",
+                      "message" : "Validation failed"
                     }
                   }
                 }
@@ -1345,6 +1445,26 @@
                       "success" : false,
                       "status" : "404",
                       "message" : "Section not found"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422" : {
+            "description" : "Unprocessable entity",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "Unprocessable entity" : {
+                    "value" : {
+                      "success" : false,
+                      "status" : "422",
+                      "message" : "Validation failed"
                     }
                   }
                 }

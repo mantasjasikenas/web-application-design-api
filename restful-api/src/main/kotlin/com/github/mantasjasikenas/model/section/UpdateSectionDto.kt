@@ -16,6 +16,10 @@ fun UpdateSectionDto.validate(): ValidationResult {
         reasons.add("At least one field must be provided")
     }
 
+    if (this.name != null && this.name.isBlank()) {
+        reasons.add("Section name cannot be empty")
+    }
+
     return if (reasons.isEmpty()) {
         ValidationResult.Valid
     } else {

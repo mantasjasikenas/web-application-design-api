@@ -76,6 +76,20 @@ fun postTaskDocs(): OpenApiRoute.() -> Unit = {
                 }
             }
         }
+
+        HttpStatusCode.UnprocessableEntity to {
+            description = "Unprocessable entity"
+            body<ApiResponse<String>> {
+                example("Unprocessable entity") {
+                    value = ApiResponse(
+                        data = null,
+                        success = false,
+                        status = HttpStatusCode.UnprocessableEntity.value.toString(),
+                        message = "Validation failed"
+                    )
+                }
+            }
+        }
     }
 }
 
@@ -329,6 +343,21 @@ fun updateTaskByIdDocs(): OpenApiRoute.() -> Unit = {
                 }
             }
         }
+
+        HttpStatusCode.UnprocessableEntity to {
+            description = "Unprocessable entity"
+            body<ApiResponse<String>> {
+                example("Unprocessable entity") {
+                    value = ApiResponse(
+                        data = null,
+                        success = false,
+                        status = HttpStatusCode.UnprocessableEntity.value.toString(),
+                        message = "Validation failed"
+                    )
+                }
+            }
+        }
+
         HttpStatusCode.NotFound to {
             description = "Task not found"
             body<ApiResponse<String>> {

@@ -732,6 +732,156 @@
 									"body": "{\n  \"success\": false,\n  \"status\": \"400\",\n  \"message\": \"Invalid project data\"\n}"
 								}
 							]
+						},
+						{
+							"name": "[422] Create a new project - Validation failed",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 422\", function () {\r",
+											"    pm.response.to.have.status(422);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"\",\n  \"description\": \"New project description\",\n  \"createdBy\": \"user1\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/projects",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"projects"
+									]
+								},
+								"description": "Create a new project"
+							},
+							"response": [
+								{
+									"name": "Project created",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"name\": \"New Project\",\n  \"description\": \"New project description\",\n  \"createdBy\": \"user1\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/projects",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"projects"
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"success\": true,\n  \"status\": \"201\",\n  \"message\": \"Project created\",\n  \"data\": {\n    \"id\": 1,\n    \"name\": \"New Project\",\n    \"description\": \"New project description\",\n    \"createdAt\": \"2023-10-01T12:00:00\",\n    \"createdBy\": \"user1\"\n  }\n}"
+								},
+								{
+									"name": "Bad request",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"name\": \"New Project\",\n  \"description\": \"New project description\",\n  \"createdBy\": \"user1\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/projects",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"projects"
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"success\": false,\n  \"status\": \"400\",\n  \"message\": \"Invalid project data\"\n}"
+								}
+							]
 						}
 					]
 				},
@@ -1187,7 +1337,7 @@
 							]
 						},
 						{
-							"name": "[400] Update project by id - Empty body",
+							"name": "[400] Update project by id - Bad id type",
 							"event": [
 								{
 									"listen": "test",
@@ -1217,6 +1367,230 @@
 								"body": {
 									"mode": "raw",
 									"raw": "{\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/projects/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"projects",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "s",
+											"description": "(Required) Project id"
+										}
+									]
+								},
+								"description": "Update project by id"
+							},
+							"response": [
+								{
+									"name": "Project updated",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"name\": \"Updated Project\",\n  \"description\": \"Updated project description\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/projects/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"projects",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"success\": true,\n  \"status\": \"200\",\n  \"message\": \"Project updated\",\n  \"data\": {\n    \"id\": 1,\n    \"name\": \"Updated Project\",\n    \"description\": \"Updated project description\",\n    \"createdAt\": \"2021-09-01T12:00:00\",\n    \"createdBy\": \"user1\"\n  }\n}"
+								},
+								{
+									"name": "Bad request",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"name\": \"Updated Project\",\n  \"description\": \"Updated project description\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/projects/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"projects",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"success\": false,\n  \"status\": \"400\",\n  \"message\": \"Invalid project data\"\n}"
+								},
+								{
+									"name": "Project not found",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"name\": \"Updated Project\",\n  \"description\": \"Updated project description\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/projects/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"projects",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"success\": false,\n  \"status\": \"404\",\n  \"message\": \"Project not found\"\n}"
+								}
+							]
+						},
+						{
+							"name": "[422] Update project by id - Validation failed",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 422\", function () {\r",
+											"    pm.response.to.have.status(422);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n      \"name\": \"\"\n}",
 									"options": {
 										"raw": {
 											"headerFamily": "json",
@@ -2559,6 +2933,230 @@
 							]
 						},
 						{
+							"name": "[422] Update task by id - Validation failed",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 422\", function () {\r",
+											"    pm.response.to.have.status(422);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"\",\n  \"description\": \"Updated task description\",\n  \"priority\": \"Vital\",\n  \"completed\": false,\n  \"dueDate\": \"2023-10-01T12:00:00\",\n  \"sectionId\": 1\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/tasks/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"tasks",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1",
+											"description": "(Required) Task id"
+										}
+									]
+								},
+								"description": "Update task by id"
+							},
+							"response": [
+								{
+									"name": "Task updated",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"name\": \"Updated Task\",\n  \"description\": \"Updated task description\",\n  \"priority\": \"Vital\",\n  \"completed\": false,\n  \"dueDate\": \"2023-10-01T12:00:00\",\n  \"sectionId\": 1\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/tasks/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"tasks",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"success\": true,\n  \"status\": \"200\",\n  \"message\": \"Task updated\",\n  \"data\": {\n    \"id\": 1,\n    \"sectionId\": 4,\n    \"name\": \"Updated Task\",\n    \"description\": \"Updated task description\",\n    \"priority\": \"Vital\",\n    \"completed\": false,\n    \"dueDate\": \"2023-10-01T12:00:00\",\n    \"createdBy\": \"user1\",\n    \"createdAt\": \"2021-09-01T12:00:00\"\n  }\n}"
+								},
+								{
+									"name": "Bad request",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"name\": \"Updated Task\",\n  \"description\": \"Updated task description\",\n  \"priority\": \"Vital\",\n  \"completed\": false,\n  \"dueDate\": \"2023-10-01T12:00:00\",\n  \"sectionId\": 1\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/tasks/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"tasks",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"success\": false,\n  \"status\": \"400\",\n  \"message\": \"Invalid task data\"\n}"
+								},
+								{
+									"name": "Task not found",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"name\": \"Updated Task\",\n  \"description\": \"Updated task description\",\n  \"priority\": \"Vital\",\n  \"completed\": false,\n  \"dueDate\": \"2023-10-01T12:00:00\",\n  \"sectionId\": 1\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/tasks/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"tasks",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"success\": false,\n  \"status\": \"404\",\n  \"message\": \"Task not found\"\n}"
+								}
+							]
+						},
+						{
 							"name": "[404] Update task by id - Task not found",
 							"event": [
 								{
@@ -2783,7 +3381,7 @@
 							]
 						},
 						{
-							"name": "[400] Update task by id - Empty body",
+							"name": "[400] Update task by id - Bad id type",
 							"event": [
 								{
 									"listen": "test",
@@ -2812,7 +3410,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n}",
+									"raw": "{\n  \"name\": \"Updated Task\",\n  \"description\": \"Updated task description\",\n  \"priority\": \"Vital\",\n  \"completed\": false,\n  \"dueDate\": \"2023-10-01T12:00:00\",\n  \"sectionId\": 1\n}",
 									"options": {
 										"raw": {
 											"headerFamily": "json",
@@ -2834,7 +3432,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "1",
+											"value": "g",
 											"description": "(Required) Task id"
 										}
 									]
@@ -3042,6 +3640,179 @@
 								"body": {
 									"mode": "raw",
 									"raw": "{\n  \"name\": \"New Task\",\n  \"description\": \"New task description\",\n  \"priority\": \"Vital\",\n  \"completed\": true,\n  \"dueDate\": \"2023-10-01T12:00:00\",\n  \"createdBy\": \"user1\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/sections/:id/tasks",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"sections",
+										":id",
+										"tasks"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1",
+											"description": "(Required) Section id"
+										}
+									]
+								},
+								"description": "Create a new task"
+							},
+							"response": [
+								{
+									"name": "Task created",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"name\": \"New Task\",\n  \"description\": \"New task description\",\n  \"priority\": \"Vital\",\n  \"completed\": true,\n  \"dueDate\": \"2023-10-01T12:00:00\",\n  \"createdBy\": \"user1\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/sections/:id/tasks",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"sections",
+												":id",
+												"tasks"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"success\": true,\n  \"status\": \"201\",\n  \"message\": \"Task created\",\n  \"data\": {\n    \"id\": 1,\n    \"sectionId\": 1,\n    \"name\": \"New Task\",\n    \"description\": \"New task description\",\n    \"priority\": \"Low\",\n    \"completed\": false,\n    \"dueDate\": \"2023-10-01T12:00:00\",\n    \"createdBy\": \"user1\",\n    \"createdAt\": \"2023-10-01T12:00:00\"\n  }\n}"
+								},
+								{
+									"name": "Bad request",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"name\": \"New Task\",\n  \"description\": \"New task description\",\n  \"priority\": \"Vital\",\n  \"completed\": true,\n  \"dueDate\": \"2023-10-01T12:00:00\",\n  \"createdBy\": \"user1\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/sections/:id/tasks",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"sections",
+												":id",
+												"tasks"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"success\": false,\n  \"status\": \"400\",\n  \"message\": \"Invalid task data\"\n}"
+								}
+							]
+						},
+						{
+							"name": "[422] Create a new task - Validation failed",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 422\", function () {\r",
+											"    pm.response.to.have.status(422);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"New Task\",\n  \"description\": \"New task description\",\n  \"priority\": \"Vital\",\n  \"completed\": true,\n  \"dueDate\": \"2023-10-01TK12:00:00\",\n  \"createdBy\": \"user1\"\n}",
 									"options": {
 										"raw": {
 											"headerFamily": "json",
@@ -4302,6 +5073,179 @@
 							]
 						},
 						{
+							"name": "[422] Create a new section - Validation failed",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 422\", function () {\r",
+											"    pm.response.to.have.status(422);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "POST",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"New Section\",\n  \"createdBy\": \"\"\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/projects/:id/sections",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"projects",
+										":id",
+										"sections"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1",
+											"description": "(Required) Project id"
+										}
+									]
+								},
+								"description": "Create a new section"
+							},
+							"response": [
+								{
+									"name": "Section created",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"name\": \"New Section\",\n  \"createdBy\": \"user1\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/projects/:id/sections",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"projects",
+												":id",
+												"sections"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Created",
+									"code": 201,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"success\": true,\n  \"status\": \"201\",\n  \"message\": \"Section created\",\n  \"data\": {\n    \"id\": 1,\n    \"projectId\": 1,\n    \"name\": \"New Section\",\n    \"createdBy\": \"user1\",\n    \"createdAt\": \"2021-09-01T12:00:00\"\n  }\n}"
+								},
+								{
+									"name": "Bad request",
+									"originalRequest": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"name\": \"New Section\",\n  \"createdBy\": \"user1\"\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/projects/:id/sections",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"projects",
+												":id",
+												"sections"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"success\": false,\n  \"status\": \"400\",\n  \"message\": \"Invalid section data\"\n}"
+								}
+							]
+						},
+						{
 							"name": "[400] Create a new section - Not all arguments provided",
 							"event": [
 								{
@@ -4510,6 +5454,230 @@
 								"body": {
 									"mode": "raw",
 									"raw": "{\n  \"name\": \"Updated Section\",\n  \"projectId\": 1\n}",
+									"options": {
+										"raw": {
+											"headerFamily": "json",
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseUrl}}/api/v1/sections/:id",
+									"host": [
+										"{{baseUrl}}"
+									],
+									"path": [
+										"api",
+										"v1",
+										"sections",
+										":id"
+									],
+									"variable": [
+										{
+											"key": "id",
+											"value": "1",
+											"description": "(Required) Section id"
+										}
+									]
+								},
+								"description": "Update section by id"
+							},
+							"response": [
+								{
+									"name": "Section updated",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"name\": \"Updated Section\",\n  \"projectId\": 1\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/sections/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"sections",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "OK",
+									"code": 200,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"success\": true,\n  \"status\": \"200\",\n  \"message\": \"Section updated\",\n  \"data\": {\n    \"id\": 1,\n    \"projectId\": 1,\n    \"name\": \"Updated Section\",\n    \"createdBy\": \"user1\",\n    \"createdAt\": \"2021-09-01T12:00:00\"\n  }\n}"
+								},
+								{
+									"name": "Bad request",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"name\": \"Updated Section\",\n  \"projectId\": 1\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/sections/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"sections",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Bad Request",
+									"code": 400,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"success\": false,\n  \"status\": \"400\",\n  \"message\": \"Invalid section data\"\n}"
+								},
+								{
+									"name": "Section not found",
+									"originalRequest": {
+										"method": "PATCH",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											},
+											{
+												"key": "Accept",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"name\": \"Updated Section\",\n  \"projectId\": 1\n}",
+											"options": {
+												"raw": {
+													"headerFamily": "json",
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/api/v1/sections/:id",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"api",
+												"v1",
+												"sections",
+												":id"
+											],
+											"variable": [
+												{
+													"key": "id"
+												}
+											]
+										}
+									},
+									"status": "Not Found",
+									"code": 404,
+									"_postman_previewlanguage": "json",
+									"header": [
+										{
+											"key": "Content-Type",
+											"value": "application/json"
+										}
+									],
+									"cookie": [],
+									"body": "{\n  \"success\": false,\n  \"status\": \"404\",\n  \"message\": \"Section not found\"\n}"
+								}
+							]
+						},
+						{
+							"name": "[422] Update section by id - Validation failed",
+							"event": [
+								{
+									"listen": "test",
+									"script": {
+										"exec": [
+											"pm.test(\"Status code is 422\", function () {\r",
+											"    pm.response.to.have.status(422);\r",
+											"});"
+										],
+										"type": "text/javascript",
+										"packages": {}
+									}
+								}
+							],
+							"request": {
+								"method": "PATCH",
+								"header": [
+									{
+										"key": "Content-Type",
+										"value": "application/json"
+									},
+									{
+										"key": "Accept",
+										"value": "application/json"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": "{\n  \"name\": \"\",\n  \"projectId\": 1\n}",
 									"options": {
 										"raw": {
 											"headerFamily": "json",
@@ -4928,7 +6096,7 @@
 							]
 						},
 						{
-							"name": "[400] Update section by id - Empty body",
+							"name": "[400] Update section by id - Bad id type",
 							"event": [
 								{
 									"listen": "test",
@@ -4957,7 +6125,7 @@
 								],
 								"body": {
 									"mode": "raw",
-									"raw": "{\n}",
+									"raw": "{\n  \"name\": \"Updated Section\",\n  \"projectId\": 1\n}",
 									"options": {
 										"raw": {
 											"headerFamily": "json",
@@ -4979,7 +6147,7 @@
 									"variable": [
 										{
 											"key": "id",
-											"value": "1",
+											"value": "s",
 											"description": "(Required) Section id"
 										}
 									]

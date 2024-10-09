@@ -12,7 +12,7 @@ fun sectionRoutesDocs(): OpenApiRoute.() -> Unit = {
     tags("Sections")
 }
 
-fun createSectionDocs(): OpenApiRoute.() -> Unit = {
+fun postSectionDocs(): OpenApiRoute.() -> Unit = {
     description = "Create a new section"
     request {
         pathParameter<Int>("id") {
@@ -61,6 +61,19 @@ fun createSectionDocs(): OpenApiRoute.() -> Unit = {
                         success = false,
                         status = HttpStatusCode.BadRequest.value.toString(),
                         message = "Invalid section data"
+                    )
+                }
+            }
+        }
+        HttpStatusCode.UnprocessableEntity to {
+            description = "Unprocessable entity"
+            body<ApiResponse<String>> {
+                example("Unprocessable entity") {
+                    value = ApiResponse(
+                        data = null,
+                        success = false,
+                        status = HttpStatusCode.UnprocessableEntity.value.toString(),
+                        message = "Validation failed"
                     )
                 }
             }
@@ -225,6 +238,19 @@ fun updateSectionByIdDocs(): OpenApiRoute.() -> Unit = {
                         success = false,
                         status = HttpStatusCode.NotFound.value.toString(),
                         message = "Section not found"
+                    )
+                }
+            }
+        }
+        HttpStatusCode.UnprocessableEntity to {
+            description = "Unprocessable entity"
+            body<ApiResponse<String>> {
+                example("Unprocessable entity") {
+                    value = ApiResponse(
+                        data = null,
+                        success = false,
+                        status = HttpStatusCode.UnprocessableEntity.value.toString(),
+                        message = "Validation failed"
                     )
                 }
             }

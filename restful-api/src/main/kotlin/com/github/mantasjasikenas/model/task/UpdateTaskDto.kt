@@ -21,6 +21,14 @@ fun UpdateTaskDto.validate(): ValidationResult {
         reasons.add("At least one field must be provided")
     }
 
+    if (this.name != null && this.name.isBlank()) {
+        reasons.add("Task name cannot be empty")
+    }
+
+    if (this.description != null && this.description.isBlank()) {
+        reasons.add("Task description cannot be empty")
+    }
+
     if (this.dueDate != null && LocalDateTime.Formats.ISO.parseOrNull(this.dueDate) == null) {
         reasons.add("Task due date is not in correct format. Use ISO format. For example: 2021-12-31T23:59:59")
     }

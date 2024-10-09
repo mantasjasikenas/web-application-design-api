@@ -19,7 +19,7 @@ import io.ktor.server.plugins.statuspages.*
 fun Application.configureValidation() {
     install(StatusPages) {
         exception<RequestValidationException> { call, cause ->
-            call.respondCustom(HttpStatusCode.BadRequest, cause.reasons.joinToString())
+            call.respondCustom(HttpStatusCode.UnprocessableEntity, cause.reasons.joinToString())
         }
 
         status(HttpStatusCode.NotFound) { call, _ ->

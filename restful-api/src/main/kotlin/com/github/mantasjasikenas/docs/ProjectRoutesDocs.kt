@@ -94,6 +94,20 @@ fun postProjectDocs(): OpenApiRoute.() -> Unit = {
                 }
             }
         }
+
+        HttpStatusCode.UnprocessableEntity to {
+            description = "Unprocessable entity"
+            body<ApiResponse<String>> {
+                example("Unprocessable entity") {
+                    value = ApiResponse(
+                        data = null,
+                        success = false,
+                        status = HttpStatusCode.UnprocessableEntity.value.toString(),
+                        message = "Validation failed"
+                    )
+                }
+            }
+        }
     }
 }
 
@@ -203,6 +217,21 @@ fun updateProjectByIdDocs(): OpenApiRoute.() -> Unit = {
                 }
             }
         }
+
+        HttpStatusCode.UnprocessableEntity to {
+            description = "Unprocessable entity"
+            body<ApiResponse<String>> {
+                example("Unprocessable entity") {
+                    value = ApiResponse(
+                        data = null,
+                        success = false,
+                        status = HttpStatusCode.UnprocessableEntity.value.toString(),
+                        message = "Validation failed"
+                    )
+                }
+            }
+        }
+
         HttpStatusCode.BadRequest to {
             description = "Bad request"
             body<ApiResponse<String>> {
