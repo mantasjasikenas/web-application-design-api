@@ -1,7 +1,7 @@
 ﻿package com.github.mantasjasikenas.routes
 
 import com.github.mantasjasikenas.data.ProjectRepository
-import com.github.mantasjasikenas.docs.*
+import com.github.mantasjasikenas.docs.project.*
 import com.github.mantasjasikenas.model.*
 import com.github.mantasjasikenas.model.project.PostProjectDto
 import com.github.mantasjasikenas.model.project.UpdateProjectDto

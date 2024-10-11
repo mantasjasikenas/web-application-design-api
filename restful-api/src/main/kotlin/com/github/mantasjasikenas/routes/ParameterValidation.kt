@@ -1,4 +1,4 @@
-﻿package com.github.mantasjasikenas.docs
+﻿package com.github.mantasjasikenas.routes
 
 import com.github.mantasjasikenas.data.ProjectRepository
 import com.github.mantasjasikenas.data.SectionRepository

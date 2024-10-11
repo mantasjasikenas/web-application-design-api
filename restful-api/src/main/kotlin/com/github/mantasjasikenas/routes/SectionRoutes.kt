@@ -2,7 +2,7 @@
 
 import com.github.mantasjasikenas.data.ProjectRepository
 import com.github.mantasjasikenas.data.SectionRepository
-import com.github.mantasjasikenas.docs.*
+import com.github.mantasjasikenas.docs.section.*
 import com.github.mantasjasikenas.model.*
 import com.github.mantasjasikenas.model.section.PostSectionDto
 import com.github.mantasjasikenas.model.section.UpdateSectionDto

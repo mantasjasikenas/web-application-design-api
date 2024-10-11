@@ -3,7 +3,7 @@
 import com.github.mantasjasikenas.data.ProjectRepository
 import com.github.mantasjasikenas.data.SectionRepository
 import com.github.mantasjasikenas.data.TaskRepository
-import com.github.mantasjasikenas.docs.*
+import com.github.mantasjasikenas.docs.task.*
 import com.github.mantasjasikenas.model.respondCreated
 import com.github.mantasjasikenas.model.respondCustom
 import com.github.mantasjasikenas.model.respondNotFound
