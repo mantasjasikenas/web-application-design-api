@@ -21,42 +21,21 @@ fun Route.sectionRoutes(
     sectionRepository: SectionRepository,
     projectRepository: ProjectRepository,
 ) {
-    route(sectionRoutesDocs()) {
-        post("/projects/{id}/sections", postSectionDocs()) {
-            val projectId = call.parameters["id"]?.toInt()
-
-            if (projectId == null) {
-                call.respondBadRequest("Project id is required")
-                return@post
-            }
-
-            projectRepository.projectById(projectId) ?: run {
-                call.respondNotFound("Project not found. Please provide a valid project id")
-                return@post
-            }
-
-            val postSectionDto = call.receive<PostSectionDto>()
-            val sectionDto = sectionRepository.addSection(projectId, postSectionDto)
-
-            call.respondCreated("Section created", sectionDto)
-        }
-
+    route("/projects/{projectId}", sectionRoutesDocs()) {
         route("/sections") {
             get(getAllSectionsDocs()) {
-                val sections = sectionRepository.allSections()
+                val projectId = call.validateAndGetProjectId(projectRepository) ?: return@get
+
+                val sections = sectionRepository.allSections(projectId)
 
                 call.respondSuccess("All sections", sections)
             }
 
-            get("/{id}", getSectionByIdDocs()) {
-                val id = call.parameters["id"]?.toInt()
+            get("/{sectionId}", getSectionByIdDocs()) {
+                val projectId = call.validateAndGetProjectId(projectRepository) ?: return@get
+                val sectionId = call.validateAndGetSectionId(sectionRepository) ?: return@get
 
-                if (id == null) {
-                    call.respondBadRequest("Section id is required")
-                    return@get
-                }
-
-                val section = sectionRepository.sectionById(id)
+                val section = sectionRepository.sectionById(projectId, sectionId)
 
                 if (section != null) {
                     call.respondSuccess("Section by id", section)
@@ -65,21 +44,27 @@ fun Route.sectionRoutes(
                 }
             }
 
-            patch("/{id}", updateSectionByIdDocs()) {
-                val sectionId = call.parameters["id"]?.toInt()
+            post(postSectionDocs()) {
+                val projectId = call.validateAndGetProjectId(projectRepository) ?: return@post
+
+                val postSectionDto = call.receive<PostSectionDto>()
+                val sectionDto = sectionRepository.addSection(projectId, postSectionDto)
+
+                if (sectionDto == null) {
+                    call.respondBadRequest("Project not found. Please provide a valid project id")
+                    return@post
+                }
+
+                call.respondCreated("Section created", sectionDto)
+            }
+
+            patch("/{sectionId}", updateSectionByIdDocs()) {
+                val projectId = call.validateAndGetProjectId(projectRepository) ?: return@patch
+                val sectionId = call.validateAndGetSectionId(sectionRepository) ?: return@patch
+
                 val sectionDto = call.receive<UpdateSectionDto>()
 
-                if (sectionId == null) {
-                    call.respondBadRequest("Section id is required")
-                    return@patch
-                }
-
-                sectionDto.projectId?.let { projectRepository.projectById(it) } ?: run {
-                    call.respondNotFound("Project not found. Please provide a valid project id")
-                    return@patch
-                }
-
-                val updatedSection = sectionRepository.updateSection(sectionId, sectionDto)
+                val updatedSection = sectionRepository.updateSection(projectId, sectionId, sectionDto)
 
                 if (updatedSection != null) {
                     call.respondSuccess("Section updated", updatedSection)
@@ -88,15 +73,11 @@ fun Route.sectionRoutes(
                 }
             }
 
-            delete("/{id}", deleteSectionByIdDocs()) {
-                val id = call.parameters["id"]?.toInt()
+            delete("/{sectionId}", deleteSectionByIdDocs()) {
+                val projectId = call.validateAndGetProjectId(projectRepository) ?: return@delete
+                val sectionId = call.validateAndGetSectionId(sectionRepository) ?: return@delete
 
-                if (id == null) {
-                    call.respondBadRequest("Section id is required")
-                    return@delete
-                }
-
-                val removed = sectionRepository.removeSection(id)
+                val removed = sectionRepository.removeSection(projectId, sectionId)
 
                 if (removed) {
                     call.respondCustom(HttpStatusCode.NoContent, "Section deleted")

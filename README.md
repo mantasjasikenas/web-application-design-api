@@ -66,24 +66,24 @@ Projektas ⇒ Sekcija ⇒ Užduotis
 ### Projektai (Projects)
 
 1. `GET /api/v1/projects` – gauti visus projektų sąrašą
-2. `GET /api/v1/projects/{id}` – gauti vieną projektą pagal ID
+2. `GET /api/v1/projects/{projectId}` – gauti vieną projektą pagal ID
 3. `POST /api/v1/projects` – sukurti naują projektą
-4. `PATCH /api/v1/projects/{id}` – atnaujinti projektą pagal ID
-5. `DELETE /api/v1/projects/{id}` – ištrinti projektą pagal ID
+4. `PATCH /api/v1/projects/{projectId}` – atnaujinti projektą pagal ID
+5. `DELETE /api/v1/projects/{projectId}` – ištrinti projektą pagal ID
 
 ### Sekcijos (Sections)
 
-1. `GET /api/v1/sections` – gauti vieną sekciją pagal ID
-2. `GET /api/v1/sections/{id}` – gauti vieną sekciją pagal ID
-3. `POST /api/v1/projects/{id}/sections` - sukurti naują sekciją
-4. `PATCH /api/v1/sections/{id}` – atnaujinti sekciją pagal ID
-5. `DELETE /api/v1/sections/{id}` – ištrinti sekciją pagal ID
+1. `GET /api/v1/projects/{projectId}/sections` – gauti vieną sekciją pagal ID
+2. `GET /api/v1/projects/{projectId}/sections/{sectionId}` – gauti vieną sekciją pagal ID
+3. `POST /api/v1/projects/{projectId}/sections` - sukurti naują sekciją
+4. `PATCH /api/v1/projects/{projectId}/sections/{sectionId}` – atnaujinti sekciją pagal ID
+5. `DELETE /api/v1/projects/{projectId}/sections/{sectionId}` – ištrinti sekciją pagal ID
 
 ### Užduotys (Tasks)
 
-1. `GET /api/v1/tasks` – gauti visų užduočių sąrašą
-2. `GET /api/v1/tasks/{id}` – gauti vieną užduotį pagal ID
+1. `GET /api/v1/projects/{projectId}/sections/{sectionId}/tasks` – gauti visų užduočių sąrašą
+2. `GET /api/v1/projects/{projectId}/sections/{sectionId}/tasks/{taskId}` – gauti vieną užduotį pagal ID
 3. `GET /api/v1/projects/{projectId}/sections/{sectionId}/tasks` – gauti visų užduočių sąrašą pagal projekto ir sekcijos ID
-4. `POST /api/v1/sections/{id}/tasks` – sukurti naują užduotį
-5. `PATCH /api/v1/tasks/{id}` – atnaujinti užduotį pagal ID
-6. `DELETE /api/v1/tasks/{id}` – ištrinti užduotį pagal ID
+4. `POST /api/v1/projects/{projectId}/sections/{sectionId}/tasks` – sukurti naują užduotį
+5. `PATCH /api/v1/projects/{projectId}/sections/{sectionId}/tasks/{taskId}` – atnaujinti užduotį pagal ID
+6. `DELETE /api/v1/projects/{projectId}/sections/{sectionId}/tasks/{taskId}` – ištrinti užduotį pagal ID

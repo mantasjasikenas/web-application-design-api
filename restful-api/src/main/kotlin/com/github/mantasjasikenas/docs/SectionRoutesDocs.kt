@@ -14,6 +14,7 @@ fun sectionRoutesDocs(): OpenApiRoute.() -> Unit = {
 
 fun postSectionDocs(): OpenApiRoute.() -> Unit = {
     description = "Create a new section"
+
     request {
         pathParameter<Int>("id") {
             description = "Project id"
@@ -22,6 +23,7 @@ fun postSectionDocs(): OpenApiRoute.() -> Unit = {
                 value = 1
             }
         }
+
         body<PostSectionDto> {
             description = "Section to create"
             example("New section") {
@@ -83,6 +85,17 @@ fun postSectionDocs(): OpenApiRoute.() -> Unit = {
 
 fun getAllSectionsDocs(): OpenApiRoute.() -> Unit = {
     description = "Get all sections"
+
+    request {
+        pathParameter<Int>("projectId") {
+            description = "Project id"
+            required = true
+            example("default") {
+                value = 1
+            }
+        }
+    }
+
     response {
         HttpStatusCode.OK to {
             description = "All sections"
@@ -118,8 +131,17 @@ fun getAllSectionsDocs(): OpenApiRoute.() -> Unit = {
 
 fun getSectionByIdDocs(): OpenApiRoute.() -> Unit = {
     description = "Get section by id"
+
     request {
-        pathParameter<Int>("id") {
+        pathParameter<Int>("projectId") {
+            description = "Project id"
+            required = true
+            example("default") {
+                value = 1
+            }
+        }
+
+        pathParameter<Int>("sectionId") {
             description = "Section id"
             required = true
             example("default") {
@@ -127,6 +149,7 @@ fun getSectionByIdDocs(): OpenApiRoute.() -> Unit = {
             }
         }
     }
+
     response {
         HttpStatusCode.OK to {
             description = "Section by id"
@@ -179,7 +202,15 @@ fun getSectionByIdDocs(): OpenApiRoute.() -> Unit = {
 fun updateSectionByIdDocs(): OpenApiRoute.() -> Unit = {
     description = "Update section by id"
     request {
-        pathParameter<Int>("id") {
+        pathParameter<Int>("projectId") {
+            description = "Project id"
+            required = true
+            example("default") {
+                value = 1
+            }
+        }
+
+        pathParameter<Int>("sectionId") {
             description = "Section id"
             required = true
             example("default") {
@@ -261,7 +292,15 @@ fun updateSectionByIdDocs(): OpenApiRoute.() -> Unit = {
 fun deleteSectionByIdDocs(): OpenApiRoute.() -> Unit = {
     description = "Delete section by id"
     request {
-        pathParameter<Int>("id") {
+        pathParameter<Int>("projectId") {
+            description = "Project id"
+            required = true
+            example("default") {
+                value = 1
+            }
+        }
+
+        pathParameter<Int>("sectionId") {
             description = "Section id"
             required = true
             example("default") {

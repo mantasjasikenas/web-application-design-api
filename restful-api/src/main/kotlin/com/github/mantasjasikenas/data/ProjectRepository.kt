@@ -10,5 +10,6 @@ interface ProjectRepository {
     suspend fun addProject(projectDto: PostProjectDto): ProjectDto
     suspend fun removeProject(id: Int): Boolean
     suspend fun updateProject(id: Int, projectDto: UpdateProjectDto): ProjectDto?
+    suspend fun projectExists(id: Int): Boolean
 }
 

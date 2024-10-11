@@ -1,9 +1,13 @@
 ﻿package com.github.mantasjasikenas.routes
 
+import com.github.mantasjasikenas.data.ProjectRepository
 import com.github.mantasjasikenas.data.SectionRepository
 import com.github.mantasjasikenas.data.TaskRepository
 import com.github.mantasjasikenas.docs.*
-import com.github.mantasjasikenas.model.*
+import com.github.mantasjasikenas.model.respondCreated
+import com.github.mantasjasikenas.model.respondCustom
+import com.github.mantasjasikenas.model.respondNotFound
+import com.github.mantasjasikenas.model.respondSuccess
 import com.github.mantasjasikenas.model.task.PostTaskDto
 import com.github.mantasjasikenas.model.task.UpdateTaskDto
 import io.github.smiley4.ktorswaggerui.dsl.routing.*
@@ -13,59 +17,28 @@ import io.ktor.server.request.*
 import io.ktor.server.routing.*
 
 fun Route.taskRoutes(
-    taskRepository: TaskRepository,
+    projectRepository: ProjectRepository,
     sectionRepository: SectionRepository,
+    taskRepository: TaskRepository,
 ) {
     route(taskRoutesDocs()) {
-        post("/sections/{id}/tasks", postTaskDocs()) {
-            val sectionId = call.parameters["id"]?.toInt()
+        route("/projects/{projectId}/sections/{sectionId}/tasks") {
+            get(getTasksByProjectAndSectionId()) {
+                val projectId = call.validateAndGetProjectId(projectRepository) ?: return@get
+                val sectionId = call.validateAndGetSectionId(sectionRepository) ?: return@get
 
-            if (sectionId == null) {
-                call.respondBadRequest("Section id is required")
-                return@post
+                val tasks = taskRepository.allTasks(projectId, sectionId)
+
+                call.respondSuccess("Project section tasks", tasks)
             }
 
-            sectionRepository.sectionById(sectionId) ?: run {
-                call.respondNotFound("Section not found. Please provide a valid section id")
-                return@post
-            }
+            get("/{taskId}", getTaskByIdDocs()) {
+                val projectId = call.validateAndGetProjectId(projectRepository) ?: return@get
+                val sectionId = call.validateAndGetSectionId(sectionRepository) ?: return@get
 
-            val taskDto = call.receive<PostTaskDto>()
-            val task = taskRepository.addTask(sectionId, taskDto)
+                val taskId = call.getTaskId() ?: return@get
 
-            call.respondCreated("Task created", task)
-        }
-
-        get("/projects/{projectId}/sections/{sectionId}/tasks", getTasksByProjectAndSectionId()) {
-            val projectId = call.parameters["projectId"]?.toInt()
-            val sectionId = call.parameters["sectionId"]?.toInt()
-
-            if (projectId == null || sectionId == null) {
-                call.respondBadRequest("Project id and section id are required")
-                return@get
-            }
-
-            val tasks = taskRepository.allTasks(projectId, sectionId)
-
-            call.respondSuccess("Project section tasks", tasks)
-        }
-
-        route("/tasks") {
-            get(getAllTasksDocs()) {
-                val tasks = taskRepository.allTasks()
-
-                call.respondSuccess("All tasks", tasks)
-            }
-
-            get("/{id}", getTaskByIdDocs()) {
-                val id = call.parameters["id"]?.toInt()
-
-                if (id == null) {
-                    call.respondBadRequest("Task id is required")
-                    return@get
-                }
-
-                val task = taskRepository.taskById(id)
+                val task = taskRepository.taskById(projectId, sectionId, taskId)
 
                 if (task != null) {
                     call.respondSuccess("Task by id", task)
@@ -74,21 +47,30 @@ fun Route.taskRoutes(
                 }
             }
 
-            patch("/{id}", updateTaskByIdDocs()) {
-                val id = call.parameters["id"]?.toInt()
+            post(postTaskDocs()) {
+                val projectId = call.validateAndGetProjectId(projectRepository) ?: return@post
+                val sectionId = call.validateAndGetSectionId(sectionRepository) ?: return@post
+
+                val taskDto = call.receive<PostTaskDto>()
+                val task = taskRepository.addTask(projectId, sectionId, taskDto)
+
+                if (task == null) {
+                    call.respondNotFound("Task not found")
+                    return@post
+                } else {
+                    call.respondCreated("Task created", task)
+                }
+            }
+
+            patch("/{taskId}", updateTaskByIdDocs()) {
+                val projectId = call.validateAndGetProjectId(projectRepository) ?: return@patch
+                val sectionId = call.validateAndGetSectionId(sectionRepository) ?: return@patch
+
+                val taskId = call.getTaskId() ?: return@patch
+
                 val taskDto = call.receive<UpdateTaskDto>()
 
-                if (id == null) {
-                    call.respondBadRequest("Task id is required")
-                    return@patch
-                }
-
-                taskDto.sectionId?.let { sectionRepository.sectionById(it) } ?: run {
-                    call.respondNotFound("Section not found. Please provide a valid section id")
-                    return@patch
-                }
-
-                val updatedTask = taskRepository.updateTask(id, taskDto)
+                val updatedTask = taskRepository.updateTask(projectId, sectionId, taskId, taskDto)
 
                 if (updatedTask != null) {
                     call.respondSuccess("Task updated", updatedTask)
@@ -97,15 +79,13 @@ fun Route.taskRoutes(
                 }
             }
 
-            delete("/{id}", deleteTaskByIdDocs()) {
-                val id = call.parameters["id"]?.toInt()
+            delete("/{taskId}", deleteTaskByIdDocs()) {
+                val projectId = call.validateAndGetProjectId(projectRepository) ?: return@delete
+                val sectionId = call.validateAndGetSectionId(sectionRepository) ?: return@delete
 
-                if (id == null) {
-                    call.respondBadRequest("Task id is required")
-                    return@delete
-                }
+                val taskId = call.getTaskId() ?: return@delete
 
-                val removed = taskRepository.removeTask(id)
+                val removed = taskRepository.removeTask(projectId, sectionId, taskId)
 
                 if (removed) {
                     call.respondCustom(HttpStatusCode.NoContent, "Task removed")

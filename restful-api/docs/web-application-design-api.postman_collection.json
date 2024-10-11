@@ -584,14 +584,14 @@
 							]
 						},
 						{
-							"name": "[400] Create a new project - Not all arguments provided",
+							"name": "[422] Create a new project - Not all arguments provided",
 							"event": [
 								{
 									"listen": "test",
 									"script": {
 										"exec": [
-											"pm.test(\"Status code is 400\", function () {\r",
-											"    pm.response.to.have.status(400);\r",
+											"pm.test(\"Status code is 422\", function () {\r",
+											"    pm.response.to.have.status(422);\r",
 											"});"
 										],
 										"type": "text/javascript",
@@ -2160,14 +2160,28 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/api/v1/tasks",
+									"raw": "{{baseUrl}}/api/v1/projects/:projectId/sections/:sectionId/tasks",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"api",
 										"v1",
+										"projects",
+										":projectId",
+										"sections",
+										":sectionId",
 										"tasks"
+									],
+									"variable": [
+										{
+											"key": "projectId",
+											"value": "1"
+										},
+										{
+											"key": "sectionId",
+											"value": "1"
+										}
 									]
 								},
 								"description": "Get all tasks"
@@ -2239,17 +2253,29 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/api/v1/tasks/:id",
+									"raw": "{{baseUrl}}/api/v1/projects/:projectId/sections/:sectionId/tasks/:id",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"api",
 										"v1",
+										"projects",
+										":projectId",
+										"sections",
+										":sectionId",
 										"tasks",
 										":id"
 									],
 									"variable": [
+										{
+											"key": "projectId",
+											"value": "1"
+										},
+										{
+											"key": "sectionId",
+											"value": "1"
+										},
 										{
 											"key": "id",
 											"value": "1",
@@ -2407,17 +2433,29 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/api/v1/tasks/:id",
+									"raw": "{{baseUrl}}/api/v1/projects/:projectId/sections/:sectionId/tasks/:id",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"api",
 										"v1",
+										"projects",
+										":projectId",
+										"sections",
+										":sectionId",
 										"tasks",
 										":id"
 									],
 									"variable": [
+										{
+											"key": "projectId",
+											"value": "1"
+										},
+										{
+											"key": "sectionId",
+											"value": "1"
+										},
 										{
 											"key": "id",
 											"value": "15454665",
@@ -2747,17 +2785,29 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/api/v1/tasks/:id",
+									"raw": "{{baseUrl}}/api/v1/projects/:projectId/sections/:sectionId/tasks/:id",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"api",
 										"v1",
+										"projects",
+										":projectId",
+										"sections",
+										":sectionId",
 										"tasks",
 										":id"
 									],
 									"variable": [
+										{
+											"key": "projectId",
+											"value": "1"
+										},
+										{
+											"key": "sectionId",
+											"value": "1"
+										},
 										{
 											"key": "id",
 											"value": "1",
@@ -2971,17 +3021,29 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/api/v1/tasks/:id",
+									"raw": "{{baseUrl}}/api/v1/projects/:projectId/sections/:sectionId/tasks/:id",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"api",
 										"v1",
+										"projects",
+										":projectId",
+										"sections",
+										":sectionId",
 										"tasks",
 										":id"
 									],
 									"variable": [
+										{
+											"key": "projectId",
+											"value": "1"
+										},
+										{
+											"key": "sectionId",
+											"value": "1"
+										},
 										{
 											"key": "id",
 											"value": "1",
@@ -3195,17 +3257,29 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/api/v1/tasks/:id",
+									"raw": "{{baseUrl}}/api/v1/projects/:projectId/sections/:sectionId/tasks/:id",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"api",
 										"v1",
+										"projects",
+										":projectId",
+										"sections",
+										":sectionId",
 										"tasks",
 										":id"
 									],
 									"variable": [
+										{
+											"key": "projectId",
+											"value": "1"
+										},
+										{
+											"key": "sectionId",
+											"value": "1"
+										},
 										{
 											"key": "id",
 											"value": "15465654",
@@ -3419,17 +3493,29 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/api/v1/tasks/:id",
+									"raw": "{{baseUrl}}/api/v1/projects/:projectId/sections/:sectionId/tasks/:id",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"api",
 										"v1",
+										"projects",
+										":projectId",
+										"sections",
+										":sectionId",
 										"tasks",
 										":id"
 									],
 									"variable": [
+										{
+											"key": "projectId",
+											"value": "1"
+										},
+										{
+											"key": "sectionId",
+											"value": "1"
+										},
 										{
 											"key": "id",
 											"value": "g",
@@ -3648,22 +3734,27 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/api/v1/sections/:id/tasks",
+									"raw": "{{baseUrl}}/api/v1/projects/:projectId/sections/:sectionId/tasks",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"api",
 										"v1",
+										"projects",
+										":projectId",
 										"sections",
-										":id",
+										":sectionId",
 										"tasks"
 									],
 									"variable": [
 										{
-											"key": "id",
-											"value": "1",
-											"description": "(Required) Section id"
+											"key": "projectId",
+											"value": "1"
+										},
+										{
+											"key": "sectionId",
+											"value": "1"
 										}
 									]
 								},
@@ -3821,22 +3912,27 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/api/v1/sections/:id/tasks",
+									"raw": "{{baseUrl}}/api/v1/projects/:projectId/sections/:sectionId/tasks",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"api",
 										"v1",
+										"projects",
+										":projectId",
 										"sections",
-										":id",
+										":sectionId",
 										"tasks"
 									],
 									"variable": [
 										{
-											"key": "id",
-											"value": "1",
-											"description": "(Required) Section id"
+											"key": "projectId",
+											"value": "1"
+										},
+										{
+											"key": "sectionId",
+											"value": "1"
 										}
 									]
 								},
@@ -3956,14 +4052,14 @@
 							]
 						},
 						{
-							"name": "[400] Create a new task - Not all arguments provided",
+							"name": "[422] Create a new task - Not all arguments provided",
 							"event": [
 								{
 									"listen": "test",
 									"script": {
 										"exec": [
-											"pm.test(\"Status code is 400\", function () {\r",
-											"    pm.response.to.have.status(400);\r",
+											"pm.test(\"Status code is 422\", function () {\r",
+											"    pm.response.to.have.status(422);\r",
 											"});"
 										],
 										"type": "text/javascript",
@@ -3994,22 +4090,27 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/api/v1/sections/:id/tasks",
+									"raw": "{{baseUrl}}/api/v1/projects/:projectId/sections/:sectionId/tasks",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"api",
 										"v1",
+										"projects",
+										":projectId",
 										"sections",
-										":id",
+										":sectionId",
 										"tasks"
 									],
 									"variable": [
 										{
-											"key": "id",
-											"value": "1",
-											"description": "(Required) Section id"
+											"key": "projectId",
+											"value": "1"
+										},
+										{
+											"key": "sectionId",
+											"value": "1"
 										}
 									]
 								},
@@ -4158,21 +4259,32 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/api/v1/tasks/:id",
+									"raw": "{{baseUrl}}/api/v1/projects/:projectId/sections/:sectionId/tasks/:taskId",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"api",
 										"v1",
+										"projects",
+										":projectId",
+										"sections",
+										":sectionId",
 										"tasks",
-										":id"
+										":taskId"
 									],
 									"variable": [
 										{
-											"key": "id",
-											"value": "2",
-											"description": "(Required) Task id"
+											"key": "projectId",
+											"value": "1"
+										},
+										{
+											"key": "sectionId",
+											"value": "1"
+										},
+										{
+											"key": "taskId",
+											"value": "1"
 										}
 									]
 								},
@@ -4326,21 +4438,32 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/api/v1/tasks/:id",
+									"raw": "{{baseUrl}}/api/v1/projects/:projectId/sections/:sectionId/tasks/:taskId",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"api",
 										"v1",
+										"projects",
+										":projectId",
+										"sections",
+										":sectionId",
 										"tasks",
-										":id"
+										":taskId"
 									],
 									"variable": [
 										{
-											"key": "id",
-											"value": "254546",
-											"description": "(Required) Task id"
+											"key": "projectId",
+											"value": "1"
+										},
+										{
+											"key": "sectionId",
+											"value": "1"
+										},
+										{
+											"key": "taskId",
+											"value": "5445456"
 										}
 									]
 								},
@@ -4504,14 +4627,22 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/api/v1/sections",
+									"raw": "{{baseUrl}}/api/v1/projects/:projectId/sections",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"api",
 										"v1",
+										"projects",
+										":projectId",
 										"sections"
+									],
+									"variable": [
+										{
+											"key": "projectId",
+											"value": "1"
+										}
 									]
 								},
 								"description": "Get all sections"
@@ -4583,21 +4714,26 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/api/v1/sections/:id",
+									"raw": "{{baseUrl}}/api/v1/projects/:projectId/sections/:sectionId",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"api",
 										"v1",
+										"projects",
+										":projectId",
 										"sections",
-										":id"
+										":sectionId"
 									],
 									"variable": [
 										{
-											"key": "id",
-											"value": "1",
-											"description": "(Required) Section id"
+											"key": "projectId",
+											"value": "1"
+										},
+										{
+											"key": "sectionId",
+											"value": "1"
 										}
 									]
 								},
@@ -4751,21 +4887,26 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/api/v1/sections/:id",
+									"raw": "{{baseUrl}}/api/v1/projects/:projectId/sections/:sectionId",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"api",
 										"v1",
+										"projects",
+										":projectId",
 										"sections",
-										":id"
+										":sectionId"
 									],
 									"variable": [
 										{
-											"key": "id",
-											"value": "143435",
-											"description": "(Required) Section id"
+											"key": "projectId",
+											"value": "1"
+										},
+										{
+											"key": "sectionId",
+											"value": "544454"
 										}
 									]
 								},
@@ -4938,7 +5079,7 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/api/v1/projects/:id/sections",
+									"raw": "{{baseUrl}}/api/v1/projects/:projectId/sections",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -4946,14 +5087,13 @@
 										"api",
 										"v1",
 										"projects",
-										":id",
+										":projectId",
 										"sections"
 									],
 									"variable": [
 										{
-											"key": "id",
-											"value": "1",
-											"description": "(Required) Project id"
+											"key": "projectId",
+											"value": "1"
 										}
 									]
 								},
@@ -5111,7 +5251,7 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/api/v1/projects/:id/sections",
+									"raw": "{{baseUrl}}/api/v1/projects/:projectId/sections",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -5119,14 +5259,13 @@
 										"api",
 										"v1",
 										"projects",
-										":id",
+										":projectId",
 										"sections"
 									],
 									"variable": [
 										{
-											"key": "id",
-											"value": "1",
-											"description": "(Required) Project id"
+											"key": "projectId",
+											"value": "1"
 										}
 									]
 								},
@@ -5246,14 +5385,14 @@
 							]
 						},
 						{
-							"name": "[400] Create a new section - Not all arguments provided",
+							"name": "[422] Create a new section - Not all arguments provided",
 							"event": [
 								{
 									"listen": "test",
 									"script": {
 										"exec": [
-											"pm.test(\"Status code is 400\", function () {\r",
-											"    pm.response.to.have.status(400);\r",
+											"pm.test(\"Status code is 422\", function () {\r",
+											"    pm.response.to.have.status(422);\r",
 											"});"
 										],
 										"type": "text/javascript",
@@ -5284,7 +5423,7 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/api/v1/projects/:id/sections",
+									"raw": "{{baseUrl}}/api/v1/projects/:projectId/sections",
 									"host": [
 										"{{baseUrl}}"
 									],
@@ -5292,14 +5431,13 @@
 										"api",
 										"v1",
 										"projects",
-										":id",
+										":projectId",
 										"sections"
 									],
 									"variable": [
 										{
-											"key": "id",
-											"value": "1",
-											"description": "(Required) Project id"
+											"key": "projectId",
+											"value": "1"
 										}
 									]
 								},
@@ -5462,17 +5600,23 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/api/v1/sections/:id",
+									"raw": "{{baseUrl}}/api/v1/projects/:projectId/sections/:id",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"api",
 										"v1",
+										"projects",
+										":projectId",
 										"sections",
 										":id"
 									],
 									"variable": [
+										{
+											"key": "projectId",
+											"value": "1"
+										},
 										{
 											"key": "id",
 											"value": "1",
@@ -5686,17 +5830,23 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/api/v1/sections/:id",
+									"raw": "{{baseUrl}}/api/v1/projects/:projectId/sections/:id",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"api",
 										"v1",
+										"projects",
+										":projectId",
 										"sections",
 										":id"
 									],
 									"variable": [
+										{
+											"key": "projectId",
+											"value": "1"
+										},
 										{
 											"key": "id",
 											"value": "1",
@@ -5910,17 +6060,23 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/api/v1/sections/:id",
+									"raw": "{{baseUrl}}/api/v1/projects/:projectId/sections/:id",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"api",
 										"v1",
+										"projects",
+										":projectId",
 										"sections",
 										":id"
 									],
 									"variable": [
+										{
+											"key": "projectId",
+											"value": "1"
+										},
 										{
 											"key": "id",
 											"value": "15543543",
@@ -6134,17 +6290,23 @@
 									}
 								},
 								"url": {
-									"raw": "{{baseUrl}}/api/v1/sections/:id",
+									"raw": "{{baseUrl}}/api/v1/projects/:projectId/sections/:id",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"api",
 										"v1",
+										"projects",
+										":projectId",
 										"sections",
 										":id"
 									],
 									"variable": [
+										{
+											"key": "projectId",
+											"value": "1"
+										},
 										{
 											"key": "id",
 											"value": "s",
@@ -6349,17 +6511,23 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/api/v1/sections/:id",
+									"raw": "{{baseUrl}}/api/v1/projects/:projectId/sections/:id",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"api",
 										"v1",
+										"projects",
+										":projectId",
 										"sections",
 										":id"
 									],
 									"variable": [
+										{
+											"key": "projectId",
+											"value": "1"
+										},
 										{
 											"key": "id",
 											"value": "2",
@@ -6517,17 +6685,23 @@
 									}
 								],
 								"url": {
-									"raw": "{{baseUrl}}/api/v1/sections/:id",
+									"raw": "{{baseUrl}}/api/v1/projects/:projectId/sections/:id",
 									"host": [
 										"{{baseUrl}}"
 									],
 									"path": [
 										"api",
 										"v1",
+										"projects",
+										":projectId",
 										"sections",
 										":id"
 									],
 									"variable": [
+										{
+											"key": "projectId",
+											"value": "1"
+										},
 										{
 											"key": "id",
 											"value": "253454",
@@ -6769,18 +6943,24 @@
 					}
 				},
 				"url": {
-					"raw": "{{baseUrl}}/api/v1/sections/:id/tasks",
+					"raw": "{{baseUrl}}/api/v1/projects/:projectId/sections/:id/tasks",
 					"host": [
 						"{{baseUrl}}"
 					],
 					"path": [
 						"api",
 						"v1",
+						"projects",
+						":projectId",
 						"sections",
 						":id",
 						"tasks"
 					],
 					"variable": [
+						{
+							"key": "projectId",
+							"value": "1"
+						},
 						{
 							"key": "id",
 							"value": "1",

@@ -17,7 +17,15 @@ fun postTaskDocs(): OpenApiRoute.() -> Unit = {
     description = "Create a new task"
 
     request {
-        pathParameter<Int>("id") {
+        pathParameter<Int>("projectId") {
+            description = "Project id"
+            required = true
+            example("default") {
+                value = 1
+            }
+        }
+
+        pathParameter<Int>("sectionId") {
             description = "Section id"
             required = true
             example("default") {
@@ -76,7 +84,6 @@ fun postTaskDocs(): OpenApiRoute.() -> Unit = {
                 }
             }
         }
-
         HttpStatusCode.UnprocessableEntity to {
             description = "Unprocessable entity"
             body<ApiResponse<String>> {
@@ -169,54 +176,27 @@ fun getTasksByProjectAndSectionId(): OpenApiRoute.() -> Unit = {
     }
 }
 
-fun getAllTasksDocs(): OpenApiRoute.() -> Unit = {
-    description = "Get all tasks"
-    response {
-        HttpStatusCode.OK to {
-            description = "All tasks"
-            body<ApiResponse<List<TaskDto>>> {
-                description = "API response with all tasks"
-                example("All tasks") {
-                    value = ApiResponse(
-                        data = listOf(
-                            TaskDto(
-                                id = 1,
-                                name = "Task 1",
-                                description = "Description 1",
-                                createdAt = "2021-09-01T12:00:00",
-                                sectionId = 4,
-                                priority = Priority.Vital,
-                                completed = false,
-                                dueDate = "2023-10-01T12:00:00",
-                                createdBy = "user1",
-                            ),
-                            TaskDto(
-                                id = 2,
-                                name = "Task 2",
-                                description = "Description 2",
-                                createdAt = "2022-09-01T12:00:00",
-                                sectionId = 4,
-                                priority = Priority.Vital,
-                                completed = false,
-                                dueDate = "2023-10-01T12:00:00",
-                                createdBy = "user1",
-                            )
-                        ),
-                        success = true,
-                        status = HttpStatusCode.OK.value.toString(),
-                        message = "All tasks"
-                    )
-                }
-            }
-        }
-    }
-}
-
 fun getTaskByIdDocs(): OpenApiRoute.() -> Unit = {
     description = "Get task by id"
 
     request {
-        pathParameter<Int>("id") {
+        pathParameter<Int>("projectId") {
+            description = "Project id"
+            required = true
+            example("default") {
+                value = 1
+            }
+        }
+
+        pathParameter<Int>("sectionId") {
+            description = "Section id"
+            required = true
+            example("default") {
+                value = 1
+            }
+        }
+
+        pathParameter<Int>("taskId") {
             description = "Task id"
             required = true
             example("default") {
@@ -282,16 +262,30 @@ fun updateTaskByIdDocs(): OpenApiRoute.() -> Unit = {
     description = "Update task by id"
 
     request {
-        pathParameter<Int>("id") {
+        pathParameter<Int>("projectId") {
+            description = "Project id"
+            required = true
+            example("default") {
+                value = 1
+            }
+        }
+
+        pathParameter<Int>("sectionId") {
+            description = "Section id"
+            required = true
+            example("default") {
+                value = 1
+            }
+        }
+
+        pathParameter<Int>("taskId") {
             description = "Task id"
             required = true
             example("default") {
                 value = 1
             }
         }
-    }
 
-    request {
         body<UpdateTaskDto> {
             description = "Task data to update"
             example("Update task") {
@@ -343,7 +337,6 @@ fun updateTaskByIdDocs(): OpenApiRoute.() -> Unit = {
                 }
             }
         }
-
         HttpStatusCode.UnprocessableEntity to {
             description = "Unprocessable entity"
             body<ApiResponse<String>> {
@@ -357,7 +350,6 @@ fun updateTaskByIdDocs(): OpenApiRoute.() -> Unit = {
                 }
             }
         }
-
         HttpStatusCode.NotFound to {
             description = "Task not found"
             body<ApiResponse<String>> {
@@ -378,7 +370,23 @@ fun deleteTaskByIdDocs(): OpenApiRoute.() -> Unit = {
     description = "Delete task by id"
 
     request {
-        pathParameter<Int>("id") {
+        pathParameter<Int>("projectId") {
+            description = "Project id"
+            required = true
+            example("default") {
+                value = 1
+            }
+        }
+
+        pathParameter<Int>("sectionId") {
+            description = "Section id"
+            required = true
+            example("default") {
+                value = 1
+            }
+        }
+
+        pathParameter<Int>("taskId") {
             description = "Task id"
             required = true
             example("default") {

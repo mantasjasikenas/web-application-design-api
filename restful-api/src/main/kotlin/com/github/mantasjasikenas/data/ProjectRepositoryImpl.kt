@@ -44,4 +44,8 @@ class ProjectRepositoryImpl : ProjectRepository {
             it.description = projectDto.description ?: it.description
         }?.let(::daoToModel)
     }
+
+    override suspend fun projectExists(id: Int): Boolean = suspendTransaction {
+        ProjectDAO.findById(id) != null
+    }
 }

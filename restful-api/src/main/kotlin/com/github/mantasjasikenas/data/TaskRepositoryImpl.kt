@@ -12,10 +12,6 @@ import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.selectAll
 
 class TaskRepositoryImpl : TaskRepository {
-    override suspend fun allTasks(): List<TaskDto> = suspendTransaction {
-        TaskDAO.all().map(::daoToModel)
-    }
-
     override suspend fun allTasks(projectId: Int, sectionId: Int): List<TaskDto> = suspendTransaction {
         (TasksTable innerJoin SectionsTable)
             .selectAll().where { (TasksTable.sectionId eq sectionId) and (SectionsTable.projectId eq projectId) }
@@ -23,12 +19,24 @@ class TaskRepositoryImpl : TaskRepository {
             .map(::daoToModel)
     }
 
-    override suspend fun taskById(id: Int): TaskDto? = suspendTransaction {
-        TaskDAO.findById(id)?.let(::daoToModel)
+    override suspend fun taskById(projectId: Int, sectionId: Int, id: Int): TaskDto? = suspendTransaction {
+        (TasksTable innerJoin SectionsTable)
+            .selectAll()
+            .where {
+                (TasksTable.sectionId eq sectionId) and (SectionsTable.projectId eq projectId) and (TasksTable.id eq id)
+            }.map { TaskDAO.wrapRow(it) }
+            .firstOrNull()
+            ?.let(::daoToModel)
     }
 
+    override suspend fun addTask(projectId: Int, sectionId: Int, taskDto: PostTaskDto): TaskDto? = suspendTransaction {
+        if (SectionsTable.selectAll()
+                .where { (SectionsTable.id eq sectionId) and (SectionsTable.projectId eq projectId) }
+                .count().toInt() == 0
+        ) {
+            return@suspendTransaction null
+        }
 
-    override suspend fun addTask(sectionId: Int, taskDto: PostTaskDto): TaskDto = suspendTransaction {
         TaskDAO.new {
             name = taskDto.name
             description = taskDto.description
@@ -40,21 +48,39 @@ class TaskRepositoryImpl : TaskRepository {
         }.let(::daoToModel)
     }
 
-    override suspend fun removeTask(id: Int): Boolean = suspendTransaction {
-        val rowsDeleted = TasksTable.deleteWhere {
-            TasksTable.id eq id
+    override suspend fun removeTask(projectId: Int, sectionId: Int, id: Int): Boolean = suspendTransaction {
+        val count = (TasksTable innerJoin SectionsTable)
+            .selectAll()
+            .where {
+                (TasksTable.id eq id) and (TasksTable.sectionId eq sectionId) and (SectionsTable.projectId eq projectId)
+            }.count()
+
+        if (count == 0L) {
+            return@suspendTransaction false
         }
+
+        val rowsDeleted = TasksTable.deleteWhere { TasksTable.id eq id }
+
         rowsDeleted == 1
     }
 
-    override suspend fun updateTask(id: Int, taskDto: UpdateTaskDto): TaskDto? = suspendTransaction {
-        TaskDAO.findByIdAndUpdate(id) {
-            it.name = taskDto.name ?: it.name
-            it.description = taskDto.description ?: it.description
-            it.priority = taskDto.priority ?: it.priority
-            it.sectionId = if (taskDto.sectionId != null) EntityID(taskDto.sectionId, ProjectsTable) else it.sectionId
-            it.isCompleted = taskDto.completed ?: it.isCompleted
-            it.dueDateTime = taskDto.dueDate?.let { due -> LocalDateTime.parse(due) } ?: it.dueDateTime
-        }?.let(::daoToModel)
-    }
+    override suspend fun updateTask(projectId: Int, sectionId: Int, id: Int, taskDto: UpdateTaskDto): TaskDto? =
+        suspendTransaction {
+            if (SectionsTable.selectAll()
+                    .where { (SectionsTable.id eq sectionId) and (SectionsTable.projectId eq projectId) }
+                    .count().toInt() == 0
+            ) {
+                return@suspendTransaction null
+            }
+
+            TaskDAO.findByIdAndUpdate(id) {
+                it.name = taskDto.name ?: it.name
+                it.description = taskDto.description ?: it.description
+                it.priority = taskDto.priority ?: it.priority
+                it.sectionId =
+                    if (taskDto.sectionId != null) EntityID(taskDto.sectionId, ProjectsTable) else it.sectionId
+                it.isCompleted = taskDto.completed ?: it.isCompleted
+                it.dueDateTime = taskDto.dueDate?.let { due -> LocalDateTime.parse(due) } ?: it.dueDateTime
+            }?.let(::daoToModel)
+        }
 }

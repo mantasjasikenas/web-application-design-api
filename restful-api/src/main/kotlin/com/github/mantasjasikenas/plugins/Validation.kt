@@ -11,11 +11,15 @@ import com.github.mantasjasikenas.model.task.PostTaskDto
 import com.github.mantasjasikenas.model.task.UpdateTaskDto
 import com.github.mantasjasikenas.model.task.validate
 import io.ktor.http.*
+import io.ktor.serialization.*
 import io.ktor.server.application.*
 import io.ktor.server.plugins.*
 import io.ktor.server.plugins.requestvalidation.*
 import io.ktor.server.plugins.statuspages.*
+import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.MissingFieldException
 
+@OptIn(ExperimentalSerializationApi::class)
 fun Application.configureValidation() {
     install(StatusPages) {
         exception<RequestValidationException> { call, cause ->
@@ -34,20 +38,33 @@ fun Application.configureValidation() {
             call.respondCustom(HttpStatusCode.InternalServerError, "Internal server error")
         }
 
-        exception<Throwable> { call, cause ->
-            if (cause is IllegalArgumentException) {
+        exception<Throwable> { call, throwable ->
+            if (throwable is IllegalArgumentException) {
                 call.respondCustom(HttpStatusCode.BadRequest, "Bad request (illegal argument)")
 
                 return@exception
             }
 
-            if (cause is IllegalStateException) {
+            if (throwable is IllegalStateException) {
                 call.respondCustom(HttpStatusCode.BadRequest, "Bad request (illegal state)")
 
                 return@exception
             }
 
-            if (cause is BadRequestException) {
+            if (throwable is BadRequestException) {
+                if (throwable.cause is JsonConvertException) {
+                    when (val cause = throwable.cause?.cause) {
+                        is MissingFieldException
+                            -> call.respondCustom(
+                            HttpStatusCode.UnprocessableEntity,
+                            "Missing fields: ${cause.missingFields.joinToString()}"
+                        )
+
+                        else -> call.respondCustom(HttpStatusCode.BadRequest, "Wrong JSON body")
+                    }
+                    return@exception
+                }
+
                 call.respondCustom(HttpStatusCode.BadRequest, "Bad request")
 
                 return@exception
