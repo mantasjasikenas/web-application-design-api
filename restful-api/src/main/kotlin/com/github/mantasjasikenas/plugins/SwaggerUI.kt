@@ -1,6 +1,8 @@
 ﻿package com.github.mantasjasikenas.plugins
 
 import io.github.smiley4.ktorswaggerui.SwaggerUI
+import io.github.smiley4.ktorswaggerui.data.AuthScheme
+import io.github.smiley4.ktorswaggerui.data.AuthType
 import io.ktor.server.application.*
 
 fun Application.configureSwaggerUI() {
@@ -16,6 +18,13 @@ fun Application.configureSwaggerUI() {
         server {
             url = "http://localhost:8080"
             description = "Local Server"
+        }
+        security {
+            defaultSecuritySchemeNames = setOf("SecurityScheme")
+            securityScheme("SecurityScheme") {
+                type = AuthType.HTTP
+                scheme = AuthScheme.BEARER
+            }
         }
     }
 }

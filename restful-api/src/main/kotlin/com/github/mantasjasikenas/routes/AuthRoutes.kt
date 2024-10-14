@@ -1,5 +1,6 @@
 package com.github.mantasjasikenas.routes
 
+import com.github.mantasjasikenas.docs.auth.*
 import com.github.mantasjasikenas.model.*
 import com.github.mantasjasikenas.model.auth.LoginDto
 import com.github.mantasjasikenas.model.auth.RefreshAccessTokenDto
@@ -8,6 +9,8 @@ import com.github.mantasjasikenas.model.user.PostUserDto
 import com.github.mantasjasikenas.model.user.toSuccessfulRegisterDto
 import com.github.mantasjasikenas.service.UserService
 import com.github.mantasjasikenas.util.extractSubject
+import io.github.smiley4.ktorswaggerui.dsl.routing.post
+import io.github.smiley4.ktorswaggerui.dsl.routing.route
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
@@ -16,8 +19,8 @@ import io.ktor.server.routing.*
 
 
 fun Route.authRoutes(userService: UserService) {
-    route("/auth") {
-        post("/register") {
+    route("/auth", authRoutesDocs()) {
+        post("/register", registerDocs()) {
             val postUserDto = call.receive<PostUserDto>()
 
             userService.findByUsername(postUserDto.username)?.let {
@@ -40,7 +43,7 @@ fun Route.authRoutes(userService: UserService) {
             )
         }
 
-        post("/login") {
+        post("/login", loginDocs()) {
             val loginDto = call.receive<LoginDto>()
 
             val authResponse: AuthResponse? = userService.authenticate(loginDto)
@@ -59,7 +62,7 @@ fun Route.authRoutes(userService: UserService) {
             )
         }
 
-        post("/accessToken") {
+        post("/accessToken", accessTokenDocs()) {
             val refreshAccessTokenDto = call.receive<RefreshAccessTokenDto>()
 
             val authResponse = userService.refreshToken(token = refreshAccessTokenDto.refreshToken)
@@ -79,18 +82,13 @@ fun Route.authRoutes(userService: UserService) {
         }
 
         authenticate {
-            post("/logout") {
+            post("/logout", logoutDocs()) {
                 val userId = call.extractSubject() ?: return@post call.respondCustom(
                     message = "Failed to logout",
                     status = HttpStatusCode.UnprocessableEntity
                 )
 
-                val user = userService.findById(userId) ?: return@post call.respondCustom(
-                    message = "User not found",
-                    status = HttpStatusCode.UnprocessableEntity
-                )
-
-                if (user.forceRelogin || !userService.logout(userId)) {
+                if (!userService.logout(userId)) {
                     return@post call.respondCustom(
                         message = "Failed to logout",
                         status = HttpStatusCode.UnprocessableEntity
