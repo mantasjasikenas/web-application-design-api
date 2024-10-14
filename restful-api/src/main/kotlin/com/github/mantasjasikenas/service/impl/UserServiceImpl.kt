@@ -56,6 +56,10 @@ class UserServiceImpl(
         )
     }
 
+    override suspend fun logout(userId: String): Boolean {
+        return update(id = userId, updateUserDto = UpdateUserDto(forceRelogin = true)) != null
+    }
+
     override suspend fun refreshToken(token: String): AuthResponse? {
         val decodedRefreshToken = jwtService.verifyRefreshToken(token) ?: return null
 
@@ -67,7 +71,7 @@ class UserServiceImpl(
         if (foundUser == null || userIdFromRefreshToken != foundUser.id.toString() || foundUser.forceRelogin) {
             return null
         }
-        
+
         val accessToken = jwtService.createAccessToken(foundUser.username, userId, foundUser.roles)
         val refreshToken = jwtService.createRefreshToken(userId)
 

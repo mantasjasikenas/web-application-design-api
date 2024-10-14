@@ -34,7 +34,6 @@ class JwtServiceImpl(
 
     override fun createAccessToken(username: String, userId: String, roles: List<Role>): String {
         return createJwtCreatorBaseBuilder(userId)
-            // todo replace username with claim name
             .withClaim("username", username)
             .withArrayClaim("roles", roles.map { it.name }.toTypedArray())
             .withExpiresAt(Date(System.currentTimeMillis() + 10.minutes.inWholeMilliseconds))

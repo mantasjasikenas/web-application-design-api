@@ -10,11 +10,11 @@ import com.github.mantasjasikenas.routes.sectionRoutes
 import com.github.mantasjasikenas.routes.taskRoutes
 import com.github.mantasjasikenas.service.UserService
 import com.github.mantasjasikenas.util.authorized
+import com.github.mantasjasikenas.util.extractClaim
 import io.github.smiley4.ktorswaggerui.routing.openApiSpec
 import io.github.smiley4.ktorswaggerui.routing.swaggerUI
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
-import io.ktor.server.auth.jwt.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
@@ -64,9 +64,3 @@ fun Application.configureRouting(
         }
     }
 }
-
-private fun ApplicationCall.extractClaim(claim: String): String? =
-    this.principal<JWTPrincipal>()
-        ?.payload
-        ?.getClaim(claim)
-        ?.asString()

@@ -7,8 +7,10 @@ import com.github.mantasjasikenas.model.auth.SuccessfulLoginDto
 import com.github.mantasjasikenas.model.user.PostUserDto
 import com.github.mantasjasikenas.model.user.toSuccessfulRegisterDto
 import com.github.mantasjasikenas.service.UserService
+import com.github.mantasjasikenas.util.extractSubject
 import io.ktor.http.*
 import io.ktor.server.application.*
+import io.ktor.server.auth.*
 import io.ktor.server.request.*
 import io.ktor.server.routing.*
 
@@ -74,6 +76,29 @@ fun Route.authRoutes(userService: UserService) {
                 message = "Unprocessable entity",
                 status = HttpStatusCode.UnprocessableEntity
             )
+        }
+
+        authenticate {
+            post("/logout") {
+                val userId = call.extractSubject() ?: return@post call.respondCustom(
+                    message = "Failed to logout",
+                    status = HttpStatusCode.UnprocessableEntity
+                )
+
+                val user = userService.findById(userId) ?: return@post call.respondCustom(
+                    message = "User not found",
+                    status = HttpStatusCode.UnprocessableEntity
+                )
+
+                if (user.forceRelogin || !userService.logout(userId)) {
+                    return@post call.respondCustom(
+                        message = "Failed to logout",
+                        status = HttpStatusCode.UnprocessableEntity
+                    )
+                }
+
+                call.respondSuccess<Unit>("Logout successful")
+            }
         }
     }
 }

@@ -16,5 +16,6 @@ interface UserService {
     suspend fun assignRole(userId: String, role: Role): Boolean
     suspend fun update(id: String, updateUserDto: UpdateUserDto): User?
     suspend fun authenticate(loginDto: LoginDto): AuthResponse?
+    suspend fun logout(userId: String): Boolean
     suspend fun refreshToken(token: String): AuthResponse?
 }
