@@ -1,4 +1,4 @@
-﻿package com.github.mantasjasikenas.data
+﻿package com.github.mantasjasikenas.repository
 
 import com.github.mantasjasikenas.model.project.PostProjectDto
 import com.github.mantasjasikenas.model.project.ProjectDto

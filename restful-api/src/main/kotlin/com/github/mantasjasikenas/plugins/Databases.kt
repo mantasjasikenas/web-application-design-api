@@ -1,8 +1,6 @@
 package com.github.mantasjasikenas.plugins
 
-import com.github.mantasjasikenas.db.ProjectsTable
-import com.github.mantasjasikenas.db.SectionsTable
-import com.github.mantasjasikenas.db.TasksTable
+import com.github.mantasjasikenas.db.tables.*
 import io.ktor.server.application.*
 import org.jetbrains.exposed.sql.Database
 import org.jetbrains.exposed.sql.SchemaUtils
@@ -21,6 +19,12 @@ fun Application.configureDatabases() {
     )
 
     transaction {
-        SchemaUtils.createMissingTablesAndColumns(TasksTable, ProjectsTable, SectionsTable)
+        SchemaUtils.createMissingTablesAndColumns(
+            TasksTable,
+            ProjectsTable,
+            SectionsTable,
+            UsersRolesTable,
+            UsersTable
+        )
     }
 }

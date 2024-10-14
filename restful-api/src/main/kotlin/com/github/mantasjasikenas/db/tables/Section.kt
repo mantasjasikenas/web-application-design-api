@@ -1,4 +1,4 @@
-﻿package com.github.mantasjasikenas.db
+﻿package com.github.mantasjasikenas.db.tables
 
 import com.github.mantasjasikenas.model.section.SectionDto
 import org.jetbrains.exposed.dao.IntEntity
@@ -14,7 +14,7 @@ object SectionsTable : IntIdTable() {
     val projectId = reference("project_id", ProjectsTable, onDelete = ReferenceOption.CASCADE)
     val name = varchar("name", 255)
     val createdAt = datetime("created_at").defaultExpression(CurrentDateTime)
-    val createdBy = varchar("created_by", 255)
+    val createdBy = reference("created_by", UsersTable, onDelete = ReferenceOption.CASCADE)
 }
 
 class SectionDAO(id: EntityID<Int>) : IntEntity(id) {
@@ -32,6 +32,6 @@ fun daoToModel(dao: SectionDAO) = SectionDto(
     id = dao.id.value,
     name = dao.name,
     createdAt = dao.createdAt.toString(),
-    createdBy = dao.createdBy,
+    createdBy = dao.createdBy.value.toString(),
     projectId = dao.project.id.value,
 )

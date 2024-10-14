@@ -42,7 +42,7 @@ fun postProjectDocs(): OpenApiRoute.() -> Unit = {
         )
 
         badRequestResponse(
-            message = "Invalid project data"
+            message = "Invalid project repository"
         )
 
         unprocessableEntityResponse(
@@ -82,7 +82,7 @@ fun updateProjectByIdDocs(): OpenApiRoute.() -> Unit = {
         projectIdPathParameter()
 
         body<UpdateProjectDto> {
-            description = "Project data to update"
+            description = "Project repository to update"
             example("default") {
                 value = updateProjectDtoExample
             }
@@ -96,7 +96,7 @@ fun updateProjectByIdDocs(): OpenApiRoute.() -> Unit = {
         )
 
         badRequestResponse(
-            message = "Invalid project data"
+            message = "Invalid project repository"
         )
 
         unprocessableEntityResponse(

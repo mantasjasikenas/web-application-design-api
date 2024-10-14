@@ -1,15 +1,18 @@
-﻿package com.github.mantasjasikenas.data
+﻿package com.github.mantasjasikenas.repository.impl
 
-import com.github.mantasjasikenas.db.*
+import com.github.mantasjasikenas.db.suspendTransaction
+import com.github.mantasjasikenas.db.tables.*
 import com.github.mantasjasikenas.model.task.PostTaskDto
 import com.github.mantasjasikenas.model.task.TaskDto
 import com.github.mantasjasikenas.model.task.UpdateTaskDto
+import com.github.mantasjasikenas.repository.TaskRepository
 import kotlinx.datetime.LocalDateTime
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.selectAll
+import java.util.*
 
 class TaskRepositoryImpl : TaskRepository {
     override suspend fun allTasks(projectId: Int, sectionId: Int): List<TaskDto> = suspendTransaction {
@@ -44,7 +47,7 @@ class TaskRepositoryImpl : TaskRepository {
             this.sectionId = EntityID(sectionId, TasksTable)
             isCompleted = taskDto.completed
             dueDateTime = taskDto.dueDate?.let { LocalDateTime.parse(it) }
-            createdBy = taskDto.createdBy
+            createdBy = EntityID(UUID.fromString(taskDto.createdBy), UsersTable)
         }.let(::daoToModel)
     }
 

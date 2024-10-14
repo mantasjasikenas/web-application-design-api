@@ -1,14 +1,18 @@
-﻿package com.github.mantasjasikenas.data
+﻿package com.github.mantasjasikenas.repository.impl
 
-import com.github.mantasjasikenas.db.ProjectDAO
-import com.github.mantasjasikenas.db.ProjectsTable
-import com.github.mantasjasikenas.db.daoToModel
 import com.github.mantasjasikenas.db.suspendTransaction
+import com.github.mantasjasikenas.db.tables.ProjectDAO
+import com.github.mantasjasikenas.db.tables.ProjectsTable
+import com.github.mantasjasikenas.db.tables.UsersTable
+import com.github.mantasjasikenas.db.tables.daoToModel
 import com.github.mantasjasikenas.model.project.PostProjectDto
 import com.github.mantasjasikenas.model.project.ProjectDto
 import com.github.mantasjasikenas.model.project.UpdateProjectDto
+import com.github.mantasjasikenas.repository.ProjectRepository
+import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.deleteWhere
+import java.util.*
 
 class ProjectRepositoryImpl : ProjectRepository {
     override suspend fun allProjects(): List<ProjectDto> = suspendTransaction {
@@ -27,7 +31,7 @@ class ProjectRepositoryImpl : ProjectRepository {
         ProjectDAO.new {
             name = projectDto.name
             description = projectDto.description
-            createdBy = projectDto.createdBy
+            createdBy = EntityID(UUID.fromString(projectDto.createdBy), UsersTable)
         }.let(::daoToModel)
     }
 

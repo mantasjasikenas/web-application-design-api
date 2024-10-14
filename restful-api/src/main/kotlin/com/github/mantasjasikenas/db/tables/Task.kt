@@ -1,4 +1,4 @@
-package com.github.mantasjasikenas.db
+package com.github.mantasjasikenas.db.tables
 
 import com.github.mantasjasikenas.model.task.Priority
 import com.github.mantasjasikenas.model.task.TaskDto
@@ -17,8 +17,8 @@ object TasksTable : IntIdTable() {
     val priority = enumerationByName("priority", 10, Priority::class)
     val isCompleted = bool("is_completed").default(false)
     val dueDateTime = datetime("due_date").nullable()
-    val createdBy = varchar("created_by", 255)
     val createdAt = datetime("created_at").defaultExpression(CurrentDateTime)
+    val createdBy = reference("created_by", UsersTable, onDelete = ReferenceOption.CASCADE)
     val sectionId = reference("section_id", SectionsTable, onDelete = ReferenceOption.CASCADE)
 }
 
@@ -46,6 +46,6 @@ fun daoToModel(dao: TaskDAO) = TaskDto(
     priority = dao.priority,
     completed = dao.isCompleted,
     dueDate = dao.dueDateTime.toString(),
-    createdBy = dao.createdBy,
+    createdBy = dao.createdBy.value.toString(),
     createdAt = dao.createdAt.toString(),
 )

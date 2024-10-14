@@ -5,7 +5,7 @@ services:
     volumes:
       - ./src/main/kotlin/com/github/mantasjasikenas/db/dumps/init.sql:/docker-entrypoint-initdb.d/docker_postgres_init.sql
     #    volumes:
-    #      - pgdata:/var/lib/postgresql/data
+    #      - pgdata:/var/lib/postgresql/repository
     environment:
       POSTGRES_DB: todo_db
       POSTGRES_HOST_AUTH_METHOD: trust

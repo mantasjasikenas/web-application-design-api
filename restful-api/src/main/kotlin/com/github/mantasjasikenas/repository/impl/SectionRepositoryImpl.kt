@@ -1,14 +1,17 @@
-﻿package com.github.mantasjasikenas.data
+﻿package com.github.mantasjasikenas.repository.impl
 
-import com.github.mantasjasikenas.db.*
+import com.github.mantasjasikenas.db.suspendTransaction
+import com.github.mantasjasikenas.db.tables.*
 import com.github.mantasjasikenas.model.section.PostSectionDto
 import com.github.mantasjasikenas.model.section.SectionDto
 import com.github.mantasjasikenas.model.section.UpdateSectionDto
+import com.github.mantasjasikenas.repository.SectionRepository
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.selectAll
+import java.util.*
 
 class SectionRepositoryImpl : SectionRepository {
     override suspend fun allSections(projectId: Int): List<SectionDto> = suspendTransaction {
@@ -36,7 +39,7 @@ class SectionRepositoryImpl : SectionRepository {
 
         SectionDAO.new {
             name = sectionDto.name
-            createdBy = sectionDto.createdBy
+            createdBy = EntityID(UUID.fromString(sectionDto.createdBy), UsersTable)
             this.projectId = EntityID(projectId, ProjectsTable)
         }.let(::daoToModel)
     }

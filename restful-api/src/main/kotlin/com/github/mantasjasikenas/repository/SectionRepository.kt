@@ -1,4 +1,4 @@
-﻿package com.github.mantasjasikenas.data
+﻿package com.github.mantasjasikenas.repository
 
 import com.github.mantasjasikenas.model.section.PostSectionDto
 import com.github.mantasjasikenas.model.section.SectionDto

@@ -10,6 +10,8 @@ import com.github.mantasjasikenas.model.section.validate
 import com.github.mantasjasikenas.model.task.PostTaskDto
 import com.github.mantasjasikenas.model.task.UpdateTaskDto
 import com.github.mantasjasikenas.model.task.validate
+import com.github.mantasjasikenas.model.user.PostUserDto
+import com.github.mantasjasikenas.model.user.validate
 import io.ktor.http.*
 import io.ktor.serialization.*
 import io.ktor.server.application.*
@@ -26,31 +28,30 @@ fun Application.configureValidation() {
             call.respondCustom(HttpStatusCode.UnprocessableEntity, cause.reasons.joinToString())
         }
 
+        status(HttpStatusCode.Unauthorized) { call, _ ->
+            call.respondCustom(HttpStatusCode.Unauthorized, "The request is unauthenticated")
+        }
+
+        status(HttpStatusCode.Forbidden) { call, _ ->
+            call.respondCustom(HttpStatusCode.Forbidden, "Access to the resource is prohibited")
+        }
+
         status(HttpStatusCode.NotFound) { call, _ ->
-            call.respondCustom(HttpStatusCode.NotFound, "Resource not found")
+            call.respondCustom(HttpStatusCode.NotFound, "Requested resource could not be found")
         }
 
         status(HttpStatusCode.BadRequest) { call, _ ->
-            call.respondCustom(HttpStatusCode.BadRequest, "Bad request")
+            call.respondCustom(HttpStatusCode.BadRequest, "The server could not understand the request")
         }
 
         status(HttpStatusCode.InternalServerError) { call, _ ->
-            call.respondCustom(HttpStatusCode.InternalServerError, "Internal server error")
+            call.respondCustom(
+                HttpStatusCode.InternalServerError,
+                "The server has encountered a situation it does not know how to handle"
+            )
         }
 
         exception<Throwable> { call, throwable ->
-            if (throwable is IllegalArgumentException) {
-                call.respondCustom(HttpStatusCode.BadRequest, "Bad request (illegal argument)")
-
-                return@exception
-            }
-
-            if (throwable is IllegalStateException) {
-                call.respondCustom(HttpStatusCode.BadRequest, "Bad request (illegal state)")
-
-                return@exception
-            }
-
             if (throwable is BadRequestException) {
                 if (throwable.cause is JsonConvertException) {
                     when (val cause = throwable.cause?.cause) {
@@ -65,7 +66,7 @@ fun Application.configureValidation() {
                     return@exception
                 }
 
-                call.respondCustom(HttpStatusCode.BadRequest, "Bad request")
+                call.respondCustom(HttpStatusCode.BadRequest, "The server could not understand the request")
 
                 return@exception
             }
@@ -80,5 +81,7 @@ fun Application.configureValidation() {
         validate<UpdateTaskDto>(UpdateTaskDto::validate)
         validate<UpdateProjectDto>(UpdateProjectDto::validate)
         validate<UpdateSectionDto>(UpdateSectionDto::validate)
+
+        validate<PostUserDto>(PostUserDto::validate)
     }
 }

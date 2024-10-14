@@ -1,4 +1,4 @@
-package com.github.mantasjasikenas.data
+package com.github.mantasjasikenas.repository
 
 import com.github.mantasjasikenas.model.task.PostTaskDto
 import com.github.mantasjasikenas.model.task.TaskDto
@@ -11,4 +11,3 @@ interface TaskRepository {
     suspend fun removeTask(projectId: Int, sectionId: Int, id: Int): Boolean
     suspend fun updateTask(projectId: Int, sectionId: Int, id: Int, taskDto: UpdateTaskDto): TaskDto?
 }
-

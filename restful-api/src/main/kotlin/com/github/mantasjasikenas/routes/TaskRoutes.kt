@@ -1,8 +1,8 @@
 ﻿package com.github.mantasjasikenas.routes
 
-import com.github.mantasjasikenas.data.ProjectRepository
-import com.github.mantasjasikenas.data.SectionRepository
-import com.github.mantasjasikenas.data.TaskRepository
+import com.github.mantasjasikenas.repository.ProjectRepository
+import com.github.mantasjasikenas.repository.SectionRepository
+import com.github.mantasjasikenas.repository.TaskRepository
 import com.github.mantasjasikenas.docs.task.*
 import com.github.mantasjasikenas.model.respondCreated
 import com.github.mantasjasikenas.model.respondCustom

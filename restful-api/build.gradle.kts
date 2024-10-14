@@ -39,4 +39,6 @@ dependencies {
     testImplementation(libs.kotlin.test.junit)
     implementation(libs.swagger.codegen.generators)
     implementation(libs.smiley4.ktor.swagger.ui)
+    implementation(libs.ktor.server.auth)
+    implementation(libs.ktor.server.auth.jwt)
 }

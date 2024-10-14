@@ -1,22 +1,53 @@
 package com.github.mantasjasikenas.plugins
 
-import com.github.mantasjasikenas.data.*
+import com.github.mantasjasikenas.model.Role
+import com.github.mantasjasikenas.repository.ProjectRepository
+import com.github.mantasjasikenas.repository.SectionRepository
+import com.github.mantasjasikenas.repository.TaskRepository
+import com.github.mantasjasikenas.routes.authRoutes
 import com.github.mantasjasikenas.routes.projectRoutes
 import com.github.mantasjasikenas.routes.sectionRoutes
 import com.github.mantasjasikenas.routes.taskRoutes
+import com.github.mantasjasikenas.service.UserService
+import com.github.mantasjasikenas.util.authorized
 import io.github.smiley4.ktorswaggerui.routing.openApiSpec
 import io.github.smiley4.ktorswaggerui.routing.swaggerUI
 import io.ktor.server.application.*
+import io.ktor.server.auth.*
+import io.ktor.server.auth.jwt.*
+import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
 
-fun Application.configureRouting() {
-    val projectRepository: ProjectRepository = ProjectRepositoryImpl()
-    val taskRepository: TaskRepository = TaskRepositoryImpl()
-    val sectionRepository: SectionRepository = SectionRepositoryImpl()
-
+fun Application.configureRouting(
+    projectRepository: ProjectRepository,
+    sectionRepository: SectionRepository,
+    taskRepository: TaskRepository,
+    userService: UserService
+) {
     routing {
         route("/api/v1") {
+
+            authenticate {
+                authorized(Role.Admin) {
+                    get("/protected/admin") {
+                        val username = call.extractClaim("username")
+
+                        call.respond("You are authorized as Admin. Your username is $username.")
+                    }
+                }
+            }
+
+            authenticate {
+                authorized(Role.User) {
+                    get("/protected/user") {
+                        val username = call.extractClaim("username")
+
+                        call.respond("You are authorized as User. Your username is $username.")
+                    }
+                }
+            }
+
             route("api.json") {
                 openApiSpec()
             }
@@ -25,9 +56,17 @@ fun Application.configureRouting() {
                 swaggerUI("/api/v1/api.json")
             }
 
+            authRoutes(userService)
+
             projectRoutes(projectRepository)
             sectionRoutes(sectionRepository, projectRepository)
             taskRoutes(projectRepository, sectionRepository, taskRepository)
         }
     }
 }
+
+private fun ApplicationCall.extractClaim(claim: String): String? =
+    this.principal<JWTPrincipal>()
+        ?.payload
+        ?.getClaim(claim)
+        ?.asString()

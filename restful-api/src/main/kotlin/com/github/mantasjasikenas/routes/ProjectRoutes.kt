@@ -1,10 +1,10 @@
 ﻿package com.github.mantasjasikenas.routes
 
-import com.github.mantasjasikenas.data.ProjectRepository
 import com.github.mantasjasikenas.docs.project.*
 import com.github.mantasjasikenas.model.*
 import com.github.mantasjasikenas.model.project.PostProjectDto
 import com.github.mantasjasikenas.model.project.UpdateProjectDto
+import com.github.mantasjasikenas.repository.ProjectRepository
 import io.github.smiley4.ktorswaggerui.dsl.routing.*
 import io.ktor.http.*
 import io.ktor.server.application.*

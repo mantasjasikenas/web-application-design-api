@@ -30,7 +30,7 @@ fun postTaskDocs(): OpenApiRoute.() -> Unit = {
     response {
         createdResponse(description = "Task created", message = "Task created", data = taskDtoExample)
 
-        badRequestResponse(message = "Invalid task data")
+        badRequestResponse(message = "Invalid task repository")
 
         unprocessableEntityResponse(message = "Validation failed")
     }
@@ -91,7 +91,7 @@ fun updateTaskByIdDocs(): OpenApiRoute.() -> Unit = {
         taskIdPathParameter()
 
         body<UpdateTaskDto> {
-            description = "Task data to update"
+            description = "Task repository to update"
             example("Update task") {
                 value = updateTaskDtoExample
             }
@@ -107,7 +107,7 @@ fun updateTaskByIdDocs(): OpenApiRoute.() -> Unit = {
             )
         )
 
-        badRequestResponse(message = "Invalid task data")
+        badRequestResponse(message = "Invalid task repository")
 
         unprocessableEntityResponse(message = "Validation failed")
 

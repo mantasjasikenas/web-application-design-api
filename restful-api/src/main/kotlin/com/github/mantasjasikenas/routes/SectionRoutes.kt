@@ -1,7 +1,7 @@
 ﻿package com.github.mantasjasikenas.routes
 
-import com.github.mantasjasikenas.data.ProjectRepository
-import com.github.mantasjasikenas.data.SectionRepository
+import com.github.mantasjasikenas.repository.ProjectRepository
+import com.github.mantasjasikenas.repository.SectionRepository
 import com.github.mantasjasikenas.docs.section.*
 import com.github.mantasjasikenas.model.*
 import com.github.mantasjasikenas.model.section.PostSectionDto

@@ -29,7 +29,7 @@ fun postSectionDocs(): OpenApiRoute.() -> Unit = {
     response {
         createdResponse(description = "Section created", message = "Section created", data = sectionDtoExample)
 
-        badRequestResponse(message = "Invalid section data")
+        badRequestResponse(message = "Invalid section repository")
 
         notFoundResponse(message = "Project not found")
 
@@ -80,7 +80,7 @@ fun updateSectionByIdDocs(): OpenApiRoute.() -> Unit = {
         sectionIdPathParameter()
 
         body<UpdateSectionDto> {
-            description = "Section data to update"
+            description = "Section repository to update"
             example("default") {
                 value = updateSectionDtoExample
             }
@@ -90,7 +90,7 @@ fun updateSectionByIdDocs(): OpenApiRoute.() -> Unit = {
     response {
         okResponse(description = "Section updated", message = "Section updated", data = sectionDtoExample)
 
-        badRequestResponse(message = "Invalid section data")
+        badRequestResponse(message = "Invalid section repository")
 
         notFoundResponse(message = "Section not found")
 
