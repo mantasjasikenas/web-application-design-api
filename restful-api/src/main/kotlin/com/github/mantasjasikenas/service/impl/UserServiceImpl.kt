@@ -33,6 +33,10 @@ class UserServiceImpl(
         return userRepository.assignRole(userId, role)
     }
 
+    override suspend fun newAndAssignRole(postUserDto: PostUserDto, role: Role): UserDto? {
+        return userRepository.newAndAssignRole(postUserDto, role)?.let(::modelToDto)
+    }
+
     override suspend fun update(id: String, updateUserDto: UpdateUserDto): User? {
         return userRepository.update(id, updateUserDto)
     }

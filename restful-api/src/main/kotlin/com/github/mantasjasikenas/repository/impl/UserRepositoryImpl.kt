@@ -43,6 +43,21 @@ class UserRepositoryImpl : UserRepository {
         return@suspendTransaction true
     }
 
+    override suspend fun newAndAssignRole(postUserDto: PostUserDto, role: Role): User = suspendTransaction {
+        val userDao = UserDAO.new {
+            userName = postUserDto.username
+            email = postUserDto.email
+            password = postUserDto.password
+        }
+
+        UserRoleDAO.new {
+            this.userId = EntityID(userDao.id.value, UsersTable)
+            this.role = role
+        }
+
+        return@suspendTransaction daoToModel(userDao)
+    }
+
     override suspend fun delete(id: String): Boolean = suspendTransaction {
         UserDAO.findById(UUID.fromString(id))?.delete() ?: false
 

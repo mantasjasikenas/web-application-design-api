@@ -30,12 +30,10 @@ fun Route.authRoutes(userService: UserService) {
                 )
             }
 
-            val createdUser = userService.new(postUserDto) ?: return@post call.respondCustom(
+            val createdUser = userService.newAndAssignRole(postUserDto, Role.User) ?: return@post call.respondCustom(
                 message = "Failed to create user",
                 status = HttpStatusCode.UnprocessableEntity
             )
-
-            userService.assignRole(createdUser.id, Role.User)
 
             call.respondCreated(
                 "User created successfully",

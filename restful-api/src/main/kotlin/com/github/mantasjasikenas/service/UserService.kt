@@ -14,6 +14,7 @@ interface UserService {
     suspend fun findByUsername(username: String): UserDto?
     suspend fun new(postUserDto: PostUserDto): UserDto?
     suspend fun assignRole(userId: String, role: Role): Boolean
+    suspend fun newAndAssignRole(postUserDto: PostUserDto, role: Role): UserDto?
     suspend fun update(id: String, updateUserDto: UpdateUserDto): User?
     suspend fun authenticate(loginDto: LoginDto): AuthResponse?
     suspend fun logout(userId: String): Boolean

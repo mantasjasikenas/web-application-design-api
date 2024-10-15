@@ -10,6 +10,7 @@ interface UserRepository {
     suspend fun findById(id: String): User?
     suspend fun findByUsername(username: String): User?
     suspend fun new(postUserDto: PostUserDto): User?
+    suspend fun newAndAssignRole(postUserDto: PostUserDto, role: Role): User?
     suspend fun assignRole(userId: String, role: Role): Boolean
     suspend fun delete(id: String): Boolean
     suspend fun update(id: String, userDto: UpdateUserDto): User?

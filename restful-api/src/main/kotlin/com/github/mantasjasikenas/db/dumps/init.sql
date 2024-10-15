@@ -86,7 +86,7 @@ $$
             user_id uuid    not null
                 constraint fk_users_roles_user_id__id
                     references users
-                    on update restrict on delete restrict,
+                    on update restrict on delete cascade,
             role_id integer not null
         );
 
