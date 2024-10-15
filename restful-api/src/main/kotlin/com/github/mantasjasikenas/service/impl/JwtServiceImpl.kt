@@ -12,7 +12,7 @@ import com.github.mantasjasikenas.service.JwtService
 import io.ktor.server.application.*
 import io.ktor.server.auth.jwt.*
 import java.util.*
-import kotlin.time.Duration.Companion.hours
+import kotlin.time.Duration.Companion.days
 import kotlin.time.Duration.Companion.minutes
 
 class JwtServiceImpl(
@@ -36,13 +36,13 @@ class JwtServiceImpl(
         return createJwtCreatorBaseBuilder(userId)
             .withClaim("username", username)
             .withArrayClaim("roles", roles.map { it.name }.toTypedArray())
-            .withExpiresAt(Date(System.currentTimeMillis() + 10.minutes.inWholeMilliseconds))
+            .withExpiresAt(Date(System.currentTimeMillis() + 5.minutes.inWholeMilliseconds))
             .sign(Algorithm.HMAC256(secret))
     }
 
     override fun createRefreshToken(userId: String): String {
         return createJwtCreatorBaseBuilder(userId)
-            .withExpiresAt(Date(System.currentTimeMillis() + 24.hours.inWholeMilliseconds))
+            .withExpiresAt(Date(System.currentTimeMillis() + 30.days.inWholeMilliseconds))
             .sign(Algorithm.HMAC256(secret))
     }
 

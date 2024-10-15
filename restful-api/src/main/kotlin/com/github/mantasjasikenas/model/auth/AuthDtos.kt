@@ -3,7 +3,7 @@
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class SuccessfulLoginDto(val accessToken: String, val refreshToken: String)
+data class SuccessfulLoginDto(val accessToken: String)
 
 @Serializable
 data class SuccessfulRegisterDto(val id: String, val userName: String, val email: String)

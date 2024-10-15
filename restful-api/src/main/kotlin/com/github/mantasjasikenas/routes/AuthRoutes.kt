@@ -3,7 +3,6 @@ package com.github.mantasjasikenas.routes
 import com.github.mantasjasikenas.docs.auth.*
 import com.github.mantasjasikenas.model.*
 import com.github.mantasjasikenas.model.auth.LoginDto
-import com.github.mantasjasikenas.model.auth.RefreshAccessTokenDto
 import com.github.mantasjasikenas.model.auth.SuccessfulLoginDto
 import com.github.mantasjasikenas.model.user.PostUserDto
 import com.github.mantasjasikenas.model.user.toSuccessfulRegisterDto
@@ -16,6 +15,7 @@ import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.request.*
 import io.ktor.server.routing.*
+import kotlin.time.Duration.Companion.days
 
 
 fun Route.authRoutes(userService: UserService) {
@@ -46,36 +46,49 @@ fun Route.authRoutes(userService: UserService) {
 
             val authResponse: AuthResponse? = userService.authenticate(loginDto)
 
-            authResponse?.let {
-                call.respondSuccess(
-                    message = "Login successful",
-                    data = SuccessfulLoginDto(
-                        accessToken = it.accessToken,
-                        refreshToken = it.refreshToken
-                    )
+            if (authResponse == null) {
+                call.respondCustom(
+                    message = "Username or password is incorrect",
+                    status = HttpStatusCode.UnprocessableEntity
                 )
-            } ?: call.respondCustom(
-                message = "Username or password is incorrect",
-                status = HttpStatusCode.UnprocessableEntity
+
+                return@post
+            }
+
+            call.appendRefreshTokenCookie(authResponse.refreshToken)
+
+            call.respondSuccess(
+                message = "Login successful",
+                data = SuccessfulLoginDto(
+                    accessToken = authResponse.accessToken
+                )
             )
         }
 
         post("/accessToken", accessTokenDocs()) {
-            val refreshAccessTokenDto = call.receive<RefreshAccessTokenDto>()
-
-            val authResponse = userService.refreshToken(token = refreshAccessTokenDto.refreshToken)
-
-            authResponse?.let {
-                call.respondSuccess(
-                    message = "Access token refreshed successfully",
-                    data = SuccessfulLoginDto(
-                        accessToken = it.accessToken,
-                        refreshToken = it.refreshToken
-                    )
-                )
-            } ?: call.respondCustom(
-                message = "Unprocessable entity",
+            val refreshToken = call.request.cookies["RefreshToken"] ?: return@post call.respondCustom(
+                message = "Refresh token not found",
                 status = HttpStatusCode.UnprocessableEntity
+            )
+
+            val authResponse = userService.refreshToken(token = refreshToken)
+
+            if (authResponse == null) {
+                call.respondCustom(
+                    message = "Unprocessable entity",
+                    status = HttpStatusCode.UnprocessableEntity
+                )
+
+                return@post
+            }
+
+            call.appendRefreshTokenCookie(authResponse.refreshToken)
+
+            call.respondSuccess(
+                message = "Access token refreshed successfully",
+                data = SuccessfulLoginDto(
+                    accessToken = authResponse.accessToken
+                )
             )
         }
 
@@ -99,3 +112,12 @@ fun Route.authRoutes(userService: UserService) {
     }
 }
 
+private fun ApplicationCall.appendRefreshTokenCookie(refreshToken: String) {
+    this.response.cookies.append(
+        name = "RefreshToken",
+        value = refreshToken,
+        maxAge = 30.days.inWholeSeconds,
+        httpOnly = true,
+        //secure = true
+    )
+}
