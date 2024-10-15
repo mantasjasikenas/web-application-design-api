@@ -4,10 +4,7 @@ import com.github.mantasjasikenas.model.Role
 import com.github.mantasjasikenas.repository.ProjectRepository
 import com.github.mantasjasikenas.repository.SectionRepository
 import com.github.mantasjasikenas.repository.TaskRepository
-import com.github.mantasjasikenas.routes.authRoutes
-import com.github.mantasjasikenas.routes.projectRoutes
-import com.github.mantasjasikenas.routes.sectionRoutes
-import com.github.mantasjasikenas.routes.taskRoutes
+import com.github.mantasjasikenas.routes.*
 import com.github.mantasjasikenas.service.UserService
 import com.github.mantasjasikenas.util.authorized
 import com.github.mantasjasikenas.util.extractClaim
@@ -55,6 +52,8 @@ fun Application.configureRouting(
             route("swagger") {
                 swaggerUI("/api/v1/api.json")
             }
+
+            scalarRoute("/api/v1/api.json")
 
             authRoutes(userService)
 
