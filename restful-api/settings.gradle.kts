@@ -1,1 +1,1 @@
-rootProject.name = "com.github.mantasjasikenas.restful-api"
+rootProject.name = "restful-api"
