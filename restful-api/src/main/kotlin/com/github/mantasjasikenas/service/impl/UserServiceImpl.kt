@@ -6,11 +6,18 @@ import com.github.mantasjasikenas.model.auth.LoginDto
 import com.github.mantasjasikenas.model.user.*
 import com.github.mantasjasikenas.repository.UserRepository
 import com.github.mantasjasikenas.service.JwtService
+import com.github.mantasjasikenas.service.SessionService
 import com.github.mantasjasikenas.service.UserService
+import kotlinx.datetime.Clock
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
+import java.util.*
+import kotlin.time.Duration.Companion.days
 
 class UserServiceImpl(
     private val userRepository: UserRepository,
     private val jwtService: JwtService,
+    private val sessionService: SessionService
 ) : UserService {
 
     override suspend fun all(): List<UserDto> {
@@ -49,10 +56,15 @@ class UserServiceImpl(
             return null
         }
 
-        update(id = foundUser.id.toString(), updateUserDto = UpdateUserDto(forceRelogin = false)) ?: return null
+        val userId = foundUser.id
 
-        val accessToken = jwtService.createAccessToken(username, foundUser.id.toString(), foundUser.roles)
-        val refreshToken = jwtService.createRefreshToken(foundUser.id.toString())
+        val sessionId = UUID.randomUUID()
+        val expiresAt = Clock.System.now().plus(3.days).toLocalDateTime(TimeZone.UTC)
+
+        val accessToken = jwtService.createAccessToken(username, userId, foundUser.roles)
+        val refreshToken = jwtService.createRefreshToken(sessionId, userId, expiresAt)
+
+        sessionService.createSession(sessionId, userId, refreshToken, expiresAt)
 
         return AuthResponse(
             accessToken = accessToken,
@@ -60,28 +72,46 @@ class UserServiceImpl(
         )
     }
 
-    override suspend fun logout(userId: String): Boolean {
-        return update(id = userId, updateUserDto = UpdateUserDto(forceRelogin = true)) != null
+    override suspend fun logout(refreshToken: String): Boolean {
+        val decodedRefreshToken = jwtService.verifyRefreshToken(refreshToken) ?: return false
+
+        val sessionId = decodedRefreshToken.getClaim("sessionId").asString() ?: return false
+        val sessionIdAsUUID = UUID.fromString(sessionId)
+
+        if (!sessionService.isSessionValid(sessionIdAsUUID, refreshToken)) {
+            return false
+        }
+
+        sessionService.invalidateSession(sessionIdAsUUID)
+
+        return true
     }
 
-    override suspend fun refreshToken(token: String): AuthResponse? {
-        val decodedRefreshToken = jwtService.verifyRefreshToken(token) ?: return null
+    override suspend fun refreshToken(refreshToken: String): AuthResponse? {
+        val decodedRefreshToken = jwtService.verifyRefreshToken(refreshToken) ?: return null
 
-        val userId: String = decodedRefreshToken.subject
+        val sessionId = decodedRefreshToken.getClaim("sessionId").asString() ?: return null
+        val sessionIdAsUUID = UUID.fromString(sessionId)
 
-        val foundUser: User? = userRepository.findById(userId)
-        val userIdFromRefreshToken: String? = decodedRefreshToken.subject
-
-        if (foundUser == null || userIdFromRefreshToken != foundUser.id.toString() || foundUser.forceRelogin) {
+        if (!sessionService.isSessionValid(sessionIdAsUUID, refreshToken)) {
             return null
         }
 
-        val accessToken = jwtService.createAccessToken(foundUser.username, userId, foundUser.roles)
-        val refreshToken = jwtService.createRefreshToken(userId)
+        val userIdFromRefreshToken: String = decodedRefreshToken.subject
+        val foundUser: User = userRepository.findById(userIdFromRefreshToken) ?: return null
+
+        val userId = foundUser.id
+
+        val expiresAt = Clock.System.now().plus(3.days).toLocalDateTime(TimeZone.UTC)
+
+        val newAccessToken = jwtService.createAccessToken(foundUser.username, userId, foundUser.roles)
+        val newRefreshToken = jwtService.createRefreshToken(sessionIdAsUUID, userId, expiresAt)
+
+        sessionService.extendSession(sessionIdAsUUID, newRefreshToken, expiresAt)
 
         return AuthResponse(
-            accessToken = accessToken,
-            refreshToken = refreshToken,
+            accessToken = newAccessToken,
+            refreshToken = newRefreshToken,
         )
     }
 }

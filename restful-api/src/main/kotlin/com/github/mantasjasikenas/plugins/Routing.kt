@@ -27,7 +27,7 @@ fun Application.configureRouting(
 
             authenticate {
                 authorized(Role.Admin) {
-                    get("/protected/admin") {
+                    get("/admin") {
                         val username = call.extractClaim("username")
 
                         call.respond("You are authorized as Admin. Your username is $username.")
@@ -37,7 +37,7 @@ fun Application.configureRouting(
 
             authenticate {
                 authorized(Role.User) {
-                    get("/protected/user") {
+                    get("/user") {
                         val username = call.extractClaim("username")
 
                         call.respond("You are authorized as User. Your username is $username.")

@@ -14,3 +14,6 @@ fun ApplicationCall.extractSubject(): String? =
     this.principal<JWTPrincipal>()
         ?.payload
         ?.subject
+
+fun ApplicationCall.getRefreshTokenFromCookies(): String? =
+    this.request.cookies["RefreshToken"]

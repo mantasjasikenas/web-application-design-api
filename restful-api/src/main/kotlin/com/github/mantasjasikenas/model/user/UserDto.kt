@@ -10,7 +10,6 @@ data class UserDto(
     val username: String,
     val email: String,
     val roles: List<Role>,
-    val forceRelogin: Boolean
 )
 
 fun UserDto.toSuccessfulRegisterDto(): SuccessfulRegisterDto =

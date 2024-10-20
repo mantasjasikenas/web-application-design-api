@@ -24,7 +24,8 @@ fun Application.configureDatabases() {
             ProjectsTable,
             SectionsTable,
             UsersRolesTable,
-            UsersTable
+            UsersTable,
+            SessionsTable
         )
     }
 }

@@ -7,12 +7,10 @@ import com.github.mantasjasikenas.model.auth.SuccessfulLoginDto
 import com.github.mantasjasikenas.model.user.PostUserDto
 import com.github.mantasjasikenas.model.user.toSuccessfulRegisterDto
 import com.github.mantasjasikenas.service.UserService
-import com.github.mantasjasikenas.util.extractSubject
 import io.github.smiley4.ktorswaggerui.dsl.routing.post
 import io.github.smiley4.ktorswaggerui.dsl.routing.route
 import io.ktor.http.*
 import io.ktor.server.application.*
-import io.ktor.server.auth.*
 import io.ktor.server.request.*
 import io.ktor.server.routing.*
 import kotlin.time.Duration.Companion.days
@@ -71,7 +69,7 @@ fun Route.authRoutes(userService: UserService) {
                 status = HttpStatusCode.UnprocessableEntity
             )
 
-            val authResponse = userService.refreshToken(token = refreshToken)
+            val authResponse = userService.refreshToken(refreshToken = refreshToken)
 
             if (authResponse == null) {
                 call.respondCustom(
@@ -92,22 +90,21 @@ fun Route.authRoutes(userService: UserService) {
             )
         }
 
-        authenticate {
-            post("/logout", logoutDocs()) {
-                val userId = call.extractSubject() ?: return@post call.respondCustom(
+        post("/logout", logoutDocs()) {
+            val refreshToken = call.request.cookies["RefreshToken"] ?: return@post call.respondCustom(
+                message = "Failed to logout",
+                status = HttpStatusCode.UnprocessableEntity
+            )
+
+            if (!userService.logout(refreshToken)) {
+                return@post call.respondCustom(
                     message = "Failed to logout",
                     status = HttpStatusCode.UnprocessableEntity
                 )
-
-                if (!userService.logout(userId)) {
-                    return@post call.respondCustom(
-                        message = "Failed to logout",
-                        status = HttpStatusCode.UnprocessableEntity
-                    )
-                }
-
-                call.respondSuccess<Unit>("Logout successful")
             }
+
+            call.removeRefreshTokenCookie()
+            call.respondSuccess<Unit>("Logout successful")
         }
     }
 }
@@ -116,8 +113,20 @@ private fun ApplicationCall.appendRefreshTokenCookie(refreshToken: String) {
     this.response.cookies.append(
         name = "RefreshToken",
         value = refreshToken,
-        maxAge = 30.days.inWholeSeconds,
+        maxAge = 3.days.inWholeSeconds,
         httpOnly = true,
-        //secure = true
+        secure = true,
+        path = "/"
+    )
+}
+
+private fun ApplicationCall.removeRefreshTokenCookie() {
+    this.response.cookies.append(
+        name = "RefreshToken",
+        value = "",
+        maxAge = 0L,
+        httpOnly = true,
+        secure = true,
+        path = "/"
     )
 }

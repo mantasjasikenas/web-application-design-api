@@ -14,7 +14,6 @@ $$
             user_name     varchar(255)                        not null,
             email         varchar(255)                        not null,
             password      varchar(255)                        not null,
-            force_relogin boolean   default false             not null,
             created_at    timestamp default CURRENT_TIMESTAMP not null
         );
 

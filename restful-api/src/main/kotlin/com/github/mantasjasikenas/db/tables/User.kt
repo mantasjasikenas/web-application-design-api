@@ -1,6 +1,7 @@
 package com.github.mantasjasikenas.db.tables
 
 import com.github.mantasjasikenas.model.user.User
+import com.github.mantasjasikenas.model.user.UserDto
 import org.jetbrains.exposed.dao.UUIDEntity
 import org.jetbrains.exposed.dao.UUIDEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
@@ -14,7 +15,6 @@ object UsersTable : UUIDTable() {
     val userName = varchar("user_name", 255)
     val email = varchar("email", 255)
     val password = varchar("password", 255)
-    val forceRelogin = bool("force_relogin").default(false)
     val createdAt = datetime("created_at").defaultExpression(CurrentDateTime)
 }
 
@@ -25,7 +25,6 @@ class UserDAO(id: EntityID<UUID>) : UUIDEntity(id) {
     var userName by UsersTable.userName
     var email by UsersTable.email
     var password by UsersTable.password
-    var forceRelogin by UsersTable.forceRelogin
     var createdAt by UsersTable.createdAt
 
     val roles by UserRoleDAO referrersOn UsersRolesTable.userId
@@ -38,5 +37,11 @@ fun daoToModel(dao: UserDAO) = User(
     email = dao.email,
     roles = dao.roles.map { it.role },
     password = dao.password,
-    forceRelogin = dao.forceRelogin
+)
+
+fun daoToDto(dao: UserDAO) = UserDto(
+    id = dao.id.value.toString(),
+    username = dao.userName,
+    email = dao.email,
+    roles = dao.roles.map { it.role },
 )

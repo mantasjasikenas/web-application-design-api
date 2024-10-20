@@ -64,12 +64,10 @@ class UserRepositoryImpl : UserRepository {
         return@suspendTransaction true
     }
 
-    // TODO validate logic
     override suspend fun update(id: String, userDto: UpdateUserDto): User? = suspendTransaction {
         UserDAO.findByIdAndUpdate(UUID.fromString(id)) {
             it.userName = userDto.username ?: it.userName
             it.email = userDto.email ?: it.email
-            it.forceRelogin = userDto.forceRelogin ?: it.forceRelogin
             it.password = userDto.password ?: it.password
         }?.let(::daoToModel)
     }

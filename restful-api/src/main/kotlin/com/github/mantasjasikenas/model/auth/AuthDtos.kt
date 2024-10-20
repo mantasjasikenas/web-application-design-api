@@ -1,5 +1,7 @@
 ﻿package com.github.mantasjasikenas.model.auth
 
+import com.github.mantasjasikenas.model.user.UserDto
+import kotlinx.datetime.LocalDateTime
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -13,3 +15,14 @@ data class LoginDto(val username: String, val password: String)
 
 @Serializable
 data class RefreshAccessTokenDto(val refreshToken: String)
+
+@Serializable
+data class SessionDto(
+    val id: String,
+    val lastRefreshToken: String,
+    val initiatedAt: LocalDateTime,
+    val expiresAt: LocalDateTime,
+    val isRevoked: Boolean,
+    val userId: String,
+    val user: UserDto
+)

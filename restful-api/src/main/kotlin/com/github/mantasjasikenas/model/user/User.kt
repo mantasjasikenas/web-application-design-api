@@ -9,13 +9,11 @@ data class User(
     val username: String,
     val password: String,
     val roles: List<Role>,
-    var forceRelogin: Boolean
 )
 
 fun modelToDto(user: User) = UserDto(
     id = user.id.toString(),
     username = user.username,
     email = user.email,
-    roles = user.roles,
-    forceRelogin = user.forceRelogin
+    roles = user.roles
 )
