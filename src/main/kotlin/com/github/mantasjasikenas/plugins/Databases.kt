@@ -8,13 +8,9 @@ import org.jetbrains.exposed.sql.transactions.transaction
 
 fun Application.configureDatabases() {
     val url = System.getenv("DB_URL")
-    val user = System.getenv("DB_USER")
-    val password = System.getenv("DB_PASS")
 
     Database.connect(
         url,
-        user = user,
-        password = password,
         driver = "org.postgresql.Driver",
     )
 

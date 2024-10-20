@@ -8,7 +8,9 @@ services:
     #      - pgdata:/var/lib/postgresql/repository
     environment:
       POSTGRES_DB: todo_db
-      POSTGRES_HOST_AUTH_METHOD: trust
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+#      POSTGRES_HOST_AUTH_METHOD: trust
     ports:
       - "5432:5432"
     healthcheck:
