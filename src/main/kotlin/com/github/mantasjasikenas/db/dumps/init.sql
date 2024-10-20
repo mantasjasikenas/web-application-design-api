@@ -9,16 +9,16 @@ $$
 
         create table users
         (
-            id            uuid                                not null
+            id         uuid                                not null
                 primary key,
-            user_name     varchar(255)                        not null,
-            email         varchar(255)                        not null,
-            password      varchar(255)                        not null,
-            created_at    timestamp default CURRENT_TIMESTAMP not null
+            user_name  varchar(255)                        not null,
+            email      varchar(255)                        not null,
+            password   varchar(255)                        not null,
+            created_at timestamp default CURRENT_TIMESTAMP not null
         );
 
-        alter table users
-            owner to postgres;
+        --         alter table users
+--             owner to postgres;
 
         create table projects
         (
@@ -33,8 +33,8 @@ $$
                     on update restrict on delete cascade
         );
 
-        alter table projects
-            owner to postgres;
+        --         alter table projects
+--             owner to postgres;
 
         create table sections
         (
@@ -52,8 +52,8 @@ $$
                     on update restrict on delete cascade
         );
 
-        alter table sections
-            owner to postgres;
+        --         alter table sections
+--             owner to postgres;
 
         create table tasks
         (
@@ -75,8 +75,8 @@ $$
                     on update restrict on delete cascade
         );
 
-        alter table tasks
-            owner to postgres;
+        --         alter table tasks
+--             owner to postgres;
 
         create table users_roles
         (
@@ -89,8 +89,22 @@ $$
             role_id integer not null
         );
 
-        alter table users_roles
-            owner to postgres;
+        create table sessions
+        (
+            id                 uuid                                not null
+                primary key,
+            last_refresh_token varchar(255)                        not null,
+            initiated_at       timestamp default CURRENT_TIMESTAMP not null,
+            expires_at         timestamp default CURRENT_TIMESTAMP not null,
+            is_revoked         boolean   default false             not null,
+            user_id            uuid                                not null
+                constraint fk_sessions_user_id__id
+                    references public.users
+                    on update restrict on delete cascade
+        );
+
+        --         alter table users_roles
+--             owner to postgres;
 
 -- Insert default users
         INSERT INTO users (id, user_name, email, password)
