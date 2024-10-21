@@ -14,6 +14,264 @@
   } ],
   "tags" : [ ],
   "paths" : {
+    "/api/v1/scalar" : {
+      "get" : {
+        "tags" : [ ],
+        "parameters" : [ ],
+        "responses" : { },
+        "deprecated" : false
+      }
+    },
+    "/api/v1/auth/register" : {
+      "post" : {
+        "tags" : [ "Auth" ],
+        "description" : "Register new user",
+        "parameters" : [ ],
+        "requestBody" : {
+          "description" : "User to register",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.user.PostUserDto"
+              },
+              "examples" : {
+                "default" : {
+                  "value" : {
+                    "username" : "Sigmund",
+                    "email" : "sigmund@gmail.com",
+                    "password" : "VerySafePassword132"
+                  }
+                }
+              }
+            }
+          },
+          "required" : false
+        },
+        "responses" : {
+          "201" : {
+            "description" : "User created",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "default" : {
+                    "value" : {
+                      "success" : true,
+                      "status" : "201",
+                      "message" : "User created successfully",
+                      "data" : {
+                        "id" : "9351f427-fba2-4378-99e9-2b82dc2a9466",
+                        "userName" : "Sigmund",
+                        "email" : "sigmund@gmail.com"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422" : {
+            "description" : "Unprocessable entity",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "default" : {
+                    "value" : {
+                      "success" : false,
+                      "status" : "422",
+                      "message" : "User with username Sigmund already exists"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated" : false
+      }
+    },
+    "/api/v1/auth/login" : {
+      "post" : {
+        "tags" : [ "Auth" ],
+        "description" : "Login user",
+        "parameters" : [ ],
+        "requestBody" : {
+          "description" : "User to login",
+          "content" : {
+            "application/json" : {
+              "schema" : {
+                "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.auth.LoginDto"
+              },
+              "examples" : {
+                "default" : {
+                  "value" : {
+                    "username" : "Sigmund",
+                    "password" : "VerySafePassword132"
+                  }
+                }
+              }
+            }
+          },
+          "required" : false
+        },
+        "responses" : {
+          "200" : {
+            "description" : "Login successful",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_com.github.mantasjasikenas.data.auth.SuccessfulLoginDto"
+                },
+                "examples" : {
+                  "default" : {
+                    "value" : {
+                      "success" : true,
+                      "status" : "200",
+                      "message" : "Login successful",
+                      "data" : {
+                        "accessToken" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJUcnVzdGVkQ2xpZW50IiwiaXNzIjoiTWFudGFzIiwianRpIjoiNmYwMzgzYmMtNjY3MC00ZTMxLTg0N2QtMGVlZGYxNWJkZDJkIiwic3ViIjoiYzFjY2FmYTYtM2EwNi00NzA3LThkNDQtNzc3ZWFkZWYzNjM1IiwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGVzIjpbIkFkbWluIl0sImV4cCI6MTcyODkxODU0Mn0.qPQOaKwhjjfMLNriH8D35xP8F81MXGox9wUMVYWwwwo"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422" : {
+            "description" : "Unprocessable entity",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "default" : {
+                    "value" : {
+                      "success" : false,
+                      "status" : "422",
+                      "message" : "Username or password is incorrect"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated" : false
+      }
+    },
+    "/api/v1/auth/accessToken" : {
+      "post" : {
+        "tags" : [ "Auth" ],
+        "description" : "Refresh access token",
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "Access token refreshed successfully",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_com.github.mantasjasikenas.data.auth.SuccessfulLoginDto"
+                },
+                "examples" : {
+                  "default" : {
+                    "value" : {
+                      "success" : true,
+                      "status" : "200",
+                      "message" : "Access token refreshed successfully",
+                      "data" : {
+                        "accessToken" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJUcnVzdGVkQ2xpZW50IiwiaXNzIjoiTWFudGFzIiwianRpIjoiNmYwMzgzYmMtNjY3MC00ZTMxLTg0N2QtMGVlZGYxNWJkZDJkIiwic3ViIjoiYzFjY2FmYTYtM2EwNi00NzA3LThkNDQtNzc3ZWFkZWYzNjM1IiwidXNlcm5hbWUiOiJhZG1pbiIsInJvbGVzIjpbIkFkbWluIl0sImV4cCI6MTcyODkxODU0Mn0.qPQOaKwhjjfMLNriH8D35xP8F81MXGox9wUMVYWwwwo"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422" : {
+            "description" : "Unprocessable entity",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "default" : {
+                    "value" : {
+                      "success" : false,
+                      "status" : "422",
+                      "message" : "Unprocessable entity"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated" : false
+      }
+    },
+    "/api/v1/auth/logout" : {
+      "post" : {
+        "tags" : [ "Auth" ],
+        "description" : "Logout user",
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "Logout successful",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.Unit"
+                },
+                "examples" : {
+                  "default" : {
+                    "value" : {
+                      "success" : true,
+                      "status" : "200",
+                      "message" : "Logout successful"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "422" : {
+            "description" : "Unprocessable entity",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "default" : {
+                    "value" : {
+                      "success" : false,
+                      "status" : "422",
+                      "message" : "Failed to logout"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "deprecated" : false
+      }
+    },
     "/api/v1/projects" : {
       "get" : {
         "tags" : [ "Projects" ],
@@ -26,7 +284,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.collections.List_com.github.mantasjasikenas.model.project.ProjectDto"
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.collections.List_com.github.mantasjasikenas.data.project.ProjectDto"
                 },
                 "examples" : {
                   "default" : {
@@ -52,9 +310,52 @@
                 }
               }
             }
+          },
+          "401" : {
+            "description" : "Unauthorized",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "default" : {
+                    "value" : {
+                      "success" : false,
+                      "status" : "401",
+                      "message" : "The request is unauthenticated"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Forbidden",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "default" : {
+                    "value" : {
+                      "success" : false,
+                      "status" : "403",
+                      "message" : "Access to the resource is prohibited"
+                    }
+                  }
+                }
+              }
+            }
           }
         },
-        "deprecated" : false
+        "deprecated" : false,
+        "security" : [ {
+          "SecurityScheme" : [ ]
+        } ]
       },
       "post" : {
         "tags" : [ "Projects" ],
@@ -65,14 +366,13 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.project.PostProjectDto"
+                "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.project.PostProjectDto"
               },
               "examples" : {
                 "default" : {
                   "value" : {
                     "name" : "Movie Night",
-                    "description" : "Plan a movie night with friends",
-                    "createdBy" : "Virgis"
+                    "description" : "Plan a movie night with friends"
                   }
                 }
               }
@@ -87,7 +387,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
                 },
                 "examples" : {
                   "default" : {
@@ -114,14 +414,14 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
                 },
                 "examples" : {
                   "default" : {
                     "value" : {
                       "success" : false,
                       "status" : "400",
-                      "message" : "Invalid project data"
+                      "message" : "Invalid project repository"
                     }
                   }
                 }
@@ -134,7 +434,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
                 },
                 "examples" : {
                   "default" : {
@@ -147,12 +447,55 @@
                 }
               }
             }
+          },
+          "401" : {
+            "description" : "Unauthorized",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "default" : {
+                    "value" : {
+                      "success" : false,
+                      "status" : "401",
+                      "message" : "The request is unauthenticated"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Forbidden",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "default" : {
+                    "value" : {
+                      "success" : false,
+                      "status" : "403",
+                      "message" : "Access to the resource is prohibited"
+                    }
+                  }
+                }
+              }
+            }
           }
         },
-        "deprecated" : false
+        "deprecated" : false,
+        "security" : [ {
+          "SecurityScheme" : [ ]
+        } ]
       }
     },
-    "/api/v1/projects/{id}" : {
+    "/api/v1/projects/{projectId}" : {
       "get" : {
         "tags" : [ "Projects" ],
         "description" : "Get project by id",
@@ -177,7 +520,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_com.github.mantasjasikenas.model.project.ProjectDto"
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_com.github.mantasjasikenas.data.project.ProjectDto"
                 },
                 "examples" : {
                   "default" : {
@@ -204,7 +547,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
                 },
                 "examples" : {
                   "default" : {
@@ -224,7 +567,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
                 },
                 "examples" : {
                   "default" : {
@@ -237,9 +580,52 @@
                 }
               }
             }
+          },
+          "401" : {
+            "description" : "Unauthorized",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "default" : {
+                    "value" : {
+                      "success" : false,
+                      "status" : "401",
+                      "message" : "The request is unauthenticated"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Forbidden",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "default" : {
+                    "value" : {
+                      "success" : false,
+                      "status" : "403",
+                      "message" : "Access to the resource is prohibited"
+                    }
+                  }
+                }
+              }
+            }
           }
         },
-        "deprecated" : false
+        "deprecated" : false,
+        "security" : [ {
+          "SecurityScheme" : [ ]
+        } ]
       },
       "delete" : {
         "tags" : [ "Projects" ],
@@ -265,7 +651,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
                 },
                 "examples" : {
                   "default" : {
@@ -285,7 +671,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
                 },
                 "examples" : {
                   "default" : {
@@ -305,7 +691,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
                 },
                 "examples" : {
                   "default" : {
@@ -318,9 +704,52 @@
                 }
               }
             }
+          },
+          "401" : {
+            "description" : "Unauthorized",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "default" : {
+                    "value" : {
+                      "success" : false,
+                      "status" : "401",
+                      "message" : "The request is unauthenticated"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Forbidden",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "default" : {
+                    "value" : {
+                      "success" : false,
+                      "status" : "403",
+                      "message" : "Access to the resource is prohibited"
+                    }
+                  }
+                }
+              }
+            }
           }
         },
-        "deprecated" : false
+        "deprecated" : false,
+        "security" : [ {
+          "SecurityScheme" : [ ]
+        } ]
       },
       "patch" : {
         "tags" : [ "Projects" ],
@@ -340,11 +769,11 @@
           "example" : 1
         } ],
         "requestBody" : {
-          "description" : "Project data to update",
+          "description" : "Project repository to update",
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.project.UpdateProjectDto"
+                "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.project.UpdateProjectDto"
               },
               "examples" : {
                 "default" : {
@@ -364,7 +793,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_com.github.mantasjasikenas.model.project.ProjectDto"
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_com.github.mantasjasikenas.data.project.ProjectDto"
                 },
                 "examples" : {
                   "default" : {
@@ -391,14 +820,14 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
                 },
                 "examples" : {
                   "default" : {
                     "value" : {
                       "success" : false,
                       "status" : "400",
-                      "message" : "Invalid project data"
+                      "message" : "Invalid project repository"
                     }
                   }
                 }
@@ -411,7 +840,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
                 },
                 "examples" : {
                   "default" : {
@@ -431,7 +860,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
                 },
                 "examples" : {
                   "default" : {
@@ -444,9 +873,52 @@
                 }
               }
             }
+          },
+          "401" : {
+            "description" : "Unauthorized",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "default" : {
+                    "value" : {
+                      "success" : false,
+                      "status" : "401",
+                      "message" : "The request is unauthenticated"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Forbidden",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "default" : {
+                    "value" : {
+                      "success" : false,
+                      "status" : "403",
+                      "message" : "Access to the resource is prohibited"
+                    }
+                  }
+                }
+              }
+            }
           }
         },
-        "deprecated" : false
+        "deprecated" : false,
+        "security" : [ {
+          "SecurityScheme" : [ ]
+        } ]
       }
     },
     "/api/v1/projects/{projectId}/sections" : {
@@ -474,7 +946,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.collections.List_com.github.mantasjasikenas.model.section.SectionDto"
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.collections.List_com.github.mantasjasikenas.data.section.SectionDto"
                 },
                 "examples" : {
                   "default" : {
@@ -502,7 +974,10 @@
             }
           }
         },
-        "deprecated" : false
+        "deprecated" : false,
+        "security" : [ {
+          "SecurityScheme" : [ ]
+        } ]
       },
       "post" : {
         "tags" : [ "Sections" ],
@@ -526,13 +1001,12 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.section.PostSectionDto"
+                "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.section.PostSectionDto"
               },
               "examples" : {
                 "default" : {
                   "value" : {
-                    "name" : "Done",
-                    "createdBy" : "Virginia"
+                    "name" : "Done"
                   }
                 }
               }
@@ -547,7 +1021,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
                 },
                 "examples" : {
                   "default" : {
@@ -574,14 +1048,14 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
                 },
                 "examples" : {
                   "default" : {
                     "value" : {
                       "success" : false,
                       "status" : "400",
-                      "message" : "Invalid section data"
+                      "message" : "Invalid section repository"
                     }
                   }
                 }
@@ -594,7 +1068,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
                 },
                 "examples" : {
                   "default" : {
@@ -614,7 +1088,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
                 },
                 "examples" : {
                   "default" : {
@@ -627,9 +1101,52 @@
                 }
               }
             }
+          },
+          "401" : {
+            "description" : "Unauthorized",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "default" : {
+                    "value" : {
+                      "success" : false,
+                      "status" : "401",
+                      "message" : "The request is unauthenticated"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Forbidden",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "default" : {
+                    "value" : {
+                      "success" : false,
+                      "status" : "403",
+                      "message" : "Access to the resource is prohibited"
+                    }
+                  }
+                }
+              }
+            }
           }
         },
-        "deprecated" : false
+        "deprecated" : false,
+        "security" : [ {
+          "SecurityScheme" : [ ]
+        } ]
       }
     },
     "/api/v1/projects/{projectId}/sections/{sectionId}" : {
@@ -670,7 +1187,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_com.github.mantasjasikenas.model.section.SectionDto"
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_com.github.mantasjasikenas.data.section.SectionDto"
                 },
                 "examples" : {
                   "default" : {
@@ -697,7 +1214,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
                 },
                 "examples" : {
                   "default" : {
@@ -717,7 +1234,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
                 },
                 "examples" : {
                   "default" : {
@@ -730,9 +1247,52 @@
                 }
               }
             }
+          },
+          "401" : {
+            "description" : "Unauthorized",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "default" : {
+                    "value" : {
+                      "success" : false,
+                      "status" : "401",
+                      "message" : "The request is unauthenticated"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Forbidden",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "default" : {
+                    "value" : {
+                      "success" : false,
+                      "status" : "403",
+                      "message" : "Access to the resource is prohibited"
+                    }
+                  }
+                }
+              }
+            }
           }
         },
-        "deprecated" : false
+        "deprecated" : false,
+        "security" : [ {
+          "SecurityScheme" : [ ]
+        } ]
       },
       "delete" : {
         "tags" : [ "Sections" ],
@@ -771,7 +1331,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
                 },
                 "examples" : {
                   "default" : {
@@ -791,7 +1351,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
                 },
                 "examples" : {
                   "default" : {
@@ -811,7 +1371,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
                 },
                 "examples" : {
                   "default" : {
@@ -824,9 +1384,52 @@
                 }
               }
             }
+          },
+          "401" : {
+            "description" : "Unauthorized",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "default" : {
+                    "value" : {
+                      "success" : false,
+                      "status" : "401",
+                      "message" : "The request is unauthenticated"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Forbidden",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "default" : {
+                    "value" : {
+                      "success" : false,
+                      "status" : "403",
+                      "message" : "Access to the resource is prohibited"
+                    }
+                  }
+                }
+              }
+            }
           }
         },
-        "deprecated" : false
+        "deprecated" : false,
+        "security" : [ {
+          "SecurityScheme" : [ ]
+        } ]
       },
       "patch" : {
         "tags" : [ "Sections" ],
@@ -859,11 +1462,11 @@
           "example" : 1
         } ],
         "requestBody" : {
-          "description" : "Section data to update",
+          "description" : "Section repository to update",
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.section.UpdateSectionDto"
+                "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.section.UpdateSectionDto"
               },
               "examples" : {
                 "default" : {
@@ -884,7 +1487,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_com.github.mantasjasikenas.model.section.SectionDto"
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_com.github.mantasjasikenas.data.section.SectionDto"
                 },
                 "examples" : {
                   "default" : {
@@ -911,14 +1514,14 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
                 },
                 "examples" : {
                   "default" : {
                     "value" : {
                       "success" : false,
                       "status" : "400",
-                      "message" : "Invalid section data"
+                      "message" : "Invalid section repository"
                     }
                   }
                 }
@@ -931,7 +1534,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
                 },
                 "examples" : {
                   "default" : {
@@ -951,7 +1554,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
                 },
                 "examples" : {
                   "default" : {
@@ -964,9 +1567,52 @@
                 }
               }
             }
+          },
+          "401" : {
+            "description" : "Unauthorized",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "default" : {
+                    "value" : {
+                      "success" : false,
+                      "status" : "401",
+                      "message" : "The request is unauthenticated"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Forbidden",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "default" : {
+                    "value" : {
+                      "success" : false,
+                      "status" : "403",
+                      "message" : "Access to the resource is prohibited"
+                    }
+                  }
+                }
+              }
+            }
           }
         },
-        "deprecated" : false
+        "deprecated" : false,
+        "security" : [ {
+          "SecurityScheme" : [ ]
+        } ]
       }
     },
     "/api/v1/projects/{projectId}/sections/{sectionId}/tasks" : {
@@ -1007,7 +1653,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.collections.List_com.github.mantasjasikenas.model.task.TaskDto"
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.collections.List_com.github.mantasjasikenas.data.task.TaskDto"
                 },
                 "examples" : {
                   "default" : {
@@ -1048,7 +1694,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
                 },
                 "examples" : {
                   "default" : {
@@ -1061,9 +1707,52 @@
                 }
               }
             }
+          },
+          "401" : {
+            "description" : "Unauthorized",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "default" : {
+                    "value" : {
+                      "success" : false,
+                      "status" : "401",
+                      "message" : "The request is unauthenticated"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Forbidden",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "default" : {
+                    "value" : {
+                      "success" : false,
+                      "status" : "403",
+                      "message" : "Access to the resource is prohibited"
+                    }
+                  }
+                }
+              }
+            }
           }
         },
-        "deprecated" : false
+        "deprecated" : false,
+        "security" : [ {
+          "SecurityScheme" : [ ]
+        } ]
       },
       "post" : {
         "tags" : [ "Tasks" ],
@@ -1100,7 +1789,7 @@
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.task.PostTaskDto"
+                "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.task.PostTaskDto"
               },
               "examples" : {
                 "default" : {
@@ -1109,8 +1798,7 @@
                     "description" : "Create documentation and tests",
                     "priority" : "Low",
                     "completed" : false,
-                    "dueDate" : "2023-10-09T12:00:00",
-                    "createdBy" : "Sigmund"
+                    "dueDate" : "2023-10-09T12:00:00"
                   }
                 }
               }
@@ -1125,7 +1813,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
                 },
                 "examples" : {
                   "default" : {
@@ -1156,14 +1844,14 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
                 },
                 "examples" : {
                   "default" : {
                     "value" : {
                       "success" : false,
                       "status" : "400",
-                      "message" : "Invalid task data"
+                      "message" : "Invalid task repository"
                     }
                   }
                 }
@@ -1176,7 +1864,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
                 },
                 "examples" : {
                   "default" : {
@@ -1189,9 +1877,52 @@
                 }
               }
             }
+          },
+          "401" : {
+            "description" : "Unauthorized",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "default" : {
+                    "value" : {
+                      "success" : false,
+                      "status" : "401",
+                      "message" : "The request is unauthenticated"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Forbidden",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "default" : {
+                    "value" : {
+                      "success" : false,
+                      "status" : "403",
+                      "message" : "Access to the resource is prohibited"
+                    }
+                  }
+                }
+              }
+            }
           }
         },
-        "deprecated" : false
+        "deprecated" : false,
+        "security" : [ {
+          "SecurityScheme" : [ ]
+        } ]
       }
     },
     "/api/v1/projects/{projectId}/sections/{sectionId}/tasks/{taskId}" : {
@@ -1245,7 +1976,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_com.github.mantasjasikenas.model.task.TaskDto"
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_com.github.mantasjasikenas.data.task.TaskDto"
                 },
                 "examples" : {
                   "default" : {
@@ -1276,7 +2007,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
                 },
                 "examples" : {
                   "default" : {
@@ -1296,7 +2027,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
                 },
                 "examples" : {
                   "default" : {
@@ -1309,9 +2040,52 @@
                 }
               }
             }
+          },
+          "401" : {
+            "description" : "Unauthorized",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "default" : {
+                    "value" : {
+                      "success" : false,
+                      "status" : "401",
+                      "message" : "The request is unauthenticated"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Forbidden",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "default" : {
+                    "value" : {
+                      "success" : false,
+                      "status" : "403",
+                      "message" : "Access to the resource is prohibited"
+                    }
+                  }
+                }
+              }
+            }
           }
         },
-        "deprecated" : false
+        "deprecated" : false,
+        "security" : [ {
+          "SecurityScheme" : [ ]
+        } ]
       },
       "delete" : {
         "tags" : [ "Tasks" ],
@@ -1363,7 +2137,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
                 },
                 "examples" : {
                   "default" : {
@@ -1383,7 +2157,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
                 },
                 "examples" : {
                   "default" : {
@@ -1403,7 +2177,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
                 },
                 "examples" : {
                   "default" : {
@@ -1416,9 +2190,52 @@
                 }
               }
             }
+          },
+          "401" : {
+            "description" : "Unauthorized",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "default" : {
+                    "value" : {
+                      "success" : false,
+                      "status" : "401",
+                      "message" : "The request is unauthenticated"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Forbidden",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "default" : {
+                    "value" : {
+                      "success" : false,
+                      "status" : "403",
+                      "message" : "Access to the resource is prohibited"
+                    }
+                  }
+                }
+              }
+            }
           }
         },
-        "deprecated" : false
+        "deprecated" : false,
+        "security" : [ {
+          "SecurityScheme" : [ ]
+        } ]
       },
       "patch" : {
         "tags" : [ "Tasks" ],
@@ -1464,11 +2281,11 @@
           "example" : 1
         } ],
         "requestBody" : {
-          "description" : "Task data to update",
+          "description" : "Task repository to update",
           "content" : {
             "application/json" : {
               "schema" : {
-                "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.task.UpdateTaskDto"
+                "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.task.UpdateTaskDto"
               },
               "examples" : {
                 "Update task" : {
@@ -1489,7 +2306,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_com.github.mantasjasikenas.model.task.TaskDto"
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_com.github.mantasjasikenas.data.task.TaskDto"
                 },
                 "examples" : {
                   "default" : {
@@ -1520,14 +2337,14 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
                 },
                 "examples" : {
                   "default" : {
                     "value" : {
                       "success" : false,
                       "status" : "400",
-                      "message" : "Invalid task data"
+                      "message" : "Invalid task repository"
                     }
                   }
                 }
@@ -1540,7 +2357,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
                 },
                 "examples" : {
                   "default" : {
@@ -1560,7 +2377,7 @@
             "content" : {
               "application/json" : {
                 "schema" : {
-                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.ApiResponse_kotlin.String"
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
                 },
                 "examples" : {
                   "default" : {
@@ -1573,94 +2390,77 @@
                 }
               }
             }
+          },
+          "401" : {
+            "description" : "Unauthorized",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "default" : {
+                    "value" : {
+                      "success" : false,
+                      "status" : "401",
+                      "message" : "The request is unauthenticated"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "403" : {
+            "description" : "Forbidden",
+            "headers" : { },
+            "content" : {
+              "application/json" : {
+                "schema" : {
+                  "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.ApiResponse_kotlin.String"
+                },
+                "examples" : {
+                  "default" : {
+                    "value" : {
+                      "success" : false,
+                      "status" : "403",
+                      "message" : "Access to the resource is prohibited"
+                    }
+                  }
+                }
+              }
+            }
           }
         },
-        "deprecated" : false
+        "deprecated" : false,
+        "security" : [ {
+          "SecurityScheme" : [ ]
+        } ]
       }
     }
   },
   "components" : {
     "schemas" : {
-      "com.github.mantasjasikenas.model.project.ProjectDto" : {
-        "title" : "ProjectDto",
-        "required" : [ "createdAt", "createdBy", "description", "id", "name" ],
+      "com.github.mantasjasikenas.data.user.PostUserDto" : {
+        "title" : "PostUserDto",
+        "required" : [ "email", "password", "username" ],
         "type" : "object",
         "properties" : {
-          "createdAt" : {
+          "email" : {
             "title" : "String",
             "type" : "string"
           },
-          "createdBy" : {
+          "password" : {
             "title" : "String",
             "type" : "string"
           },
-          "description" : {
-            "title" : "String",
-            "type" : "string"
-          },
-          "id" : {
-            "title" : "Int",
-            "type" : "integer",
-            "format" : "int32"
-          },
-          "name" : {
+          "username" : {
             "title" : "String",
             "type" : "string"
           }
         }
       },
-      "com.github.mantasjasikenas.model.ApiResponse_kotlin.collections.List_com.github.mantasjasikenas.model.project.ProjectDto" : {
-        "title" : "ApiResponse<List<ProjectDto>>",
-        "required" : [ "message", "status", "success" ],
-        "type" : "object",
-        "properties" : {
-          "data" : {
-            "title" : "List<ProjectDto>",
-            "items" : {
-              "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.project.ProjectDto"
-            }
-          },
-          "errors" : {
-            "title" : "List<String>",
-            "items" : {
-              "title" : "String",
-              "type" : "string"
-            }
-          },
-          "message" : {
-            "title" : "String",
-            "type" : "string"
-          },
-          "status" : {
-            "title" : "String",
-            "type" : "string"
-          },
-          "success" : {
-            "title" : "Boolean",
-            "type" : "boolean"
-          }
-        }
-      },
-      "com.github.mantasjasikenas.model.project.PostProjectDto" : {
-        "title" : "PostProjectDto",
-        "required" : [ "createdBy", "description", "name" ],
-        "type" : "object",
-        "properties" : {
-          "createdBy" : {
-            "title" : "String",
-            "type" : "string"
-          },
-          "description" : {
-            "title" : "String",
-            "type" : "string"
-          },
-          "name" : {
-            "title" : "String",
-            "type" : "string"
-          }
-        }
-      },
-      "com.github.mantasjasikenas.model.ApiResponse_kotlin.String" : {
+      "com.github.mantasjasikenas.data.ApiResponse_kotlin.String" : {
         "title" : "ApiResponse<String>",
         "required" : [ "message", "status", "success" ],
         "type" : "object",
@@ -1689,8 +2489,34 @@
           }
         }
       },
-      "com.github.mantasjasikenas.model.ApiResponse_com.github.mantasjasikenas.model.project.ProjectDto" : {
-        "title" : "ApiResponse<ProjectDto>",
+      "com.github.mantasjasikenas.data.auth.LoginDto" : {
+        "title" : "LoginDto",
+        "required" : [ "password", "username" ],
+        "type" : "object",
+        "properties" : {
+          "password" : {
+            "title" : "String",
+            "type" : "string"
+          },
+          "username" : {
+            "title" : "String",
+            "type" : "string"
+          }
+        }
+      },
+      "com.github.mantasjasikenas.data.auth.SuccessfulLoginDto" : {
+        "title" : "SuccessfulLoginDto",
+        "required" : [ "accessToken" ],
+        "type" : "object",
+        "properties" : {
+          "accessToken" : {
+            "title" : "String",
+            "type" : "string"
+          }
+        }
+      },
+      "com.github.mantasjasikenas.data.ApiResponse_com.github.mantasjasikenas.data.auth.SuccessfulLoginDto" : {
+        "title" : "ApiResponse<SuccessfulLoginDto>",
         "required" : [ "message", "status", "success" ],
         "type" : "object",
         "properties" : {
@@ -1698,7 +2524,7 @@
             "oneOf" : [ {
               "type" : "null"
             }, {
-              "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.project.ProjectDto"
+              "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.auth.SuccessfulLoginDto"
             } ]
           },
           "errors" : {
@@ -1722,7 +2548,144 @@
           }
         }
       },
-      "com.github.mantasjasikenas.model.project.UpdateProjectDto" : {
+      "com.github.mantasjasikenas.data.ApiResponse_kotlin.Unit" : {
+        "title" : "ApiResponse<Unit>",
+        "required" : [ "message", "status", "success" ],
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "title" : "Unit"
+          },
+          "errors" : {
+            "title" : "List<String>",
+            "items" : {
+              "title" : "String",
+              "type" : "string"
+            }
+          },
+          "message" : {
+            "title" : "String",
+            "type" : "string"
+          },
+          "status" : {
+            "title" : "String",
+            "type" : "string"
+          },
+          "success" : {
+            "title" : "Boolean",
+            "type" : "boolean"
+          }
+        }
+      },
+      "com.github.mantasjasikenas.data.project.ProjectDto" : {
+        "title" : "ProjectDto",
+        "required" : [ "createdAt", "createdBy", "description", "id", "name" ],
+        "type" : "object",
+        "properties" : {
+          "createdAt" : {
+            "title" : "String",
+            "type" : "string"
+          },
+          "createdBy" : {
+            "title" : "String",
+            "type" : "string"
+          },
+          "description" : {
+            "title" : "String",
+            "type" : "string"
+          },
+          "id" : {
+            "title" : "Int",
+            "type" : "integer",
+            "format" : "int32"
+          },
+          "name" : {
+            "title" : "String",
+            "type" : "string"
+          }
+        }
+      },
+      "com.github.mantasjasikenas.data.ApiResponse_kotlin.collections.List_com.github.mantasjasikenas.data.project.ProjectDto" : {
+        "title" : "ApiResponse<List<ProjectDto>>",
+        "required" : [ "message", "status", "success" ],
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "title" : "List<ProjectDto>",
+            "items" : {
+              "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.project.ProjectDto"
+            }
+          },
+          "errors" : {
+            "title" : "List<String>",
+            "items" : {
+              "title" : "String",
+              "type" : "string"
+            }
+          },
+          "message" : {
+            "title" : "String",
+            "type" : "string"
+          },
+          "status" : {
+            "title" : "String",
+            "type" : "string"
+          },
+          "success" : {
+            "title" : "Boolean",
+            "type" : "boolean"
+          }
+        }
+      },
+      "com.github.mantasjasikenas.data.project.PostProjectDto" : {
+        "title" : "PostProjectDto",
+        "required" : [ "description", "name" ],
+        "type" : "object",
+        "properties" : {
+          "description" : {
+            "title" : "String",
+            "type" : "string"
+          },
+          "name" : {
+            "title" : "String",
+            "type" : "string"
+          }
+        }
+      },
+      "com.github.mantasjasikenas.data.ApiResponse_com.github.mantasjasikenas.data.project.ProjectDto" : {
+        "title" : "ApiResponse<ProjectDto>",
+        "required" : [ "message", "status", "success" ],
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "oneOf" : [ {
+              "type" : "null"
+            }, {
+              "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.project.ProjectDto"
+            } ]
+          },
+          "errors" : {
+            "title" : "List<String>",
+            "items" : {
+              "title" : "String",
+              "type" : "string"
+            }
+          },
+          "message" : {
+            "title" : "String",
+            "type" : "string"
+          },
+          "status" : {
+            "title" : "String",
+            "type" : "string"
+          },
+          "success" : {
+            "title" : "Boolean",
+            "type" : "boolean"
+          }
+        }
+      },
+      "com.github.mantasjasikenas.data.project.UpdateProjectDto" : {
         "title" : "UpdateProjectDto",
         "type" : "object",
         "properties" : {
@@ -1734,7 +2697,7 @@
           }
         }
       },
-      "com.github.mantasjasikenas.model.section.SectionDto" : {
+      "com.github.mantasjasikenas.data.section.SectionDto" : {
         "title" : "SectionDto",
         "required" : [ "createdAt", "createdBy", "id", "name", "projectId" ],
         "type" : "object",
@@ -1763,7 +2726,7 @@
           }
         }
       },
-      "com.github.mantasjasikenas.model.ApiResponse_kotlin.collections.List_com.github.mantasjasikenas.model.section.SectionDto" : {
+      "com.github.mantasjasikenas.data.ApiResponse_kotlin.collections.List_com.github.mantasjasikenas.data.section.SectionDto" : {
         "title" : "ApiResponse<List<SectionDto>>",
         "required" : [ "message", "status", "success" ],
         "type" : "object",
@@ -1771,7 +2734,7 @@
           "data" : {
             "title" : "List<SectionDto>",
             "items" : {
-              "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.section.SectionDto"
+              "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.section.SectionDto"
             }
           },
           "errors" : {
@@ -1795,7 +2758,18 @@
           }
         }
       },
-      "com.github.mantasjasikenas.model.ApiResponse_com.github.mantasjasikenas.model.section.SectionDto" : {
+      "com.github.mantasjasikenas.data.section.PostSectionDto" : {
+        "title" : "PostSectionDto",
+        "required" : [ "name" ],
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "title" : "String",
+            "type" : "string"
+          }
+        }
+      },
+      "com.github.mantasjasikenas.data.ApiResponse_com.github.mantasjasikenas.data.section.SectionDto" : {
         "title" : "ApiResponse<SectionDto>",
         "required" : [ "message", "status", "success" ],
         "type" : "object",
@@ -1804,7 +2778,7 @@
             "oneOf" : [ {
               "type" : "null"
             }, {
-              "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.section.SectionDto"
+              "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.section.SectionDto"
             } ]
           },
           "errors" : {
@@ -1828,22 +2802,7 @@
           }
         }
       },
-      "com.github.mantasjasikenas.model.section.PostSectionDto" : {
-        "title" : "PostSectionDto",
-        "required" : [ "createdBy", "name" ],
-        "type" : "object",
-        "properties" : {
-          "createdBy" : {
-            "title" : "String",
-            "type" : "string"
-          },
-          "name" : {
-            "title" : "String",
-            "type" : "string"
-          }
-        }
-      },
-      "com.github.mantasjasikenas.model.section.UpdateSectionDto" : {
+      "com.github.mantasjasikenas.data.section.UpdateSectionDto" : {
         "title" : "UpdateSectionDto",
         "type" : "object",
         "properties" : {
@@ -1856,7 +2815,7 @@
           }
         }
       },
-      "com.github.mantasjasikenas.model.task.TaskDto" : {
+      "com.github.mantasjasikenas.data.task.TaskDto" : {
         "title" : "TaskDto",
         "required" : [ "completed", "createdAt", "createdBy", "description", "id", "name", "priority", "sectionId" ],
         "type" : "object",
@@ -1890,7 +2849,7 @@
             "type" : "string"
           },
           "priority" : {
-            "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.task.Priority"
+            "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.task.Priority"
           },
           "sectionId" : {
             "title" : "Int",
@@ -1899,11 +2858,11 @@
           }
         }
       },
-      "com.github.mantasjasikenas.model.task.Priority" : {
+      "com.github.mantasjasikenas.data.task.Priority" : {
         "title" : "Priority",
         "enum" : [ "Low", "Medium", "High", "Vital" ]
       },
-      "com.github.mantasjasikenas.model.ApiResponse_kotlin.collections.List_com.github.mantasjasikenas.model.task.TaskDto" : {
+      "com.github.mantasjasikenas.data.ApiResponse_kotlin.collections.List_com.github.mantasjasikenas.data.task.TaskDto" : {
         "title" : "ApiResponse<List<TaskDto>>",
         "required" : [ "message", "status", "success" ],
         "type" : "object",
@@ -1911,7 +2870,7 @@
           "data" : {
             "title" : "List<TaskDto>",
             "items" : {
-              "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.task.TaskDto"
+              "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.task.TaskDto"
             }
           },
           "errors" : {
@@ -1935,7 +2894,32 @@
           }
         }
       },
-      "com.github.mantasjasikenas.model.ApiResponse_com.github.mantasjasikenas.model.task.TaskDto" : {
+      "com.github.mantasjasikenas.data.task.PostTaskDto" : {
+        "title" : "PostTaskDto",
+        "required" : [ "completed", "description", "name", "priority" ],
+        "type" : "object",
+        "properties" : {
+          "completed" : {
+            "title" : "Boolean",
+            "type" : "boolean"
+          },
+          "description" : {
+            "title" : "String",
+            "type" : "string"
+          },
+          "dueDate" : {
+            "title" : "String"
+          },
+          "name" : {
+            "title" : "String",
+            "type" : "string"
+          },
+          "priority" : {
+            "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.task.Priority"
+          }
+        }
+      },
+      "com.github.mantasjasikenas.data.ApiResponse_com.github.mantasjasikenas.data.task.TaskDto" : {
         "title" : "ApiResponse<TaskDto>",
         "required" : [ "message", "status", "success" ],
         "type" : "object",
@@ -1944,7 +2928,7 @@
             "oneOf" : [ {
               "type" : "null"
             }, {
-              "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.task.TaskDto"
+              "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.task.TaskDto"
             } ]
           },
           "errors" : {
@@ -1968,36 +2952,7 @@
           }
         }
       },
-      "com.github.mantasjasikenas.model.task.PostTaskDto" : {
-        "title" : "PostTaskDto",
-        "required" : [ "completed", "createdBy", "description", "name", "priority" ],
-        "type" : "object",
-        "properties" : {
-          "completed" : {
-            "title" : "Boolean",
-            "type" : "boolean"
-          },
-          "createdBy" : {
-            "title" : "String",
-            "type" : "string"
-          },
-          "description" : {
-            "title" : "String",
-            "type" : "string"
-          },
-          "dueDate" : {
-            "title" : "String"
-          },
-          "name" : {
-            "title" : "String",
-            "type" : "string"
-          },
-          "priority" : {
-            "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.task.Priority"
-          }
-        }
-      },
-      "com.github.mantasjasikenas.model.task.UpdateTaskDto" : {
+      "com.github.mantasjasikenas.data.task.UpdateTaskDto" : {
         "title" : "UpdateTaskDto",
         "type" : "object",
         "properties" : {
@@ -2017,7 +2972,7 @@
             "oneOf" : [ {
               "type" : "null"
             }, {
-              "$ref" : "#/components/schemas/com.github.mantasjasikenas.model.task.Priority"
+              "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.task.Priority"
             } ]
           },
           "sectionId" : {
@@ -2027,6 +2982,12 @@
         }
       }
     },
-    "examples" : { }
+    "examples" : { },
+    "securitySchemes" : {
+      "SecurityScheme" : {
+        "type" : "http",
+        "scheme" : "bearer"
+      }
+    }
   }
 }
