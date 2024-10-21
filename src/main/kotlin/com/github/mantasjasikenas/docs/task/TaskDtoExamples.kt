@@ -1,9 +1,9 @@
 ﻿package com.github.mantasjasikenas.docs.task
 
-import com.github.mantasjasikenas.model.task.PostTaskDto
-import com.github.mantasjasikenas.model.task.Priority
-import com.github.mantasjasikenas.model.task.TaskDto
-import com.github.mantasjasikenas.model.task.UpdateTaskDto
+import com.github.mantasjasikenas.data.task.PostTaskDto
+import com.github.mantasjasikenas.data.task.Priority
+import com.github.mantasjasikenas.data.task.TaskDto
+import com.github.mantasjasikenas.data.task.UpdateTaskDto
 
 val taskDtoExample = TaskDto(
     id = 1,
@@ -35,7 +35,6 @@ val postTaskDtoExample = PostTaskDto(
     priority = Priority.Low,
     completed = false,
     dueDate = "2023-10-09T12:00:00",
-    createdBy = "Sigmund"
 )
 
 val updateTaskDtoExample = UpdateTaskDto(

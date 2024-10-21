@@ -1,9 +1,9 @@
 ﻿package com.github.mantasjasikenas.repository
 
-import com.github.mantasjasikenas.model.Role
-import com.github.mantasjasikenas.model.user.PostUserDto
-import com.github.mantasjasikenas.model.user.UpdateUserDto
-import com.github.mantasjasikenas.model.user.User
+import com.github.mantasjasikenas.data.Role
+import com.github.mantasjasikenas.data.user.PostUserDto
+import com.github.mantasjasikenas.data.user.UpdateUserDto
+import com.github.mantasjasikenas.data.user.User
 
 interface UserRepository {
     suspend fun all(): List<User>

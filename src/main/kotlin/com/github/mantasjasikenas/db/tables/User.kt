@@ -1,7 +1,7 @@
 package com.github.mantasjasikenas.db.tables
 
-import com.github.mantasjasikenas.model.user.User
-import com.github.mantasjasikenas.model.user.UserDto
+import com.github.mantasjasikenas.data.user.User
+import com.github.mantasjasikenas.data.user.UserDto
 import org.jetbrains.exposed.dao.UUIDEntity
 import org.jetbrains.exposed.dao.UUIDEntityClass
 import org.jetbrains.exposed.dao.id.EntityID

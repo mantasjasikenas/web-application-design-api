@@ -1,6 +1,6 @@
-﻿package com.github.mantasjasikenas.model.auth
+﻿package com.github.mantasjasikenas.data.auth
 
-import com.github.mantasjasikenas.model.user.UserDto
+import com.github.mantasjasikenas.data.user.UserDto
 import kotlinx.datetime.LocalDateTime
 import kotlinx.serialization.Serializable
 

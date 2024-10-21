@@ -1,11 +1,11 @@
 package com.github.mantasjasikenas.plugins
 
-import com.github.mantasjasikenas.model.Role
-import com.github.mantasjasikenas.model.respondCustom
+import com.github.mantasjasikenas.data.Role
+import com.github.mantasjasikenas.data.respondCustom
+import com.github.mantasjasikenas.util.getRoleFromToken
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
-import io.ktor.server.auth.jwt.*
 
 class PluginConfiguration {
     var roles: Set<Role> = emptySet()
@@ -32,10 +32,3 @@ val RoleBasedAuthorizationPlugin = createRouteScopedPlugin(
         }
     }
 }
-
-private fun getRoleFromToken(call: ApplicationCall): List<Role>? =
-    call.principal<JWTPrincipal>()
-        ?.payload
-        ?.getClaim("roles")
-        ?.asList(String::class.java)
-        ?.map(Role::valueOf)

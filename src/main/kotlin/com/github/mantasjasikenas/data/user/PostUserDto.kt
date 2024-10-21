@@ -1,4 +1,4 @@
-﻿package com.github.mantasjasikenas.model.user
+﻿package com.github.mantasjasikenas.data.user
 
 import io.ktor.server.plugins.requestvalidation.*
 import kotlinx.serialization.Serializable

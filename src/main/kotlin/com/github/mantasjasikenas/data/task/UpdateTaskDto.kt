@@ -1,4 +1,4 @@
-﻿package com.github.mantasjasikenas.model.task
+﻿package com.github.mantasjasikenas.data.task
 
 import io.ktor.server.plugins.requestvalidation.*
 import kotlinx.datetime.LocalDateTime

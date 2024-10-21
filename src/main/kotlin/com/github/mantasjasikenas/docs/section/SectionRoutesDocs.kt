@@ -1,8 +1,8 @@
 ﻿package com.github.mantasjasikenas.docs.section
 
+import com.github.mantasjasikenas.data.section.PostSectionDto
+import com.github.mantasjasikenas.data.section.UpdateSectionDto
 import com.github.mantasjasikenas.docs.*
-import com.github.mantasjasikenas.model.section.PostSectionDto
-import com.github.mantasjasikenas.model.section.UpdateSectionDto
 import io.github.smiley4.ktorswaggerui.dsl.routes.OpenApiRoute
 
 
@@ -34,6 +34,10 @@ fun postSectionDocs(): OpenApiRoute.() -> Unit = {
         notFoundResponse(message = "Project not found")
 
         unprocessableEntityResponse(message = "Validation failed")
+
+        unauthorizedResponse()
+
+        forbiddenResponse()
     }
 }
 
@@ -68,6 +72,10 @@ fun getSectionByIdDocs(): OpenApiRoute.() -> Unit = {
         badRequestResponse(message = "Section id is required")
 
         notFoundResponse(message = "Section not found")
+
+        unauthorizedResponse()
+
+        forbiddenResponse()
     }
 }
 
@@ -95,6 +103,10 @@ fun updateSectionByIdDocs(): OpenApiRoute.() -> Unit = {
         notFoundResponse(message = "Section not found")
 
         unprocessableEntityResponse(message = "Validation failed")
+
+        unauthorizedResponse()
+
+        forbiddenResponse()
     }
 }
 
@@ -113,5 +125,9 @@ fun deleteSectionByIdDocs(): OpenApiRoute.() -> Unit = {
         badRequestResponse(message = "Section id is required")
 
         notFoundResponse(message = "Section not found")
+
+        unauthorizedResponse()
+
+        forbiddenResponse()
     }
 }

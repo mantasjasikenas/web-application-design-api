@@ -1,4 +1,4 @@
-﻿package com.github.mantasjasikenas.model.task
+﻿package com.github.mantasjasikenas.data.task
 
 import io.ktor.server.plugins.requestvalidation.*
 import kotlinx.datetime.LocalDateTime
@@ -11,7 +11,6 @@ data class PostTaskDto(
     val priority: Priority,
     val completed: Boolean,
     val dueDate: String?,
-    val createdBy: String,
 )
 
 fun PostTaskDto.validate(): ValidationResult {
@@ -23,10 +22,6 @@ fun PostTaskDto.validate(): ValidationResult {
 
     if (this.description.isBlank()) {
         reasons.add("Task description cannot be blank")
-    }
-
-    if (this.createdBy.isBlank()) {
-        reasons.add("Task creator cannot be blank")
     }
 
     if (this.dueDate != null && this.dueDate.isBlank()) {

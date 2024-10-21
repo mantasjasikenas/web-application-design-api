@@ -1,8 +1,8 @@
 ﻿package com.github.mantasjasikenas.docs.project
 
-import com.github.mantasjasikenas.model.project.PostProjectDto
-import com.github.mantasjasikenas.model.project.ProjectDto
-import com.github.mantasjasikenas.model.project.UpdateProjectDto
+import com.github.mantasjasikenas.data.project.PostProjectDto
+import com.github.mantasjasikenas.data.project.ProjectDto
+import com.github.mantasjasikenas.data.project.UpdateProjectDto
 
 val projectDtoExample = ProjectDto(
     id = 1,
@@ -22,8 +22,7 @@ val projectDtoExample2 = ProjectDto(
 
 val postProjectDtoExample = PostProjectDto(
     name = "Movie Night",
-    description = "Plan a movie night with friends",
-    createdBy = "Virgis"
+    description = "Plan a movie night with friends"
 )
 
 val updateProjectDtoExample = UpdateProjectDto(

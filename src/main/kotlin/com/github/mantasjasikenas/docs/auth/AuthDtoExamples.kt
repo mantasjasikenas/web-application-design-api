@@ -1,10 +1,10 @@
 ﻿package com.github.mantasjasikenas.docs.auth
 
-import com.github.mantasjasikenas.model.auth.LoginDto
-import com.github.mantasjasikenas.model.auth.RefreshAccessTokenDto
-import com.github.mantasjasikenas.model.auth.SuccessfulLoginDto
-import com.github.mantasjasikenas.model.auth.SuccessfulRegisterDto
-import com.github.mantasjasikenas.model.user.PostUserDto
+import com.github.mantasjasikenas.data.auth.LoginDto
+import com.github.mantasjasikenas.data.auth.RefreshAccessTokenDto
+import com.github.mantasjasikenas.data.auth.SuccessfulLoginDto
+import com.github.mantasjasikenas.data.auth.SuccessfulRegisterDto
+import com.github.mantasjasikenas.data.user.PostUserDto
 
 val postUserDtoExample = PostUserDto(
     username = "Sigmund",

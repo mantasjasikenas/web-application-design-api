@@ -1,6 +1,6 @@
 package com.github.mantasjasikenas.util
 
-import com.github.mantasjasikenas.model.Role
+import com.github.mantasjasikenas.data.Role
 import com.github.mantasjasikenas.plugins.RoleBasedAuthorizationPlugin
 import io.ktor.server.application.*
 import io.ktor.server.routing.*

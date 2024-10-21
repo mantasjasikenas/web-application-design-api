@@ -3,8 +3,8 @@
 import com.github.mantasjasikenas.docs.createdResponse
 import com.github.mantasjasikenas.docs.okResponse
 import com.github.mantasjasikenas.docs.unprocessableEntityResponse
-import com.github.mantasjasikenas.model.auth.LoginDto
-import com.github.mantasjasikenas.model.user.PostUserDto
+import com.github.mantasjasikenas.data.auth.LoginDto
+import com.github.mantasjasikenas.data.user.PostUserDto
 import io.github.smiley4.ktorswaggerui.dsl.routes.OpenApiRoute
 
 

@@ -2,7 +2,7 @@
 
 import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.interfaces.DecodedJWT
-import com.github.mantasjasikenas.model.Role
+import com.github.mantasjasikenas.data.Role
 import io.ktor.server.auth.jwt.*
 import kotlinx.datetime.LocalDateTime
 import java.util.*

@@ -1,4 +1,4 @@
-﻿package com.github.mantasjasikenas.model
+﻿package com.github.mantasjasikenas.data
 
 enum class Role(
     val id: Int,

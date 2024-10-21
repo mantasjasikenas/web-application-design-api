@@ -5,9 +5,9 @@ import com.github.mantasjasikenas.db.tables.ProjectDAO
 import com.github.mantasjasikenas.db.tables.ProjectsTable
 import com.github.mantasjasikenas.db.tables.UsersTable
 import com.github.mantasjasikenas.db.tables.daoToModel
-import com.github.mantasjasikenas.model.project.PostProjectDto
-import com.github.mantasjasikenas.model.project.ProjectDto
-import com.github.mantasjasikenas.model.project.UpdateProjectDto
+import com.github.mantasjasikenas.data.project.PostProjectDto
+import com.github.mantasjasikenas.data.project.ProjectDto
+import com.github.mantasjasikenas.data.project.UpdateProjectDto
 import com.github.mantasjasikenas.repository.ProjectRepository
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
@@ -27,11 +27,11 @@ class ProjectRepositoryImpl : ProjectRepository {
             ?.let(::daoToModel)
     }
 
-    override suspend fun addProject(projectDto: PostProjectDto): ProjectDto = suspendTransaction {
+    override suspend fun addProject(createdBy: String, projectDto: PostProjectDto): ProjectDto = suspendTransaction {
         ProjectDAO.new {
             name = projectDto.name
             description = projectDto.description
-            createdBy = EntityID(UUID.fromString(projectDto.createdBy), UsersTable)
+            this.createdBy = EntityID(UUID.fromString(createdBy), UsersTable)
         }.let(::daoToModel)
     }
 

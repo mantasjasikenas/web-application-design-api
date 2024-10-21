@@ -1,9 +1,9 @@
 ﻿package com.github.mantasjasikenas.docs.task
 
+import com.github.mantasjasikenas.data.task.PostTaskDto
+import com.github.mantasjasikenas.data.task.Priority
+import com.github.mantasjasikenas.data.task.UpdateTaskDto
 import com.github.mantasjasikenas.docs.*
-import com.github.mantasjasikenas.model.task.PostTaskDto
-import com.github.mantasjasikenas.model.task.Priority
-import com.github.mantasjasikenas.model.task.UpdateTaskDto
 import io.github.smiley4.ktorswaggerui.dsl.routes.OpenApiRoute
 
 
@@ -33,6 +33,10 @@ fun postTaskDocs(): OpenApiRoute.() -> Unit = {
         badRequestResponse(message = "Invalid task repository")
 
         unprocessableEntityResponse(message = "Validation failed")
+
+        unauthorizedResponse()
+
+        forbiddenResponse()
     }
 }
 
@@ -53,6 +57,10 @@ fun getTasksByProjectAndSectionId(): OpenApiRoute.() -> Unit = {
         )
 
         badRequestResponse(message = "Both project id and section id are required")
+
+        unauthorizedResponse()
+
+        forbiddenResponse()
     }
 }
 
@@ -77,6 +85,10 @@ fun getTaskByIdDocs(): OpenApiRoute.() -> Unit = {
         badRequestResponse(message = "Task id is required")
 
         notFoundResponse(message = "Task not found")
+
+        unauthorizedResponse()
+
+        forbiddenResponse()
     }
 }
 
@@ -112,6 +124,10 @@ fun updateTaskByIdDocs(): OpenApiRoute.() -> Unit = {
         unprocessableEntityResponse(message = "Validation failed")
 
         notFoundResponse(message = "Task not found")
+
+        unauthorizedResponse()
+
+        forbiddenResponse()
     }
 }
 
@@ -132,5 +148,9 @@ fun deleteTaskByIdDocs(): OpenApiRoute.() -> Unit = {
         badRequestResponse(message = "Task id is required")
 
         notFoundResponse(message = "Task not found")
+
+        unauthorizedResponse()
+
+        forbiddenResponse()
     }
 }

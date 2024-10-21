@@ -1,23 +1,23 @@
-﻿package com.github.mantasjasikenas.model.section
+﻿package com.github.mantasjasikenas.data.project
 
 import io.ktor.server.plugins.requestvalidation.*
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class PostSectionDto(
+data class PostProjectDto(
     val name: String,
-    val createdBy: String,
+    val description: String,
 )
 
-fun PostSectionDto.validate(): ValidationResult {
+fun PostProjectDto.validate(): ValidationResult {
     val reasons = mutableListOf<String>()
 
     if (this.name.isBlank()) {
-        reasons.add("Section name cannot be blank")
+        reasons.add("Task name cannot be blank")
     }
 
-    if (this.createdBy.isBlank()) {
-        reasons.add("Section creator cannot be blank")
+    if (this.description.isBlank()) {
+        reasons.add("Task description cannot be blank")
     }
 
     return if (reasons.isEmpty()) {

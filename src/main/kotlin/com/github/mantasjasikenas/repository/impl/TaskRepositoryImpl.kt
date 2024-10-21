@@ -2,9 +2,9 @@
 
 import com.github.mantasjasikenas.db.suspendTransaction
 import com.github.mantasjasikenas.db.tables.*
-import com.github.mantasjasikenas.model.task.PostTaskDto
-import com.github.mantasjasikenas.model.task.TaskDto
-import com.github.mantasjasikenas.model.task.UpdateTaskDto
+import com.github.mantasjasikenas.data.task.PostTaskDto
+import com.github.mantasjasikenas.data.task.TaskDto
+import com.github.mantasjasikenas.data.task.UpdateTaskDto
 import com.github.mantasjasikenas.repository.TaskRepository
 import kotlinx.datetime.LocalDateTime
 import org.jetbrains.exposed.dao.id.EntityID
@@ -32,7 +32,7 @@ class TaskRepositoryImpl : TaskRepository {
             ?.let(::daoToModel)
     }
 
-    override suspend fun addTask(projectId: Int, sectionId: Int, taskDto: PostTaskDto): TaskDto? = suspendTransaction {
+    override suspend fun addTask(createdBy: String,projectId: Int, sectionId: Int, taskDto: PostTaskDto): TaskDto? = suspendTransaction {
         if (SectionsTable.selectAll()
                 .where { (SectionsTable.id eq sectionId) and (SectionsTable.projectId eq projectId) }
                 .count().toInt() == 0
@@ -47,7 +47,7 @@ class TaskRepositoryImpl : TaskRepository {
             this.sectionId = EntityID(sectionId, TasksTable)
             isCompleted = taskDto.completed
             dueDateTime = taskDto.dueDate?.let { LocalDateTime.parse(it) }
-            createdBy = EntityID(UUID.fromString(taskDto.createdBy), UsersTable)
+            this.createdBy = EntityID(UUID.fromString(createdBy), UsersTable)
         }.let(::daoToModel)
     }
 

@@ -1,6 +1,6 @@
-﻿package com.github.mantasjasikenas.model.user
+﻿package com.github.mantasjasikenas.data.user
 
-import com.github.mantasjasikenas.model.Role
+import com.github.mantasjasikenas.data.Role
 import java.util.*
 
 data class User(

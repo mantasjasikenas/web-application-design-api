@@ -1,8 +1,8 @@
 ﻿package com.github.mantasjasikenas.docs.project
 
+import com.github.mantasjasikenas.data.project.PostProjectDto
+import com.github.mantasjasikenas.data.project.UpdateProjectDto
 import com.github.mantasjasikenas.docs.*
-import com.github.mantasjasikenas.model.project.PostProjectDto
-import com.github.mantasjasikenas.model.project.UpdateProjectDto
 import io.github.smiley4.ktorswaggerui.dsl.routes.OpenApiRoute
 
 
@@ -20,6 +20,8 @@ fun getAllProjectsDocs(): OpenApiRoute.() -> Unit = {
             message = "All projects",
             data = listOf(projectDtoExample, projectDtoExample2)
         )
+        unauthorizedResponse()
+        forbiddenResponse()
     }
 }
 
@@ -48,6 +50,10 @@ fun postProjectDocs(): OpenApiRoute.() -> Unit = {
         unprocessableEntityResponse(
             message = "Validation failed"
         )
+
+        unauthorizedResponse()
+
+        forbiddenResponse()
     }
 }
 
@@ -72,6 +78,10 @@ fun getProjectByIdDocs(): OpenApiRoute.() -> Unit = {
         notFoundResponse(
             message = "Project not found"
         )
+
+        unauthorizedResponse()
+
+        forbiddenResponse()
     }
 }
 
@@ -106,6 +116,10 @@ fun updateProjectByIdDocs(): OpenApiRoute.() -> Unit = {
         notFoundResponse(
             message = "Project not found"
         )
+
+        unauthorizedResponse()
+
+        forbiddenResponse()
     }
 }
 
@@ -128,5 +142,9 @@ fun deleteProjectByIdDocs(): OpenApiRoute.() -> Unit = {
         notFoundResponse(
             message = "Project not found"
         )
+
+        unauthorizedResponse()
+
+        forbiddenResponse()
     }
 }

@@ -1,9 +1,9 @@
 package com.github.mantasjasikenas.service.impl
 
-import com.github.mantasjasikenas.model.AuthResponse
-import com.github.mantasjasikenas.model.Role
-import com.github.mantasjasikenas.model.auth.LoginDto
-import com.github.mantasjasikenas.model.user.*
+import com.github.mantasjasikenas.data.AuthResponse
+import com.github.mantasjasikenas.data.Role
+import com.github.mantasjasikenas.data.auth.LoginDto
+import com.github.mantasjasikenas.data.user.*
 import com.github.mantasjasikenas.repository.UserRepository
 import com.github.mantasjasikenas.service.JwtService
 import com.github.mantasjasikenas.service.SessionService

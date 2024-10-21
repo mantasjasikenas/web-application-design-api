@@ -1,12 +1,12 @@
 ﻿package com.github.mantasjasikenas.service
 
-import com.github.mantasjasikenas.model.AuthResponse
-import com.github.mantasjasikenas.model.Role
-import com.github.mantasjasikenas.model.auth.LoginDto
-import com.github.mantasjasikenas.model.user.PostUserDto
-import com.github.mantasjasikenas.model.user.UpdateUserDto
-import com.github.mantasjasikenas.model.user.User
-import com.github.mantasjasikenas.model.user.UserDto
+import com.github.mantasjasikenas.data.AuthResponse
+import com.github.mantasjasikenas.data.Role
+import com.github.mantasjasikenas.data.auth.LoginDto
+import com.github.mantasjasikenas.data.user.PostUserDto
+import com.github.mantasjasikenas.data.user.UpdateUserDto
+import com.github.mantasjasikenas.data.user.User
+import com.github.mantasjasikenas.data.user.UserDto
 
 interface UserService {
     suspend fun all(): List<UserDto>

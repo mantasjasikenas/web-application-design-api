@@ -1,4 +1,4 @@
-﻿package com.github.mantasjasikenas.model.task
+﻿package com.github.mantasjasikenas.data.task
 
 enum class Priority {
     Low, Medium, High, Vital

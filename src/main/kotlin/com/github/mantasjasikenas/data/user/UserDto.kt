@@ -1,7 +1,7 @@
-﻿package com.github.mantasjasikenas.model.user
+﻿package com.github.mantasjasikenas.data.user
 
-import com.github.mantasjasikenas.model.Role
-import com.github.mantasjasikenas.model.auth.SuccessfulRegisterDto
+import com.github.mantasjasikenas.data.Role
+import com.github.mantasjasikenas.data.auth.SuccessfulRegisterDto
 import kotlinx.serialization.Serializable
 
 @Serializable

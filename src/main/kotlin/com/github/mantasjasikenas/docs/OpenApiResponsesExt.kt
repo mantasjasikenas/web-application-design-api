@@ -1,6 +1,6 @@
 ﻿package com.github.mantasjasikenas.docs
 
-import com.github.mantasjasikenas.model.ApiResponse
+import com.github.mantasjasikenas.data.ApiResponse
 import io.github.smiley4.ktorswaggerui.dsl.routes.OpenApiResponses
 import io.ktor.http.*
 
@@ -95,6 +95,42 @@ inline fun <reified T> OpenApiResponses.createdResponse(
             example("default") {
                 value = ApiResponse(
                     data = data, success = true, status = HttpStatusCode.Created.value.toString(), message = message
+                )
+            }
+        }
+    }
+}
+
+inline fun OpenApiResponses.unauthorizedResponse(
+    description: String = "Unauthorized",
+    message: String = "The request is unauthenticated",
+    errors: List<String>? = null
+) {
+    HttpStatusCode.Unauthorized to {
+        this.description = description
+        body<ApiResponse<String>> {
+            example("default") {
+                value = ApiResponse(
+                    data = null,
+                    success = false,
+                    status = HttpStatusCode.Unauthorized.value.toString(),
+                    message = message,
+                    errors = errors
+                )
+            }
+        }
+    }
+}
+
+inline fun OpenApiResponses.forbiddenResponse(
+    description: String = "Forbidden", message: String = "Access to the resource is prohibited"
+) {
+    HttpStatusCode.Forbidden to {
+        this.description = description
+        body<ApiResponse<String>> {
+            example("default") {
+                value = ApiResponse(
+                    data = null, success = false, status = HttpStatusCode.Forbidden.value.toString(), message = message
                 )
             }
         }

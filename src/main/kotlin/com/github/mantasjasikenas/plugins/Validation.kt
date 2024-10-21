@@ -1,17 +1,17 @@
 ﻿package com.github.mantasjasikenas.plugins
 
-import com.github.mantasjasikenas.model.project.PostProjectDto
-import com.github.mantasjasikenas.model.project.UpdateProjectDto
-import com.github.mantasjasikenas.model.project.validate
-import com.github.mantasjasikenas.model.respondCustom
-import com.github.mantasjasikenas.model.section.PostSectionDto
-import com.github.mantasjasikenas.model.section.UpdateSectionDto
-import com.github.mantasjasikenas.model.section.validate
-import com.github.mantasjasikenas.model.task.PostTaskDto
-import com.github.mantasjasikenas.model.task.UpdateTaskDto
-import com.github.mantasjasikenas.model.task.validate
-import com.github.mantasjasikenas.model.user.PostUserDto
-import com.github.mantasjasikenas.model.user.validate
+import com.github.mantasjasikenas.data.project.PostProjectDto
+import com.github.mantasjasikenas.data.project.UpdateProjectDto
+import com.github.mantasjasikenas.data.project.validate
+import com.github.mantasjasikenas.data.respondCustom
+import com.github.mantasjasikenas.data.section.PostSectionDto
+import com.github.mantasjasikenas.data.section.UpdateSectionDto
+import com.github.mantasjasikenas.data.section.validate
+import com.github.mantasjasikenas.data.task.PostTaskDto
+import com.github.mantasjasikenas.data.task.UpdateTaskDto
+import com.github.mantasjasikenas.data.task.validate
+import com.github.mantasjasikenas.data.user.PostUserDto
+import com.github.mantasjasikenas.data.user.validate
 import io.ktor.http.*
 import io.ktor.serialization.*
 import io.ktor.server.application.*
@@ -66,6 +66,12 @@ fun Application.configureValidation() {
                     return@exception
                 }
 
+                call.respondCustom(HttpStatusCode.BadRequest, "The server could not understand the request")
+
+                return@exception
+            }
+
+            if (throwable is IllegalArgumentException || throwable is IllegalStateException) {
                 call.respondCustom(HttpStatusCode.BadRequest, "The server could not understand the request")
 
                 return@exception

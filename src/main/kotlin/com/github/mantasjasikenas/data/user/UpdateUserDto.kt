@@ -1,4 +1,4 @@
-﻿package com.github.mantasjasikenas.model.user
+﻿package com.github.mantasjasikenas.data.user
 
 import kotlinx.serialization.Serializable
 

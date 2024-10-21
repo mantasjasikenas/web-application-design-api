@@ -2,9 +2,9 @@
 
 import com.github.mantasjasikenas.db.suspendTransaction
 import com.github.mantasjasikenas.db.tables.*
-import com.github.mantasjasikenas.model.section.PostSectionDto
-import com.github.mantasjasikenas.model.section.SectionDto
-import com.github.mantasjasikenas.model.section.UpdateSectionDto
+import com.github.mantasjasikenas.data.section.PostSectionDto
+import com.github.mantasjasikenas.data.section.SectionDto
+import com.github.mantasjasikenas.data.section.UpdateSectionDto
 import com.github.mantasjasikenas.repository.SectionRepository
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
@@ -29,7 +29,7 @@ class SectionRepositoryImpl : SectionRepository {
             ?.let(::daoToModel)
     }
 
-    override suspend fun addSection(projectId: Int, sectionDto: PostSectionDto): SectionDto? = suspendTransaction {
+    override suspend fun addSection(createdBy: String, projectId: Int, sectionDto: PostSectionDto): SectionDto? = suspendTransaction {
         if (ProjectsTable.selectAll()
                 .where { (ProjectsTable.id eq projectId) }
                 .count().toInt() == 0
@@ -39,7 +39,7 @@ class SectionRepositoryImpl : SectionRepository {
 
         SectionDAO.new {
             name = sectionDto.name
-            createdBy = EntityID(UUID.fromString(sectionDto.createdBy), UsersTable)
+            this.createdBy = EntityID(UUID.fromString(createdBy), UsersTable)
             this.projectId = EntityID(projectId, ProjectsTable)
         }.let(::daoToModel)
     }

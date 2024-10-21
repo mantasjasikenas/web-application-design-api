@@ -1,4 +1,4 @@
-﻿package com.github.mantasjasikenas.model.task
+﻿package com.github.mantasjasikenas.data.task
 
 import kotlinx.serialization.Serializable
 

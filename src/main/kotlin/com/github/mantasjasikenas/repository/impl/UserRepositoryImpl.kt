@@ -5,10 +5,10 @@ import com.github.mantasjasikenas.db.tables.UserDAO
 import com.github.mantasjasikenas.db.tables.UserRoleDAO
 import com.github.mantasjasikenas.db.tables.UsersTable
 import com.github.mantasjasikenas.db.tables.daoToModel
-import com.github.mantasjasikenas.model.Role
-import com.github.mantasjasikenas.model.user.PostUserDto
-import com.github.mantasjasikenas.model.user.UpdateUserDto
-import com.github.mantasjasikenas.model.user.User
+import com.github.mantasjasikenas.data.Role
+import com.github.mantasjasikenas.data.user.PostUserDto
+import com.github.mantasjasikenas.data.user.UpdateUserDto
+import com.github.mantasjasikenas.data.user.User
 import com.github.mantasjasikenas.repository.UserRepository
 import org.jetbrains.exposed.dao.id.EntityID
 import java.util.*

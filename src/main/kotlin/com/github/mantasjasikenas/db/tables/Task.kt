@@ -1,7 +1,7 @@
 package com.github.mantasjasikenas.db.tables
 
-import com.github.mantasjasikenas.model.task.Priority
-import com.github.mantasjasikenas.model.task.TaskDto
+import com.github.mantasjasikenas.data.task.Priority
+import com.github.mantasjasikenas.data.task.TaskDto
 import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
 import org.jetbrains.exposed.dao.id.EntityID

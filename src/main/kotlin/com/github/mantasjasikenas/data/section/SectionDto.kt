@@ -1,4 +1,4 @@
-﻿package com.github.mantasjasikenas.model.section
+﻿package com.github.mantasjasikenas.data.section
 
 import kotlinx.serialization.Serializable
 

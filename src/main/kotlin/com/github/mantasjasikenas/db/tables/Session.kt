@@ -1,6 +1,6 @@
 ﻿package com.github.mantasjasikenas.db.tables
 
-import com.github.mantasjasikenas.model.auth.SessionDto
+import com.github.mantasjasikenas.data.auth.SessionDto
 import org.jetbrains.exposed.dao.UUIDEntity
 import org.jetbrains.exposed.dao.UUIDEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
