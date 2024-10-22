@@ -1,10 +1,10 @@
 ﻿package com.github.mantasjasikenas.docs.auth
 
+import com.github.mantasjasikenas.data.auth.LoginDto
+import com.github.mantasjasikenas.data.user.PostUserDto
 import com.github.mantasjasikenas.docs.createdResponse
 import com.github.mantasjasikenas.docs.okResponse
 import com.github.mantasjasikenas.docs.unprocessableEntityResponse
-import com.github.mantasjasikenas.data.auth.LoginDto
-import com.github.mantasjasikenas.data.user.PostUserDto
 import io.github.smiley4.ktorswaggerui.dsl.routes.OpenApiRoute
 
 
@@ -62,15 +62,15 @@ fun loginDocs(): OpenApiRoute.() -> Unit = {
 fun accessTokenDocs(): OpenApiRoute.() -> Unit = {
     description = "Refresh access token"
 
-//    Could be cookie RefreshToken
-//    request {
-//        body<RefreshAccessTokenDto> {
-//            description = "Refresh token"
-//            example("default") {
-//                value = refreshAccessTokenDtoExample
-//            }
-//        }
-//    }
+    request {
+        cookieParameter<String>("RefreshToken") {
+            description = "Refresh token"
+            required = true
+            example("default") {
+                value = refreshTokenExample
+            }
+        }
+    }
 
     response {
         okResponse(

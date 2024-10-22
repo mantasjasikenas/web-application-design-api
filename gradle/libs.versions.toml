@@ -5,7 +5,7 @@ logback-version = "1.4.14"
 exposed-version = "0.53.0"
 postgresql-version = "42.7.2"
 swagger-version = "1.0.51"
-smiley4-ktor-swagger-ui = "3.5.0"
+smiley4-ktor-swagger-ui = "3.6.0"
 
 [libraries]
 ktor-server-call-logging = { module = "io.ktor:ktor-server-call-logging-jvm", version.ref = "ktor-version" }
