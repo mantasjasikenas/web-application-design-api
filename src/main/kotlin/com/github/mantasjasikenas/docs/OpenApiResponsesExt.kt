@@ -1,4 +1,6 @@
-﻿package com.github.mantasjasikenas.docs
+﻿@file:Suppress("inlineOnly", "NOTHING_TO_INLINE")
+
+package com.github.mantasjasikenas.docs
 
 import com.github.mantasjasikenas.data.ApiResponse
 import io.github.smiley4.ktorswaggerui.dsl.routes.OpenApiResponses
