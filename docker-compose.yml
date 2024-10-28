@@ -1,20 +1,25 @@
 services:
+  api:
+    build: .
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    depends_on:
+      - db
+
+
   db:
     image: postgres
     restart: always
     volumes:
       - ./src/main/kotlin/com/github/mantasjasikenas/db/dumps/init.sql:/docker-entrypoint-initdb.d/docker_postgres_init.sql
-    #    volumes:
-    #      - pgdata:/var/lib/postgresql/repository
     environment:
       POSTGRES_DB: todo_db
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
-#      POSTGRES_HOST_AUTH_METHOD: trust
     ports:
       - "5432:5432"
     healthcheck:
       test: [ "CMD-SHELL", "pg_isready -U postgres" ]
       interval: 1s
-#volumes:
-#  pgdata:
