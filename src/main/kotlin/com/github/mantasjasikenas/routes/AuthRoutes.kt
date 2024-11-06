@@ -1,11 +1,11 @@
 package com.github.mantasjasikenas.routes
 
-import com.github.mantasjasikenas.docs.auth.*
 import com.github.mantasjasikenas.data.*
 import com.github.mantasjasikenas.data.auth.LoginDto
 import com.github.mantasjasikenas.data.auth.SuccessfulLoginDto
 import com.github.mantasjasikenas.data.user.PostUserDto
 import com.github.mantasjasikenas.data.user.toSuccessfulRegisterDto
+import com.github.mantasjasikenas.docs.auth.*
 import com.github.mantasjasikenas.service.UserService
 import io.github.smiley4.ktorswaggerui.dsl.routing.post
 import io.github.smiley4.ktorswaggerui.dsl.routing.route
