@@ -17,7 +17,6 @@ import io.github.smiley4.ktorswaggerui.dsl.routing.patch
 import io.github.smiley4.ktorswaggerui.dsl.routing.post
 import io.github.smiley4.ktorswaggerui.dsl.routing.route
 import io.ktor.http.*
-import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.request.*
 import io.ktor.server.routing.*
@@ -34,16 +33,19 @@ fun Route.sectionRoutes(
             route("/sections") {
                 get(getAllSectionsDocs()) {
                     val roles = call.extractRolesOrRespond() ?: return@get
-
-                    if (!roles.contains(Role.Admin)) {
-                        call.respondForbidden()
-                        return@get
-                    }
+                    val userId = call.extractSubjectOrRespond() ?: return@get
 
                     val projectId = call.getProjectIdOrRespond() ?: return@get
                     routeService.validateProjectOrRespond(call, projectId) ?: return@get
 
-                    val sections = sectionRepository.allSections(projectId)
+                    // check if query parameter is present, if to return sections with tasks
+                    val withTasks = call.request.queryParameters["withTasks"]?.toBoolean() ?: false
+
+                    val sections = if (roles.contains(Role.Admin)) {
+                        sectionRepository.allSections(projectId, withTasks)
+                    } else {
+                        sectionRepository.allUserSections(userId, projectId, withTasks)
+                    }
 
                     call.respondSuccess("All sections", sections)
                 }

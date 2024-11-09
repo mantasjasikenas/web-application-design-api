@@ -6,6 +6,7 @@ import com.github.mantasjasikenas.data.project.UpdateProjectDto
 
 interface ProjectRepository {
     suspend fun allProjects(): List<ProjectDto>
+    suspend fun allUserProjects(userId: String): List<ProjectDto>
     suspend fun projectById(id: Int): ProjectDto?
     suspend fun addProject(createdBy: String, projectDto: PostProjectDto): ProjectDto
     suspend fun removeProject(id: Int): Boolean

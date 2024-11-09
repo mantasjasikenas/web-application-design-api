@@ -25,13 +25,16 @@ class SectionDAO(id: EntityID<Int>) : IntEntity(id) {
     var project by ProjectDAO referencedOn SectionsTable.projectId
     var createdAt by SectionsTable.createdAt
     var createdBy by SectionsTable.createdBy
+
+    val tasks by TaskDAO referrersOn TasksTable.sectionId
 }
 
 
-fun daoToModel(dao: SectionDAO) = SectionDto(
+fun daoToModel(dao: SectionDAO, withTasks: Boolean = false) = SectionDto(
     id = dao.id.value,
     name = dao.name,
     createdAt = dao.createdAt.toString(),
     createdBy = dao.createdBy.value.toString(),
     projectId = dao.project.id.value,
+    tasks = if (withTasks) dao.tasks.map { daoToModel(it) } else null
 )

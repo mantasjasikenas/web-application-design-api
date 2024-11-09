@@ -5,7 +5,8 @@ import com.github.mantasjasikenas.data.section.SectionDto
 import com.github.mantasjasikenas.data.section.UpdateSectionDto
 
 interface SectionRepository {
-    suspend fun allSections(projectId: Int): List<SectionDto>
+    suspend fun allSections(projectId: Int, withTasks: Boolean): List<SectionDto>
+    suspend fun allUserSections(userId: String, projectId: Int, withTasks: Boolean): List<SectionDto>
     suspend fun sectionById(projectId: Int, id: Int): SectionDto?
     suspend fun addSection(createdBy: String, projectId: Int, sectionDto: PostSectionDto): SectionDto?
     suspend fun removeSection(projectId: Int, id: Int): Boolean

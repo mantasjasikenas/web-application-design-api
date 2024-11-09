@@ -1,10 +1,10 @@
 ﻿package com.github.mantasjasikenas.repository.impl
 
-import com.github.mantasjasikenas.db.suspendTransaction
-import com.github.mantasjasikenas.db.tables.*
 import com.github.mantasjasikenas.data.section.PostSectionDto
 import com.github.mantasjasikenas.data.section.SectionDto
 import com.github.mantasjasikenas.data.section.UpdateSectionDto
+import com.github.mantasjasikenas.db.suspendTransaction
+import com.github.mantasjasikenas.db.tables.*
 import com.github.mantasjasikenas.repository.SectionRepository
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
@@ -14,11 +14,24 @@ import org.jetbrains.exposed.sql.selectAll
 import java.util.*
 
 class SectionRepositoryImpl : SectionRepository {
-    override suspend fun allSections(projectId: Int): List<SectionDto> = suspendTransaction {
+    override suspend fun allSections(projectId: Int, withTasks: Boolean): List<SectionDto> = suspendTransaction {
         SectionDAO
             .find { SectionsTable.projectId eq projectId }
-            .map(::daoToModel)
+            .map { daoToModel(it, withTasks) }
     }
+
+    override suspend fun allUserSections(userId: String, projectId: Int, withTasks: Boolean): List<SectionDto> =
+        suspendTransaction {
+            SectionDAO
+                .find {
+                    (SectionsTable.projectId eq projectId) and (SectionsTable.createdBy eq EntityID(
+                        UUID.fromString(
+                            userId
+                        ), UsersTable
+                    ))
+                }
+                .map { daoToModel(it, withTasks) }
+        }
 
     override suspend fun sectionById(projectId: Int, id: Int): SectionDto? = suspendTransaction {
         SectionDAO
@@ -29,20 +42,21 @@ class SectionRepositoryImpl : SectionRepository {
             ?.let(::daoToModel)
     }
 
-    override suspend fun addSection(createdBy: String, projectId: Int, sectionDto: PostSectionDto): SectionDto? = suspendTransaction {
-        if (ProjectsTable.selectAll()
-                .where { (ProjectsTable.id eq projectId) }
-                .count().toInt() == 0
-        ) {
-            return@suspendTransaction null
-        }
+    override suspend fun addSection(createdBy: String, projectId: Int, sectionDto: PostSectionDto): SectionDto? =
+        suspendTransaction {
+            if (ProjectsTable.selectAll()
+                    .where { (ProjectsTable.id eq projectId) }
+                    .count().toInt() == 0
+            ) {
+                return@suspendTransaction null
+            }
 
-        SectionDAO.new {
-            name = sectionDto.name
-            this.createdBy = EntityID(UUID.fromString(createdBy), UsersTable)
-            this.projectId = EntityID(projectId, ProjectsTable)
-        }.let(::daoToModel)
-    }
+            SectionDAO.new {
+                name = sectionDto.name
+                this.createdBy = EntityID(UUID.fromString(createdBy), UsersTable)
+                this.projectId = EntityID(projectId, ProjectsTable)
+            }.let(::daoToModel)
+        }
 
     override suspend fun removeSection(projectId: Int, id: Int): Boolean = suspendTransaction {
         val rowsDeleted = SectionsTable.deleteWhere {

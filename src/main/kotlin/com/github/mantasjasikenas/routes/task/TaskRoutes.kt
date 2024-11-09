@@ -14,7 +14,6 @@ import com.github.mantasjasikenas.util.extractSubjectOrRespond
 import com.github.mantasjasikenas.util.extractSubjectWithRolesOrRespond
 import io.github.smiley4.ktorswaggerui.dsl.routing.*
 import io.ktor.http.*
-import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.request.*
 import io.ktor.server.routing.*
@@ -31,16 +30,16 @@ fun Route.taskRoutes(
             route("/projects/{projectId}/sections/{sectionId}/tasks") {
                 get(getTasksByProjectAndSectionId()) {
                     val roles = call.extractRolesOrRespond() ?: return@get
-
-                    if (!roles.contains(Role.Admin)) {
-                        call.respondForbidden("You are not allowed to access this section")
-                        return@get
-                    }
+                    val userId = call.extractSubjectOrRespond() ?: return@get
 
                     val (projectId, sectionId) = call.getProjectSectionIdOrRespond() ?: return@get
                     routeService.validateProjectAndSectionOrRespond(call, projectId, sectionId) ?: return@get
 
-                    val tasks = taskRepository.allTasks(projectId, sectionId)
+                    val tasks = if (roles.contains(Role.Admin)) {
+                        taskRepository.allTasks(projectId, sectionId)
+                    } else {
+                        taskRepository.allUserTasks(userId, projectId, sectionId)
+                    }
 
                     call.respondSuccess("Project section tasks", tasks)
                 }

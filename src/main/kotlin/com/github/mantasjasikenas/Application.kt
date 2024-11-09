@@ -35,6 +35,7 @@ fun Application.module() {
     val sectionRepository: SectionRepository = SectionRepositoryImpl()
 
 
+    configureCORS()
     configureMonitoring()
     configureSerialization()
     configureDatabases()

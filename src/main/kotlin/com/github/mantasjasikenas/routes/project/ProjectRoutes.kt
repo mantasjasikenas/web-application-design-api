@@ -11,7 +11,6 @@ import com.github.mantasjasikenas.util.extractSubjectOrRespond
 import com.github.mantasjasikenas.util.extractSubjectWithRolesOrRespond
 import io.github.smiley4.ktorswaggerui.dsl.routing.*
 import io.ktor.http.*
-import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.request.*
 import io.ktor.server.routing.*
@@ -24,13 +23,13 @@ fun Route.projectRoutes(projectRepository: ProjectRepository) {
         route("/projects", projectRoutesDocs()) {
             get(getAllProjectsDocs()) {
                 val roles = call.extractRolesOrRespond() ?: return@get
+                val userId = call.extractSubjectOrRespond() ?: return@get
 
-                if (!roles.contains(Role.Admin)) {
-                    call.respondForbidden()
-                    return@get
+                val projects = if (roles.contains(Role.Admin)) {
+                    projectRepository.allProjects()
+                } else {
+                    projectRepository.allUserProjects(userId)
                 }
-
-                val projects = projectRepository.allProjects()
 
                 call.respondSuccess("All projects", projects)
             }

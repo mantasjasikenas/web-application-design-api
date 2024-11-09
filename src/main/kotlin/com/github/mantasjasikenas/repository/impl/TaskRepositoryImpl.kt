@@ -1,10 +1,10 @@
 ﻿package com.github.mantasjasikenas.repository.impl
 
-import com.github.mantasjasikenas.db.suspendTransaction
-import com.github.mantasjasikenas.db.tables.*
 import com.github.mantasjasikenas.data.task.PostTaskDto
 import com.github.mantasjasikenas.data.task.TaskDto
 import com.github.mantasjasikenas.data.task.UpdateTaskDto
+import com.github.mantasjasikenas.db.suspendTransaction
+import com.github.mantasjasikenas.db.tables.*
 import com.github.mantasjasikenas.repository.TaskRepository
 import kotlinx.datetime.LocalDateTime
 import org.jetbrains.exposed.dao.id.EntityID
@@ -22,6 +22,19 @@ class TaskRepositoryImpl : TaskRepository {
             .map(::daoToModel)
     }
 
+    override suspend fun allUserTasks(userId: String, projectId: Int, sectionId: Int): List<TaskDto> =
+        suspendTransaction {
+            (TasksTable innerJoin SectionsTable)
+                .selectAll()
+                .where {
+                    (TasksTable.sectionId eq sectionId) and (SectionsTable.projectId eq projectId) and (TasksTable.createdBy eq EntityID(
+                        UUID.fromString(userId),
+                        UsersTable
+                    ))
+                }.map { TaskDAO.wrapRow(it) }
+                .map(::daoToModel)
+        }
+
     override suspend fun taskById(projectId: Int, sectionId: Int, id: Int): TaskDto? = suspendTransaction {
         (TasksTable innerJoin SectionsTable)
             .selectAll()
@@ -32,24 +45,25 @@ class TaskRepositoryImpl : TaskRepository {
             ?.let(::daoToModel)
     }
 
-    override suspend fun addTask(createdBy: String,projectId: Int, sectionId: Int, taskDto: PostTaskDto): TaskDto? = suspendTransaction {
-        if (SectionsTable.selectAll()
-                .where { (SectionsTable.id eq sectionId) and (SectionsTable.projectId eq projectId) }
-                .count().toInt() == 0
-        ) {
-            return@suspendTransaction null
-        }
+    override suspend fun addTask(createdBy: String, projectId: Int, sectionId: Int, taskDto: PostTaskDto): TaskDto? =
+        suspendTransaction {
+            if (SectionsTable.selectAll()
+                    .where { (SectionsTable.id eq sectionId) and (SectionsTable.projectId eq projectId) }
+                    .count().toInt() == 0
+            ) {
+                return@suspendTransaction null
+            }
 
-        TaskDAO.new {
-            name = taskDto.name
-            description = taskDto.description
-            priority = taskDto.priority
-            this.sectionId = EntityID(sectionId, TasksTable)
-            isCompleted = taskDto.completed
-            dueDateTime = taskDto.dueDate?.let { LocalDateTime.parse(it) }
-            this.createdBy = EntityID(UUID.fromString(createdBy), UsersTable)
-        }.let(::daoToModel)
-    }
+            TaskDAO.new {
+                name = taskDto.name
+                description = taskDto.description
+                priority = taskDto.priority
+                this.sectionId = EntityID(sectionId, TasksTable)
+                isCompleted = taskDto.completed
+                dueDateTime = taskDto.dueDate?.let { LocalDateTime.parse(it) }
+                this.createdBy = EntityID(UUID.fromString(createdBy), UsersTable)
+            }.let(::daoToModel)
+        }
 
     override suspend fun removeTask(projectId: Int, sectionId: Int, id: Int): Boolean = suspendTransaction {
         val count = (TasksTable innerJoin SectionsTable)

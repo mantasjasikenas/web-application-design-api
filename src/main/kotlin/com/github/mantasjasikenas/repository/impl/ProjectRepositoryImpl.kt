@@ -1,13 +1,13 @@
 ﻿package com.github.mantasjasikenas.repository.impl
 
+import com.github.mantasjasikenas.data.project.PostProjectDto
+import com.github.mantasjasikenas.data.project.ProjectDto
+import com.github.mantasjasikenas.data.project.UpdateProjectDto
 import com.github.mantasjasikenas.db.suspendTransaction
 import com.github.mantasjasikenas.db.tables.ProjectDAO
 import com.github.mantasjasikenas.db.tables.ProjectsTable
 import com.github.mantasjasikenas.db.tables.UsersTable
 import com.github.mantasjasikenas.db.tables.daoToModel
-import com.github.mantasjasikenas.data.project.PostProjectDto
-import com.github.mantasjasikenas.data.project.ProjectDto
-import com.github.mantasjasikenas.data.project.UpdateProjectDto
 import com.github.mantasjasikenas.repository.ProjectRepository
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
@@ -18,6 +18,12 @@ class ProjectRepositoryImpl : ProjectRepository {
     override suspend fun allProjects(): List<ProjectDto> = suspendTransaction {
         ProjectDAO
             .all()
+            .map(::daoToModel)
+    }
+
+    override suspend fun allUserProjects(userId: String): List<ProjectDto> = suspendTransaction {
+        ProjectDAO
+            .find { ProjectsTable.createdBy eq UUID.fromString(userId) }
             .map(::daoToModel)
     }
 
