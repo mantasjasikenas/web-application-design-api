@@ -116,7 +116,8 @@ private fun ApplicationCall.appendRefreshTokenCookie(refreshToken: String) {
         maxAge = 3.days.inWholeSeconds,
         httpOnly = true,
         secure = true,
-        path = "/"
+        path = "/",
+        extensions = mapOf("SameSite" to "None")
     )
 }
 
@@ -127,6 +128,7 @@ private fun ApplicationCall.removeRefreshTokenCookie() {
         maxAge = 0L,
         httpOnly = true,
         secure = true,
-        path = "/"
+        path = "/",
+        extensions = mapOf("SameSite" to "None")
     )
 }
