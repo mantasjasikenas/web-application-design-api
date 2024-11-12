@@ -10,6 +10,7 @@ import com.github.mantasjasikenas.db.tables.UsersTable
 import com.github.mantasjasikenas.db.tables.daoToModel
 import com.github.mantasjasikenas.repository.ProjectRepository
 import org.jetbrains.exposed.dao.id.EntityID
+import org.jetbrains.exposed.sql.SortOrder
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.deleteWhere
 import java.util.*
@@ -18,12 +19,14 @@ class ProjectRepositoryImpl : ProjectRepository {
     override suspend fun allProjects(): List<ProjectDto> = suspendTransaction {
         ProjectDAO
             .all()
+            .orderBy(ProjectsTable.createdAt to SortOrder.ASC)
             .map(::daoToModel)
     }
 
     override suspend fun allUserProjects(userId: String): List<ProjectDto> = suspendTransaction {
         ProjectDAO
             .find { ProjectsTable.createdBy eq UUID.fromString(userId) }
+            .orderBy(ProjectsTable.createdAt to SortOrder.ASC)
             .map(::daoToModel)
     }
 

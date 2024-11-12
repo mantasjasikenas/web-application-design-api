@@ -8,6 +8,7 @@ import com.github.mantasjasikenas.db.tables.*
 import com.github.mantasjasikenas.repository.TaskRepository
 import kotlinx.datetime.LocalDateTime
 import org.jetbrains.exposed.dao.id.EntityID
+import org.jetbrains.exposed.sql.SortOrder
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.deleteWhere
@@ -18,6 +19,7 @@ class TaskRepositoryImpl : TaskRepository {
     override suspend fun allTasks(projectId: Int, sectionId: Int): List<TaskDto> = suspendTransaction {
         (TasksTable innerJoin SectionsTable)
             .selectAll().where { (TasksTable.sectionId eq sectionId) and (SectionsTable.projectId eq projectId) }
+            .orderBy(TasksTable.createdAt to SortOrder.ASC)
             .map { TaskDAO.wrapRow(it) }
             .map(::daoToModel)
     }
@@ -31,7 +33,9 @@ class TaskRepositoryImpl : TaskRepository {
                         UUID.fromString(userId),
                         UsersTable
                     ))
-                }.map { TaskDAO.wrapRow(it) }
+                }
+                .orderBy(TasksTable.createdAt to SortOrder.ASC)
+                .map { TaskDAO.wrapRow(it) }
                 .map(::daoToModel)
         }
 

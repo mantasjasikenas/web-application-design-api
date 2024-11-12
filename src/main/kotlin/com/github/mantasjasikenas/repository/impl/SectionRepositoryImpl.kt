@@ -7,6 +7,7 @@ import com.github.mantasjasikenas.db.suspendTransaction
 import com.github.mantasjasikenas.db.tables.*
 import com.github.mantasjasikenas.repository.SectionRepository
 import org.jetbrains.exposed.dao.id.EntityID
+import org.jetbrains.exposed.sql.SortOrder
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.and
 import org.jetbrains.exposed.sql.deleteWhere
@@ -17,6 +18,7 @@ class SectionRepositoryImpl : SectionRepository {
     override suspend fun allSections(projectId: Int, withTasks: Boolean): List<SectionDto> = suspendTransaction {
         SectionDAO
             .find { SectionsTable.projectId eq projectId }
+            .orderBy(SectionsTable.createdAt to SortOrder.ASC)
             .map { daoToModel(it, withTasks) }
     }
 
@@ -30,6 +32,7 @@ class SectionRepositoryImpl : SectionRepository {
                         ), UsersTable
                     ))
                 }
+                .orderBy(SectionsTable.createdAt to SortOrder.ASC)
                 .map { daoToModel(it, withTasks) }
         }
 

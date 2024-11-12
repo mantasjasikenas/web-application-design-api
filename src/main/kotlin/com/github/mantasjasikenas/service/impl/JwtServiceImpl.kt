@@ -17,7 +17,7 @@ import java.util.*
 import kotlin.time.Duration.Companion.days
 import kotlin.time.Duration.Companion.minutes
 
-val JWT_ACCESS_TOKEN_EXPIRATION = 1.minutes
+val JWT_ACCESS_TOKEN_EXPIRATION = 5.minutes
 val JWT_REFRESH_TOKEN_EXPIRATION = 3.days
 
 class JwtServiceImpl(

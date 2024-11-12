@@ -1,21 +1,25 @@
 package com.github.mantasjasikenas.repository.impl
 
+import com.github.mantasjasikenas.data.Role
+import com.github.mantasjasikenas.data.user.PostUserDto
+import com.github.mantasjasikenas.data.user.UpdateUserDto
+import com.github.mantasjasikenas.data.user.User
 import com.github.mantasjasikenas.db.suspendTransaction
 import com.github.mantasjasikenas.db.tables.UserDAO
 import com.github.mantasjasikenas.db.tables.UserRoleDAO
 import com.github.mantasjasikenas.db.tables.UsersTable
 import com.github.mantasjasikenas.db.tables.daoToModel
-import com.github.mantasjasikenas.data.Role
-import com.github.mantasjasikenas.data.user.PostUserDto
-import com.github.mantasjasikenas.data.user.UpdateUserDto
-import com.github.mantasjasikenas.data.user.User
 import com.github.mantasjasikenas.repository.UserRepository
 import org.jetbrains.exposed.dao.id.EntityID
+import org.jetbrains.exposed.sql.SortOrder
 import java.util.*
 
 class UserRepositoryImpl : UserRepository {
     override suspend fun all(): List<User> = suspendTransaction {
-        UserDAO.all().map(::daoToModel)
+        UserDAO
+            .all()
+            .orderBy(UsersTable.createdAt to SortOrder.ASC)
+            .map(::daoToModel)
     }
 
     override suspend fun findById(id: String): User? = suspendTransaction {
