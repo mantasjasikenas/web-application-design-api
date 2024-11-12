@@ -14,7 +14,11 @@ import kotlinx.datetime.LocalDateTime
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toInstant
 import java.util.*
+import kotlin.time.Duration.Companion.days
 import kotlin.time.Duration.Companion.minutes
+
+val JWT_ACCESS_TOKEN_EXPIRATION = 5.minutes
+val JWT_REFRESH_TOKEN_EXPIRATION = 3.days
 
 class JwtServiceImpl(
     private val application: Application,
@@ -37,7 +41,7 @@ class JwtServiceImpl(
         return createJwtCreatorBaseBuilder(userId)
             .withClaim("username", username)
             .withArrayClaim("roles", roles.map { it.name }.toTypedArray())
-            .withExpiresAt(Date(System.currentTimeMillis() + 5.minutes.inWholeMilliseconds))
+            .withExpiresAt(Date(System.currentTimeMillis() + JWT_ACCESS_TOKEN_EXPIRATION.inWholeMilliseconds))
             .sign(Algorithm.HMAC256(secret))
     }
 

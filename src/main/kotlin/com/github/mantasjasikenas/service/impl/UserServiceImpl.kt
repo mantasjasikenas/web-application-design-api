@@ -12,7 +12,6 @@ import kotlinx.datetime.Clock
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import java.util.*
-import kotlin.time.Duration.Companion.days
 
 class UserServiceImpl(
     private val userRepository: UserRepository,
@@ -59,7 +58,7 @@ class UserServiceImpl(
         val userId = foundUser.id
 
         val sessionId = UUID.randomUUID()
-        val expiresAt = Clock.System.now().plus(3.days).toLocalDateTime(TimeZone.UTC)
+        val expiresAt = Clock.System.now().plus(JWT_REFRESH_TOKEN_EXPIRATION).toLocalDateTime(TimeZone.UTC)
 
         val accessToken = jwtService.createAccessToken(username, userId, foundUser.roles)
         val refreshToken = jwtService.createRefreshToken(sessionId, userId, expiresAt)
@@ -102,7 +101,7 @@ class UserServiceImpl(
 
         val userId = foundUser.id
 
-        val expiresAt = Clock.System.now().plus(3.days).toLocalDateTime(TimeZone.UTC)
+        val expiresAt = Clock.System.now().plus(JWT_REFRESH_TOKEN_EXPIRATION).toLocalDateTime(TimeZone.UTC)
 
         val newAccessToken = jwtService.createAccessToken(foundUser.username, userId, foundUser.roles)
         val newRefreshToken = jwtService.createRefreshToken(sessionIdAsUUID, userId, expiresAt)

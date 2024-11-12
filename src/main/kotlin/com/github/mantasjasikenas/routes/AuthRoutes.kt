@@ -7,13 +7,13 @@ import com.github.mantasjasikenas.data.user.PostUserDto
 import com.github.mantasjasikenas.data.user.toSuccessfulRegisterDto
 import com.github.mantasjasikenas.docs.auth.*
 import com.github.mantasjasikenas.service.UserService
+import com.github.mantasjasikenas.service.impl.JWT_REFRESH_TOKEN_EXPIRATION
 import io.github.smiley4.ktorswaggerui.dsl.routing.post
 import io.github.smiley4.ktorswaggerui.dsl.routing.route
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
 import io.ktor.server.routing.*
-import kotlin.time.Duration.Companion.days
 
 
 fun Route.authRoutes(userService: UserService) {
@@ -113,7 +113,7 @@ private fun ApplicationCall.appendRefreshTokenCookie(refreshToken: String) {
     this.response.cookies.append(
         name = "RefreshToken",
         value = refreshToken,
-        maxAge = 3.days.inWholeSeconds,
+        maxAge = JWT_REFRESH_TOKEN_EXPIRATION.inWholeSeconds,
         httpOnly = true,
         secure = true,
         path = "/",
