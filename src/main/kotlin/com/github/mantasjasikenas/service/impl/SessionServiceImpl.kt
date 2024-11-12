@@ -50,7 +50,7 @@ class SessionServiceImpl : SessionService {
         }
 
         return session != null &&
-                session.expiresAt > Clock.System.now().toLocalDateTime(TimeZone.currentSystemDefault()) &&
+                session.expiresAt > Clock.System.now().toLocalDateTime(TimeZone.UTC) &&
                 session.lastRefreshToken == refreshToken.toSHA256() &&
                 !session.isRevoked
     }
