@@ -46,6 +46,13 @@ fun getAllSectionsDocs(): OpenApiRoute.() -> Unit = {
 
     request {
         projectIdPathParameter()
+
+        queryParameter<Boolean>("withTasks") {
+            description = "Include tasks in sections"
+            example("default") {
+                value = false
+            }
+        }
     }
 
     response {

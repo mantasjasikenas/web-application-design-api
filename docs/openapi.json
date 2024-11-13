@@ -173,7 +173,19 @@
       "post" : {
         "tags" : [ "Auth" ],
         "description" : "Refresh access token",
-        "parameters" : [ ],
+        "parameters" : [ {
+          "name" : "RefreshToken",
+          "in" : "cookie",
+          "description" : "Refresh token",
+          "required" : true,
+          "deprecated" : false,
+          "explode" : false,
+          "schema" : {
+            "type" : "string",
+            "title" : "String"
+          },
+          "example" : "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhdWQiOiJUcnVzdGVkQ2xpZW50IiwiaXNzIjoiTWFudGFzIiwianRpIjoiNThkMWMzMzQtNmRjMi00OTAyLTg2ZmEtNmUyYjk4ZjE4ODJhIiwic3ViIjoiYzFjY2FmYTYtM2EwNi00NzA3LThkNDQtNzc3ZWFkZWYzNjM1IiwiZXhwIjoxNzI5MDA0MzQyfQ.NwcM5fY4glzUVroLqaGfQEHA7bDkpd0LpVy10DFHJmw"
+        } ],
         "responses" : {
           "200" : {
             "description" : "Access token refreshed successfully",
@@ -507,9 +519,9 @@
           "deprecated" : false,
           "explode" : false,
           "schema" : {
-            "title" : "Int",
             "type" : "integer",
-            "format" : "int32"
+            "format" : "int32",
+            "title" : "Int"
           },
           "example" : 1
         } ],
@@ -638,9 +650,9 @@
           "deprecated" : false,
           "explode" : false,
           "schema" : {
-            "title" : "Int",
             "type" : "integer",
-            "format" : "int32"
+            "format" : "int32",
+            "title" : "Int"
           },
           "example" : 1
         } ],
@@ -762,9 +774,9 @@
           "deprecated" : false,
           "explode" : false,
           "schema" : {
-            "title" : "Int",
             "type" : "integer",
-            "format" : "int32"
+            "format" : "int32",
+            "title" : "Int"
           },
           "example" : 1
         } ],
@@ -933,11 +945,23 @@
           "deprecated" : false,
           "explode" : false,
           "schema" : {
-            "title" : "Int",
             "type" : "integer",
-            "format" : "int32"
+            "format" : "int32",
+            "title" : "Int"
           },
           "example" : 1
+        }, {
+          "name" : "withTasks",
+          "in" : "query",
+          "description" : "Include tasks in sections",
+          "required" : false,
+          "deprecated" : false,
+          "explode" : false,
+          "schema" : {
+            "type" : "boolean",
+            "title" : "Boolean"
+          },
+          "example" : false
         } ],
         "responses" : {
           "200" : {
@@ -990,9 +1014,9 @@
           "deprecated" : false,
           "explode" : false,
           "schema" : {
-            "title" : "Int",
             "type" : "integer",
-            "format" : "int32"
+            "format" : "int32",
+            "title" : "Int"
           },
           "example" : 1
         } ],
@@ -1161,9 +1185,9 @@
           "deprecated" : false,
           "explode" : false,
           "schema" : {
-            "title" : "Int",
             "type" : "integer",
-            "format" : "int32"
+            "format" : "int32",
+            "title" : "Int"
           },
           "example" : 1
         }, {
@@ -1174,9 +1198,9 @@
           "deprecated" : false,
           "explode" : false,
           "schema" : {
-            "title" : "Int",
             "type" : "integer",
-            "format" : "int32"
+            "format" : "int32",
+            "title" : "Int"
           },
           "example" : 1
         } ],
@@ -1305,9 +1329,9 @@
           "deprecated" : false,
           "explode" : false,
           "schema" : {
-            "title" : "Int",
             "type" : "integer",
-            "format" : "int32"
+            "format" : "int32",
+            "title" : "Int"
           },
           "example" : 1
         }, {
@@ -1318,9 +1342,9 @@
           "deprecated" : false,
           "explode" : false,
           "schema" : {
-            "title" : "Int",
             "type" : "integer",
-            "format" : "int32"
+            "format" : "int32",
+            "title" : "Int"
           },
           "example" : 1
         } ],
@@ -1442,9 +1466,9 @@
           "deprecated" : false,
           "explode" : false,
           "schema" : {
-            "title" : "Int",
             "type" : "integer",
-            "format" : "int32"
+            "format" : "int32",
+            "title" : "Int"
           },
           "example" : 1
         }, {
@@ -1455,9 +1479,9 @@
           "deprecated" : false,
           "explode" : false,
           "schema" : {
-            "title" : "Int",
             "type" : "integer",
-            "format" : "int32"
+            "format" : "int32",
+            "title" : "Int"
           },
           "example" : 1
         } ],
@@ -1627,9 +1651,9 @@
           "deprecated" : false,
           "explode" : false,
           "schema" : {
-            "title" : "Int",
             "type" : "integer",
-            "format" : "int32"
+            "format" : "int32",
+            "title" : "Int"
           },
           "example" : 1
         }, {
@@ -1640,9 +1664,9 @@
           "deprecated" : false,
           "explode" : false,
           "schema" : {
-            "title" : "Int",
             "type" : "integer",
-            "format" : "int32"
+            "format" : "int32",
+            "title" : "Int"
           },
           "example" : 1
         } ],
@@ -1765,9 +1789,9 @@
           "deprecated" : false,
           "explode" : false,
           "schema" : {
-            "title" : "Int",
             "type" : "integer",
-            "format" : "int32"
+            "format" : "int32",
+            "title" : "Int"
           },
           "example" : 1
         }, {
@@ -1778,9 +1802,9 @@
           "deprecated" : false,
           "explode" : false,
           "schema" : {
-            "title" : "Int",
             "type" : "integer",
-            "format" : "int32"
+            "format" : "int32",
+            "title" : "Int"
           },
           "example" : 1
         } ],
@@ -1937,9 +1961,9 @@
           "deprecated" : false,
           "explode" : false,
           "schema" : {
-            "title" : "Int",
             "type" : "integer",
-            "format" : "int32"
+            "format" : "int32",
+            "title" : "Int"
           },
           "example" : 1
         }, {
@@ -1950,9 +1974,9 @@
           "deprecated" : false,
           "explode" : false,
           "schema" : {
-            "title" : "Int",
             "type" : "integer",
-            "format" : "int32"
+            "format" : "int32",
+            "title" : "Int"
           },
           "example" : 1
         }, {
@@ -1963,9 +1987,9 @@
           "deprecated" : false,
           "explode" : false,
           "schema" : {
-            "title" : "Int",
             "type" : "integer",
-            "format" : "int32"
+            "format" : "int32",
+            "title" : "Int"
           },
           "example" : 1
         } ],
@@ -2098,9 +2122,9 @@
           "deprecated" : false,
           "explode" : false,
           "schema" : {
-            "title" : "Int",
             "type" : "integer",
-            "format" : "int32"
+            "format" : "int32",
+            "title" : "Int"
           },
           "example" : 1
         }, {
@@ -2111,9 +2135,9 @@
           "deprecated" : false,
           "explode" : false,
           "schema" : {
-            "title" : "Int",
             "type" : "integer",
-            "format" : "int32"
+            "format" : "int32",
+            "title" : "Int"
           },
           "example" : 1
         }, {
@@ -2124,9 +2148,9 @@
           "deprecated" : false,
           "explode" : false,
           "schema" : {
-            "title" : "Int",
             "type" : "integer",
-            "format" : "int32"
+            "format" : "int32",
+            "title" : "Int"
           },
           "example" : 1
         } ],
@@ -2248,9 +2272,9 @@
           "deprecated" : false,
           "explode" : false,
           "schema" : {
-            "title" : "Int",
             "type" : "integer",
-            "format" : "int32"
+            "format" : "int32",
+            "title" : "Int"
           },
           "example" : 1
         }, {
@@ -2261,9 +2285,9 @@
           "deprecated" : false,
           "explode" : false,
           "schema" : {
-            "title" : "Int",
             "type" : "integer",
-            "format" : "int32"
+            "format" : "int32",
+            "title" : "Int"
           },
           "example" : 1
         }, {
@@ -2274,9 +2298,9 @@
           "deprecated" : false,
           "explode" : false,
           "schema" : {
-            "title" : "Int",
             "type" : "integer",
-            "format" : "int32"
+            "format" : "int32",
+            "title" : "Int"
           },
           "example" : 1
         } ],
@@ -2442,82 +2466,82 @@
   "components" : {
     "schemas" : {
       "com.github.mantasjasikenas.data.user.PostUserDto" : {
-        "title" : "PostUserDto",
-        "required" : [ "email", "password", "username" ],
         "type" : "object",
         "properties" : {
           "email" : {
-            "title" : "String",
-            "type" : "string"
+            "type" : "string",
+            "title" : "String"
           },
           "password" : {
-            "title" : "String",
-            "type" : "string"
+            "type" : "string",
+            "title" : "String"
           },
           "username" : {
-            "title" : "String",
-            "type" : "string"
+            "type" : "string",
+            "title" : "String"
           }
-        }
+        },
+        "required" : [ "email", "password", "username" ],
+        "title" : "PostUserDto"
       },
       "com.github.mantasjasikenas.data.ApiResponse_kotlin.String" : {
-        "title" : "ApiResponse<String>",
-        "required" : [ "message", "status", "success" ],
         "type" : "object",
         "properties" : {
           "data" : {
+            "type" : [ "null", "string" ],
             "title" : "String"
           },
           "errors" : {
-            "title" : "List<String>",
+            "type" : [ "null", "array" ],
             "items" : {
-              "title" : "String",
-              "type" : "string"
-            }
+              "type" : "string",
+              "title" : "String"
+            },
+            "title" : "List<String>"
           },
           "message" : {
-            "title" : "String",
-            "type" : "string"
+            "type" : "string",
+            "title" : "String"
           },
           "status" : {
-            "title" : "String",
-            "type" : "string"
+            "type" : "string",
+            "title" : "String"
           },
           "success" : {
-            "title" : "Boolean",
-            "type" : "boolean"
+            "type" : "boolean",
+            "title" : "Boolean"
           }
-        }
+        },
+        "required" : [ "message", "status", "success" ],
+        "title" : "ApiResponse<String>"
       },
       "com.github.mantasjasikenas.data.auth.LoginDto" : {
-        "title" : "LoginDto",
-        "required" : [ "password", "username" ],
         "type" : "object",
         "properties" : {
           "password" : {
-            "title" : "String",
-            "type" : "string"
+            "type" : "string",
+            "title" : "String"
           },
           "username" : {
-            "title" : "String",
-            "type" : "string"
+            "type" : "string",
+            "title" : "String"
           }
-        }
+        },
+        "required" : [ "password", "username" ],
+        "title" : "LoginDto"
       },
       "com.github.mantasjasikenas.data.auth.SuccessfulLoginDto" : {
-        "title" : "SuccessfulLoginDto",
-        "required" : [ "accessToken" ],
         "type" : "object",
         "properties" : {
           "accessToken" : {
-            "title" : "String",
-            "type" : "string"
+            "type" : "string",
+            "title" : "String"
           }
-        }
+        },
+        "required" : [ "accessToken" ],
+        "title" : "SuccessfulLoginDto"
       },
       "com.github.mantasjasikenas.data.ApiResponse_com.github.mantasjasikenas.data.auth.SuccessfulLoginDto" : {
-        "title" : "ApiResponse<SuccessfulLoginDto>",
-        "required" : [ "message", "status", "success" ],
         "type" : "object",
         "properties" : {
           "data" : {
@@ -2528,133 +2552,138 @@
             } ]
           },
           "errors" : {
-            "title" : "List<String>",
+            "type" : [ "null", "array" ],
             "items" : {
-              "title" : "String",
-              "type" : "string"
-            }
+              "type" : "string",
+              "title" : "String"
+            },
+            "title" : "List<String>"
           },
           "message" : {
-            "title" : "String",
-            "type" : "string"
+            "type" : "string",
+            "title" : "String"
           },
           "status" : {
-            "title" : "String",
-            "type" : "string"
+            "type" : "string",
+            "title" : "String"
           },
           "success" : {
-            "title" : "Boolean",
-            "type" : "boolean"
+            "type" : "boolean",
+            "title" : "Boolean"
           }
-        }
+        },
+        "required" : [ "message", "status", "success" ],
+        "title" : "ApiResponse<SuccessfulLoginDto>"
       },
       "com.github.mantasjasikenas.data.ApiResponse_kotlin.Unit" : {
-        "title" : "ApiResponse<Unit>",
-        "required" : [ "message", "status", "success" ],
         "type" : "object",
         "properties" : {
           "data" : {
+            "type" : "null",
             "title" : "Unit"
           },
           "errors" : {
-            "title" : "List<String>",
+            "type" : [ "null", "array" ],
             "items" : {
-              "title" : "String",
-              "type" : "string"
-            }
+              "type" : "string",
+              "title" : "String"
+            },
+            "title" : "List<String>"
           },
           "message" : {
-            "title" : "String",
-            "type" : "string"
+            "type" : "string",
+            "title" : "String"
           },
           "status" : {
-            "title" : "String",
-            "type" : "string"
+            "type" : "string",
+            "title" : "String"
           },
           "success" : {
-            "title" : "Boolean",
-            "type" : "boolean"
+            "type" : "boolean",
+            "title" : "Boolean"
           }
-        }
+        },
+        "required" : [ "message", "status", "success" ],
+        "title" : "ApiResponse<Unit>"
       },
       "com.github.mantasjasikenas.data.project.ProjectDto" : {
-        "title" : "ProjectDto",
-        "required" : [ "createdAt", "createdBy", "description", "id", "name" ],
         "type" : "object",
         "properties" : {
           "createdAt" : {
-            "title" : "String",
-            "type" : "string"
+            "type" : "string",
+            "title" : "String"
           },
           "createdBy" : {
-            "title" : "String",
-            "type" : "string"
+            "type" : "string",
+            "title" : "String"
           },
           "description" : {
-            "title" : "String",
-            "type" : "string"
+            "type" : "string",
+            "title" : "String"
           },
           "id" : {
-            "title" : "Int",
             "type" : "integer",
-            "format" : "int32"
+            "format" : "int32",
+            "title" : "Int"
           },
           "name" : {
-            "title" : "String",
-            "type" : "string"
+            "type" : "string",
+            "title" : "String"
           }
-        }
+        },
+        "required" : [ "createdAt", "createdBy", "description", "id", "name" ],
+        "title" : "ProjectDto"
       },
       "com.github.mantasjasikenas.data.ApiResponse_kotlin.collections.List_com.github.mantasjasikenas.data.project.ProjectDto" : {
-        "title" : "ApiResponse<List<ProjectDto>>",
-        "required" : [ "message", "status", "success" ],
         "type" : "object",
         "properties" : {
           "data" : {
-            "title" : "List<ProjectDto>",
+            "type" : [ "null", "array" ],
             "items" : {
               "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.project.ProjectDto"
-            }
+            },
+            "title" : "List<ProjectDto>"
           },
           "errors" : {
-            "title" : "List<String>",
+            "type" : [ "null", "array" ],
             "items" : {
-              "title" : "String",
-              "type" : "string"
-            }
+              "type" : "string",
+              "title" : "String"
+            },
+            "title" : "List<String>"
           },
           "message" : {
-            "title" : "String",
-            "type" : "string"
+            "type" : "string",
+            "title" : "String"
           },
           "status" : {
-            "title" : "String",
-            "type" : "string"
+            "type" : "string",
+            "title" : "String"
           },
           "success" : {
-            "title" : "Boolean",
-            "type" : "boolean"
+            "type" : "boolean",
+            "title" : "Boolean"
           }
-        }
+        },
+        "required" : [ "message", "status", "success" ],
+        "title" : "ApiResponse<List<ProjectDto>>"
       },
       "com.github.mantasjasikenas.data.project.PostProjectDto" : {
-        "title" : "PostProjectDto",
-        "required" : [ "description", "name" ],
         "type" : "object",
         "properties" : {
           "description" : {
-            "title" : "String",
-            "type" : "string"
+            "type" : "string",
+            "title" : "String"
           },
           "name" : {
-            "title" : "String",
-            "type" : "string"
+            "type" : "string",
+            "title" : "String"
           }
-        }
+        },
+        "required" : [ "description", "name" ],
+        "title" : "PostProjectDto"
       },
       "com.github.mantasjasikenas.data.ApiResponse_com.github.mantasjasikenas.data.project.ProjectDto" : {
-        "title" : "ApiResponse<ProjectDto>",
-        "required" : [ "message", "status", "success" ],
         "type" : "object",
         "properties" : {
           "data" : {
@@ -2665,263 +2694,283 @@
             } ]
           },
           "errors" : {
-            "title" : "List<String>",
+            "type" : [ "null", "array" ],
             "items" : {
-              "title" : "String",
-              "type" : "string"
-            }
+              "type" : "string",
+              "title" : "String"
+            },
+            "title" : "List<String>"
           },
           "message" : {
-            "title" : "String",
-            "type" : "string"
+            "type" : "string",
+            "title" : "String"
           },
           "status" : {
-            "title" : "String",
-            "type" : "string"
+            "type" : "string",
+            "title" : "String"
           },
           "success" : {
-            "title" : "Boolean",
-            "type" : "boolean"
+            "type" : "boolean",
+            "title" : "Boolean"
           }
-        }
+        },
+        "required" : [ "message", "status", "success" ],
+        "title" : "ApiResponse<ProjectDto>"
       },
       "com.github.mantasjasikenas.data.project.UpdateProjectDto" : {
-        "title" : "UpdateProjectDto",
         "type" : "object",
         "properties" : {
           "description" : {
+            "type" : [ "null", "string" ],
             "title" : "String"
           },
           "name" : {
+            "type" : [ "null", "string" ],
             "title" : "String"
           }
-        }
+        },
+        "title" : "UpdateProjectDto"
       },
       "com.github.mantasjasikenas.data.section.SectionDto" : {
-        "title" : "SectionDto",
-        "required" : [ "createdAt", "createdBy", "id", "name", "projectId" ],
         "type" : "object",
         "properties" : {
           "createdAt" : {
-            "title" : "String",
-            "type" : "string"
+            "type" : "string",
+            "title" : "String"
           },
           "createdBy" : {
-            "title" : "String",
-            "type" : "string"
+            "type" : "string",
+            "title" : "String"
           },
           "id" : {
-            "title" : "Int",
             "type" : "integer",
-            "format" : "int32"
+            "format" : "int32",
+            "title" : "Int"
           },
           "name" : {
-            "title" : "String",
-            "type" : "string"
-          },
-          "projectId" : {
-            "title" : "Int",
-            "type" : "integer",
-            "format" : "int32"
-          }
-        }
-      },
-      "com.github.mantasjasikenas.data.ApiResponse_kotlin.collections.List_com.github.mantasjasikenas.data.section.SectionDto" : {
-        "title" : "ApiResponse<List<SectionDto>>",
-        "required" : [ "message", "status", "success" ],
-        "type" : "object",
-        "properties" : {
-          "data" : {
-            "title" : "List<SectionDto>",
-            "items" : {
-              "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.section.SectionDto"
-            }
-          },
-          "errors" : {
-            "title" : "List<String>",
-            "items" : {
-              "title" : "String",
-              "type" : "string"
-            }
-          },
-          "message" : {
-            "title" : "String",
-            "type" : "string"
-          },
-          "status" : {
-            "title" : "String",
-            "type" : "string"
-          },
-          "success" : {
-            "title" : "Boolean",
-            "type" : "boolean"
-          }
-        }
-      },
-      "com.github.mantasjasikenas.data.section.PostSectionDto" : {
-        "title" : "PostSectionDto",
-        "required" : [ "name" ],
-        "type" : "object",
-        "properties" : {
-          "name" : {
-            "title" : "String",
-            "type" : "string"
-          }
-        }
-      },
-      "com.github.mantasjasikenas.data.ApiResponse_com.github.mantasjasikenas.data.section.SectionDto" : {
-        "title" : "ApiResponse<SectionDto>",
-        "required" : [ "message", "status", "success" ],
-        "type" : "object",
-        "properties" : {
-          "data" : {
-            "oneOf" : [ {
-              "type" : "null"
-            }, {
-              "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.section.SectionDto"
-            } ]
-          },
-          "errors" : {
-            "title" : "List<String>",
-            "items" : {
-              "title" : "String",
-              "type" : "string"
-            }
-          },
-          "message" : {
-            "title" : "String",
-            "type" : "string"
-          },
-          "status" : {
-            "title" : "String",
-            "type" : "string"
-          },
-          "success" : {
-            "title" : "Boolean",
-            "type" : "boolean"
-          }
-        }
-      },
-      "com.github.mantasjasikenas.data.section.UpdateSectionDto" : {
-        "title" : "UpdateSectionDto",
-        "type" : "object",
-        "properties" : {
-          "name" : {
+            "type" : "string",
             "title" : "String"
           },
           "projectId" : {
-            "title" : "Int",
-            "format" : "int32"
+            "type" : "integer",
+            "format" : "int32",
+            "title" : "Int"
+          },
+          "tasks" : {
+            "type" : [ "null", "array" ],
+            "items" : {
+              "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.task.TaskDto"
+            },
+            "title" : "List<TaskDto>"
           }
-        }
+        },
+        "required" : [ "createdAt", "createdBy", "id", "name", "projectId" ],
+        "title" : "SectionDto"
       },
       "com.github.mantasjasikenas.data.task.TaskDto" : {
-        "title" : "TaskDto",
-        "required" : [ "completed", "createdAt", "createdBy", "description", "id", "name", "priority", "sectionId" ],
         "type" : "object",
         "properties" : {
           "completed" : {
-            "title" : "Boolean",
-            "type" : "boolean"
+            "type" : "boolean",
+            "title" : "Boolean"
           },
           "createdAt" : {
-            "title" : "String",
-            "type" : "string"
+            "type" : "string",
+            "title" : "String"
           },
           "createdBy" : {
-            "title" : "String",
-            "type" : "string"
+            "type" : "string",
+            "title" : "String"
           },
           "description" : {
-            "title" : "String",
-            "type" : "string"
+            "type" : "string",
+            "title" : "String"
           },
           "dueDate" : {
+            "type" : [ "null", "string" ],
             "title" : "String"
           },
           "id" : {
-            "title" : "Int",
             "type" : "integer",
-            "format" : "int32"
+            "format" : "int32",
+            "title" : "Int"
           },
           "name" : {
-            "title" : "String",
-            "type" : "string"
+            "type" : "string",
+            "title" : "String"
           },
           "priority" : {
             "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.task.Priority"
           },
           "sectionId" : {
-            "title" : "Int",
             "type" : "integer",
-            "format" : "int32"
+            "format" : "int32",
+            "title" : "Int"
           }
-        }
+        },
+        "required" : [ "completed", "createdAt", "createdBy", "description", "id", "name", "priority", "sectionId" ],
+        "title" : "TaskDto"
       },
       "com.github.mantasjasikenas.data.task.Priority" : {
-        "title" : "Priority",
-        "enum" : [ "Low", "Medium", "High", "Vital" ]
+        "type" : "string",
+        "enum" : [ "Low", "Medium", "High", "Vital" ],
+        "title" : "Priority"
       },
-      "com.github.mantasjasikenas.data.ApiResponse_kotlin.collections.List_com.github.mantasjasikenas.data.task.TaskDto" : {
-        "title" : "ApiResponse<List<TaskDto>>",
-        "required" : [ "message", "status", "success" ],
+      "com.github.mantasjasikenas.data.ApiResponse_kotlin.collections.List_com.github.mantasjasikenas.data.section.SectionDto" : {
         "type" : "object",
         "properties" : {
           "data" : {
-            "title" : "List<TaskDto>",
+            "type" : [ "null", "array" ],
             "items" : {
-              "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.task.TaskDto"
-            }
+              "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.section.SectionDto"
+            },
+            "title" : "List<SectionDto>"
           },
           "errors" : {
-            "title" : "List<String>",
+            "type" : [ "null", "array" ],
             "items" : {
-              "title" : "String",
-              "type" : "string"
-            }
+              "type" : "string",
+              "title" : "String"
+            },
+            "title" : "List<String>"
           },
           "message" : {
-            "title" : "String",
-            "type" : "string"
+            "type" : "string",
+            "title" : "String"
           },
           "status" : {
-            "title" : "String",
-            "type" : "string"
+            "type" : "string",
+            "title" : "String"
           },
           "success" : {
-            "title" : "Boolean",
-            "type" : "boolean"
+            "type" : "boolean",
+            "title" : "Boolean"
           }
-        }
+        },
+        "required" : [ "message", "status", "success" ],
+        "title" : "ApiResponse<List<SectionDto>>"
+      },
+      "com.github.mantasjasikenas.data.section.PostSectionDto" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : "string",
+            "title" : "String"
+          }
+        },
+        "required" : [ "name" ],
+        "title" : "PostSectionDto"
+      },
+      "com.github.mantasjasikenas.data.ApiResponse_com.github.mantasjasikenas.data.section.SectionDto" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "oneOf" : [ {
+              "type" : "null"
+            }, {
+              "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.section.SectionDto"
+            } ]
+          },
+          "errors" : {
+            "type" : [ "null", "array" ],
+            "items" : {
+              "type" : "string",
+              "title" : "String"
+            },
+            "title" : "List<String>"
+          },
+          "message" : {
+            "type" : "string",
+            "title" : "String"
+          },
+          "status" : {
+            "type" : "string",
+            "title" : "String"
+          },
+          "success" : {
+            "type" : "boolean",
+            "title" : "Boolean"
+          }
+        },
+        "required" : [ "message", "status", "success" ],
+        "title" : "ApiResponse<SectionDto>"
+      },
+      "com.github.mantasjasikenas.data.section.UpdateSectionDto" : {
+        "type" : "object",
+        "properties" : {
+          "name" : {
+            "type" : [ "null", "string" ],
+            "title" : "String"
+          },
+          "projectId" : {
+            "type" : [ "null", "integer" ],
+            "format" : "int32",
+            "title" : "Int"
+          }
+        },
+        "title" : "UpdateSectionDto"
+      },
+      "com.github.mantasjasikenas.data.ApiResponse_kotlin.collections.List_com.github.mantasjasikenas.data.task.TaskDto" : {
+        "type" : "object",
+        "properties" : {
+          "data" : {
+            "type" : [ "null", "array" ],
+            "items" : {
+              "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.task.TaskDto"
+            },
+            "title" : "List<TaskDto>"
+          },
+          "errors" : {
+            "type" : [ "null", "array" ],
+            "items" : {
+              "type" : "string",
+              "title" : "String"
+            },
+            "title" : "List<String>"
+          },
+          "message" : {
+            "type" : "string",
+            "title" : "String"
+          },
+          "status" : {
+            "type" : "string",
+            "title" : "String"
+          },
+          "success" : {
+            "type" : "boolean",
+            "title" : "Boolean"
+          }
+        },
+        "required" : [ "message", "status", "success" ],
+        "title" : "ApiResponse<List<TaskDto>>"
       },
       "com.github.mantasjasikenas.data.task.PostTaskDto" : {
-        "title" : "PostTaskDto",
-        "required" : [ "completed", "description", "name", "priority" ],
         "type" : "object",
         "properties" : {
           "completed" : {
-            "title" : "Boolean",
-            "type" : "boolean"
+            "type" : "boolean",
+            "title" : "Boolean"
           },
           "description" : {
-            "title" : "String",
-            "type" : "string"
+            "type" : "string",
+            "title" : "String"
           },
           "dueDate" : {
+            "type" : [ "null", "string" ],
             "title" : "String"
           },
           "name" : {
-            "title" : "String",
-            "type" : "string"
+            "type" : "string",
+            "title" : "String"
           },
           "priority" : {
             "$ref" : "#/components/schemas/com.github.mantasjasikenas.data.task.Priority"
           }
-        }
+        },
+        "required" : [ "completed", "description", "name", "priority" ],
+        "title" : "PostTaskDto"
       },
       "com.github.mantasjasikenas.data.ApiResponse_com.github.mantasjasikenas.data.task.TaskDto" : {
-        "title" : "ApiResponse<TaskDto>",
-        "required" : [ "message", "status", "success" ],
         "type" : "object",
         "properties" : {
           "data" : {
@@ -2932,40 +2981,46 @@
             } ]
           },
           "errors" : {
-            "title" : "List<String>",
+            "type" : [ "null", "array" ],
             "items" : {
-              "title" : "String",
-              "type" : "string"
-            }
+              "type" : "string",
+              "title" : "String"
+            },
+            "title" : "List<String>"
           },
           "message" : {
-            "title" : "String",
-            "type" : "string"
+            "type" : "string",
+            "title" : "String"
           },
           "status" : {
-            "title" : "String",
-            "type" : "string"
+            "type" : "string",
+            "title" : "String"
           },
           "success" : {
-            "title" : "Boolean",
-            "type" : "boolean"
+            "type" : "boolean",
+            "title" : "Boolean"
           }
-        }
+        },
+        "required" : [ "message", "status", "success" ],
+        "title" : "ApiResponse<TaskDto>"
       },
       "com.github.mantasjasikenas.data.task.UpdateTaskDto" : {
-        "title" : "UpdateTaskDto",
         "type" : "object",
         "properties" : {
           "completed" : {
+            "type" : [ "null", "boolean" ],
             "title" : "Boolean"
           },
           "description" : {
+            "type" : [ "null", "string" ],
             "title" : "String"
           },
           "dueDate" : {
+            "type" : [ "null", "string" ],
             "title" : "String"
           },
           "name" : {
+            "type" : [ "null", "string" ],
             "title" : "String"
           },
           "priority" : {
@@ -2976,10 +3031,12 @@
             } ]
           },
           "sectionId" : {
-            "title" : "Int",
-            "format" : "int32"
+            "type" : [ "null", "integer" ],
+            "format" : "int32",
+            "title" : "Int"
           }
-        }
+        },
+        "title" : "UpdateTaskDto"
       }
     },
     "examples" : { },
