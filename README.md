@@ -1,89 +1,14 @@
-# Tornado - užduočių valdymo sistema
+<div align="center">
+  <img src="./docs/assets/logo.svg" alt="Shortcuts logo" width="75">  
+  
+  <h1>Tornado REST API</h1>
+</div>
 
-## Sprendžiamo uždavinio aprašymas
+> [!IMPORTANT]  
+> This repository contains only backend part of the project. Full project with documentation can be found [here](https://github.com/mantasjasikenas/web-application-design).
 
-### Sistemos paskirtis
+## Technologies used
 
-Projekto tikslas – sukurti užduočių valdymo įrankį, kuris leistų prisijungusiems sistemos naudotojams efektyviai
-planuoti, vykdyti ir stebėti savo užduotis. Sistema leis valdyti projektus, sekcijas, užduotis ir naudotojų paskyras.
-
-Aukščiausiame hierarchijos lygyje yra projektai, kurie suskirstomi į sekcijas, o sekcijose kuriamos užduotys. Projektai
-grupuoja platesnius tikslus, sekcijos leidžia smulkiau suskirstyti veiklas pagal temas ar etapus, o užduotys yra
-konkretūs darbai, kuriuos reikia atlikti.
-
-Sistemai naudotojai bus trijų rolių: svečias, registruotas naudotojas ir administratorius.
-
-### Funkciniai reikalavimai
-
-#### Svečias galės:
-
-1. Peržiūrėti prisijungimo puslapį
-2. Peržiūrėti registracijos puslapį
-3. Prisijungti prie sistemos
-4. Užsiregistruoti į sistemą
-
-<a></a>
-
-#### Registruotas sistemos naudotojas galės:
-
-1. Prisijungti prie sistemos
-2. Atsijungti nuo sistemos
-3. Sukurti, ištrinti, redaguoti, peržiūrėti projektus
-4. Sukurti, ištrinti, redaguoti, peržiūrėti sekcijas
-5. Sukurti, ištrinti, redaguoti, peržiūrėti užduotis
-
-<a></a>
-
-#### Administratorius galės:
-
-1. Prisijungti prie sistemos
-2. Atsijungti nuo sistemos
-3. Valdyti naudotojus
-
-## Taikomosios srities objektai
-
-Projektas ⇒ Sekcija ⇒ Užduotis
-
-- Projektas (project)
-- Sekcija (section)
-- Užduotis (task)
-- Naudotojas (user)
-
-## Sistemos architektūra
-
-### Sistemos sudedamosios dalys:
-
-- Kliento pusė (angl. Front-end) – bus realizuojama naudojant `SvelteKit` karkasą. SvelteKit - tai Svelte paremtas
-  karkasas, kuris remiasi Svelte pagrindais ir suteikia galingų funkcijų, tokių kaip SSR, kodo skaidymas, failų
-  maršrutizavimas, kurios palengvina sudėtingų programų kūrimą.
-- Serverio pusė (angl. Back-end) – bus realizuojama naudojant `Ktor` karkasą. Ktor yra asinchroninis karkasas, skirtas
-  mikroservisams, žiniatinklio programoms ir kt. kurti, naudojant Kotlin programavimo kalbą.
-- Duomenys bus saugomi `PostgreSQL` duomenų bazėje, kuri bus pasiekiama per `Exposed ORM`. Duomenų bazė yra reliacinė,
-  kuri leidžia saugoti duomenis lentelėse bei sudaryti ryšius tarp jų.
-
-## API metodai (Endpoints)
-
-### Projektai (Projects)
-
-1. `GET /api/v1/projects` – gauti visus projektų sąrašą
-2. `GET /api/v1/projects/{projectId}` – gauti vieną projektą pagal ID
-3. `POST /api/v1/projects` – sukurti naują projektą
-4. `PATCH /api/v1/projects/{projectId}` – atnaujinti projektą pagal ID
-5. `DELETE /api/v1/projects/{projectId}` – ištrinti projektą pagal ID
-
-### Sekcijos (Sections)
-
-1. `GET /api/v1/projects/{projectId}/sections` – gauti vieną sekciją pagal ID
-2. `GET /api/v1/projects/{projectId}/sections/{sectionId}` – gauti vieną sekciją pagal ID
-3. `POST /api/v1/projects/{projectId}/sections` - sukurti naują sekciją
-4. `PATCH /api/v1/projects/{projectId}/sections/{sectionId}` – atnaujinti sekciją pagal ID
-5. `DELETE /api/v1/projects/{projectId}/sections/{sectionId}` – ištrinti sekciją pagal ID
-
-### Užduotys (Tasks)
-
-1. `GET /api/v1/projects/{projectId}/sections/{sectionId}/tasks` – gauti visų užduočių sąrašą
-2. `GET /api/v1/projects/{projectId}/sections/{sectionId}/tasks/{taskId}` – gauti vieną užduotį pagal ID
-3. `GET /api/v1/projects/{projectId}/sections/{sectionId}/tasks` – gauti visų užduočių sąrašą pagal projekto ir sekcijos ID
-4. `POST /api/v1/projects/{projectId}/sections/{sectionId}/tasks` – sukurti naują užduotį
-5. `PATCH /api/v1/projects/{projectId}/sections/{sectionId}/tasks/{taskId}` – atnaujinti užduotį pagal ID
-6. `DELETE /api/v1/projects/{projectId}/sections/{sectionId}/tasks/{taskId}` – ištrinti užduotį pagal ID
+- [Ktor](https://ktor.io/) - Kotlin backend framework
+- [Exposed ORM](https://jetbrains.github.io/Exposed/home.html) - lightweight ORM
+- [PostgreSQL](https://www.postgresql.org/) - relational database
